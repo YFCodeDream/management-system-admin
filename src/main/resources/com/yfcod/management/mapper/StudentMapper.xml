@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yfcod.management.mapper.StudentMapper">
+    <resultMap id="studentMap" type="com.yfcod.management.model.Student">
+        <id column="StudentId" property="studentId"/>
+        <result column="StudentName" property="studentName"/>
+        <result column="Gender" property="gender"/>
+        <result column="Birthday" property="birthday"/>
+        <result column="Nation" property="nation"/>
+        <result column="Major" property="major"/>
+        <result column="Grade" property="grade"/>
+    </resultMap>
+
+    <select id="queryStudentAll" resultMap="studentMap">
+        SELECT * FROM student;
+    </select>
+
+    <select id="queryStudentByConditions" resultMap="studentMap">
+        SELECT * FROM student
+        <where>
+            <if test="studentId != null">
+                StudentId = #{studentId}
+            </if>
+            <if test="studentName != null">
+                AND StudentName = #{studentName}
+            </if>
+            <if test="gender != null">
+                AND Gender = #{gender}
+            </if>
+            <if test="birthday != null">
+                AND Birthday = #{birthday}
+            </if>
+            <if test="nation != null">
+                AND Nation = #{nation}
+            </if>
+            <if test="major != null">
+                AND Major = #{major}
+            </if>
+            <if test="grade != null">
+                AND Grade = #{grade}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryStudentById" resultMap="studentMap">
+        SELECT * FROM student WHERE StudentId = #{studentId};
+    </select>
+
+    <insert id="addStudent" parameterType="com.yfcod.management.model.Student">
+        INSERT INTO student (StudentId, StudentName, Gender, Birthday, Nation, Major, Grade, Password)
+        VALUES (#{studentId}, #{studentName}, #{major}, #{birthday}, #{nation}, #{major}, #{grade}, #{Password});
+    </insert>
+
+    <update id="updateStudent" parameterType="com.yfcod.management.model.Student">
+        UPDATE student
+        SET StudentName = #{studentName},
+            Gender = #{gender},
+            Birthday = #{birthday},
+            Nation = #{nation},
+            Major = #{nation},
+            Grade = #{grade}
+        WHERE StudentId = #{studentId};
+    </update>
+
+    <delete id="deleteStudentById">
+        DELETE FROM student WHERE StudentId = #{studentId};
+    </delete>
+</mapper>

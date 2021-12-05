@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties resource="com/yfcod/management/db.properties"/>
+
+    <!-- 日志技术 -->
+    <settings>
+        <setting name="logImpl" value="LOG4J"/>
+        <setting name="lazyLoadingEnabled" value="false" />
+    </settings>
+
+    <typeAliases>
+<!--        <typeAlias type="com.yfcod.entity.User" alias="User"/>-->
+        <!--一般写到domain包就可以了,自动为该包中的类起别名,默认的别名就是简单类名首字母小写(不区分大小写) -->
+        <package name="com.yfcod.management.model"/>
+    </typeAliases>
+
+    <!-- 1. 配置mybatis的运行环境 -->
+    <environments default="development">
+        <!-- 开发环境：在以后事务管理器和连接池都是交给spring框架来管理 -->
+        <environment id="development">
+            <!-- 配置JDBC事务管理-->
+            <transactionManager type="JDBC"/>
+            <!-- POOLED配置JDBC数据源连接池 -->
+            <dataSource type="POOLED">
+<!--                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>-->
+<!--                <property name="url"-->
+<!--                          value="jdbc:mysql://localhost:3306/mybatis_demo?useSSL=False"/>-->
+<!--                <property name="username" value="root"/>-->
+<!--                <property name="password" value="gaofeiqwert0627"/>-->
+
+                <!-- 替代上述配置，可以在properties标签引入外部properties文件-->
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url"
+                          value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    
+    <!-- 2. 关联映射文件 -->
+    <mappers>
+        <mapper resource="com/yfcod/management/mapper/AdminMapper.xml"/>
+        <mapper resource="com/yfcod/management/mapper/ArrangementMapper.xml"/>
+        <mapper resource="com/yfcod/management/mapper/CourseMapper.xml"/>
+        <mapper resource="com/yfcod/management/mapper/ScoreMapper.xml"/>
+        <mapper resource="com/yfcod/management/mapper/StudentMapper.xml"/>
+        <mapper resource="com/yfcod/management/mapper/TeacherMapper.xml"/>
+        <mapper resource="com/yfcod/management/mapper/TimetableMapper.xml"/>
+    </mappers>
+</configuration>

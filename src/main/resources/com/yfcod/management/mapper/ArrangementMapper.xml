@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yfcod.management.mapper.ArrangementMapper">
+    <resultMap id="arrangementMap" type="com.yfcod.management.model.Arrangement">
+        <id column="ExamId" property="examId"/>
+        <result column="CourseId" property="courseId"/>
+        <result column="ExamDate" property="examDate"/>
+        <result column="StartTime" property="startTime"/>
+        <result column="EndTime" property="endTime"/>
+        <result column="Address" property="address"/>
+    </resultMap>
+
+    <select id="queryArrangementAll" resultMap="arrangementMap">
+        SELECT * FROM arrangement;
+    </select>
+
+    <select id="queryArrangementById" resultMap="arrangementMap">
+        SELECT * FROM arrangement WHERE ExamId = #{examId};
+    </select>
+
+    <select id="queryArrangementByConditions" resultMap="arrangementMap">
+        SELECT * FROM arrangement
+        <where>
+            <if test="examId != null">
+                ExamId = #{examId}
+            </if>
+            <if test="courseId != null">
+                AND CourseId = #{courseId}
+            </if>
+            <if test="examDate != null">
+                AND NOT DATEDIFF(ExamDate, #{examDate})
+            </if>
+            <if test="startTime != null">
+                AND StartTime = #{startTime}
+            </if>
+            <if test="endTime != null">
+                AND EndTime = #{endTime}
+            </if>
+            <if test="address != null">
+                AND Address = #{address}
+            </if>
+        </where>
+    </select>
+
+    <insert id="addArrangement" parameterType="com.yfcod.management.model.Arrangement">
+        INSERT INTO arrangement (CourseId, ExamDate, StartTime, EndTime, Address)
+        VALUES (#{courseId}, #{examDate}, #{startTime}, #{endTime}, #{address})
+    </insert>
+
+    <update id="updateArrangement" parameterType="com.yfcod.management.model.Arrangement">
+        UPDATE arrangement
+        <set>
+            <if test="courseId != null">
+                CourseId = #{courseId},
+            </if>
+            <if test="examDate != null">
+                ExamDate = #{examDate},
+            </if>
+            <if test="startTime != null">
+                StartTime = #{startTime}
+            </if>
+            <if test="endTime != null">
+                EndTime = #{endTime}
+            </if>
+            <if test="address != null">
+                Address = #{address}
+            </if>
+        </set>
+        where ExamId = #{examId}
+    </update>
+
+    <delete id="deleteArrangementById">
+        DELETE FROM arrangement WHERE ExamId = #{examId}
+    </delete>
+</mapper>

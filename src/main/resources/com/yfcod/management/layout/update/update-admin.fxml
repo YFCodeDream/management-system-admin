@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+
+<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox layoutX="127.0" layoutY="81.0" AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="50.0">
+         <children>
+            <VBox layoutX="127.0" layoutY="81.0">
+               <children>
+                  <Label layoutX="127.0" layoutY="81.0" text="当前管理员号">
+                     <VBox.margin>
+                        <Insets bottom="50.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label layoutX="127.0" layoutY="150.0" text="密码">
+                     <VBox.margin>
+                        <Insets bottom="50.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label layoutX="127.0" layoutY="228.0" text="重复输入密码">
+                     <VBox.margin>
+                        <Insets bottom="50.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label text="手机号" />
+               </children>
+               <HBox.margin>
+                  <Insets right="50.0" />
+               </HBox.margin>
+            </VBox>
+            <VBox layoutX="255.0" layoutY="81.0">
+               <children>
+                  <Label layoutX="255.0" layoutY="81.0" text="Label">
+                     <VBox.margin>
+                        <Insets bottom="45.0" />
+                     </VBox.margin>
+                  </Label>
+                  <PasswordField>
+                     <VBox.margin>
+                        <Insets bottom="40.0" />
+                     </VBox.margin>
+                  </PasswordField>
+                  <PasswordField>
+                     <VBox.margin>
+                        <Insets bottom="40.0" />
+                     </VBox.margin>
+                  </PasswordField>
+                  <TextField />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <HBox layoutX="330.0" layoutY="332.0" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="80.0">
+         <children>
+            <Button layoutX="330.0" layoutY="332.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="70.0" text="清空">
+               <HBox.margin>
+                  <Insets right="50.0" />
+               </HBox.margin>
+            </Button>
+            <Button layoutX="445.0" layoutY="332.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="70.0" text="提交" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

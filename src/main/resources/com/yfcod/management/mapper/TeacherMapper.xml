@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yfcod.management.mapper.TeacherMapper">
+    <resultMap id="teacherMap" type="com.yfcod.management.model.Teacher">
+        <id column="TeacherId" property="teacherId"/>
+        <result column="TeacherName" property="teacherName"/>
+        <result column="Gender" property="gender"/>
+        <result column="Birthday" property="birthday"/>
+        <result column="Nation" property="nation"/>
+    </resultMap>
+
+    <select id="queryTeacherAll" resultMap="teacherMap">
+        SELECT * FROM teacher;
+    </select>
+
+    <select id="queryTeacherByConditions" resultMap="teacherMap">
+        SELECT * FROM teacher
+        <where>
+            <if test="teacherId != null">
+                TeacherId = #{teacherId}
+            </if>
+            <if test="teacherName != null">
+                AND TeacherName = #{teacherName}
+            </if>
+            <if test="gender != null">
+                AND Gender = #{gender}
+            </if>
+            <if test="birthday != null">
+                AND Birthday = #{birthday}
+            </if>
+            <if test="nation != null">
+                AND Nation = #{nation}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryTeacherById" resultMap="teacherMap">
+        SELECT * FROM teacher WHERE TeacherId = #{teacherId};
+    </select>
+
+    <insert id="addTeacher" parameterType="com.yfcod.management.model.Teacher">
+        INSERT INTO teacher (TeacherId, TeacherName, Gender, Birthday, Nation, Password)
+        VALUES (#{teacherId}, #{teacherName}, #{gender}, #{birthday}, #{nation}, #{Password});
+    </insert>
+
+    <update id="updateTeacher" parameterType="com.yfcod.management.model.Teacher">
+        UPDATE teacher
+        SET TeacherName = #{teacherName},
+            Gender = #{gender},
+            Birthday = #{birthday},
+            Nation = #{nation}
+        WHERE TeacherId = #{teacherId};
+    </update>
+
+    <delete id="deleteTeacherById">
+        DELETE FROM teacher WHERE TeacherId = #{teacherId};
+    </delete>
+</mapper>

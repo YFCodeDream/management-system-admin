@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yfcod.management.mapper.ScoreMapper">
+    <resultMap id="scoreMap" type="com.yfcod.management.model.Score">
+        <result column="ExamId" property="examId"/>
+        <result column="StudentId" property="studentId"/>
+        <result column="Score" property="score"/>
+    </resultMap>
+
+    <select id="queryScoreAll" resultMap="scoreMap">
+        SELECT * FROM score;
+    </select>
+
+    <select id="queryScoreByConditions" resultMap="scoreMap">
+        SELECT * FROM score
+        <where>
+            <if test="examId != null">
+                ExamId = #{examId}
+            </if>
+            <if test="studentId != null">
+                AND StudentId = #{studentId}
+            </if>
+            <if test="score != null">
+                AND Score = #{score}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryScoreByStudentId" resultMap="scoreMap">
+        SELECT * FROM score WHERE StudentId = #{studentId};
+    </select>
+
+    <select id="queryScoreByExamId" resultMap="scoreMap">
+        SELECT * FROM score WHERE ExamId = #{examId};
+    </select>
+
+    <insert id="addScore" parameterType="com.yfcod.management.model.Score">
+        INSERT INTO score (ExamId, StudentId, Score)
+        VALUES (#{examId}, #{studentId}, #{score});
+    </insert>
+
+    <update id="updateScore" parameterType="com.yfcod.management.model.Score">
+        UPDATE score
+        <set>
+            <if test="score != null">
+                Score = #{score}
+            </if>
+        </set>
+        where ExamId = #{examId} AND StudentId = #{studentId};
+    </update>
+
+    <delete id="deleteScore" parameterType="com.yfcod.management.model.Score">
+        DELETE FROM score WHERE StudentId = #{studentId} AND ExamId = #{examId};
+    </delete>
+</mapper>

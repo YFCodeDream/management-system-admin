@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yfcod.management.mapper.TimetableMapper">
+    <resultMap id="timetableMap" type="com.yfcod.management.model.Timetable">
+        <result column="StudentId" property="studentId"/>
+        <result column="CourseId" property="courseId"/>
+    </resultMap>
+
+    <select id="queryTimetableAll" resultMap="timetableMap">
+        SELECT * FROM timetable;
+    </select>
+
+    <select id="queryTimetableByConditions" resultMap="timetableMap">
+        SELECT * FROM timetable
+        <where>
+            <if test="studentId != null">
+                StudentId = #{studentId}
+            </if>
+            <if test="courseId != null">
+                AND CourseId = #{courseId}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryTimetableByStudentId" resultMap="timetableMap">
+        SELECT * FROM timetable
+        WHERE StudentId = #{studentId};
+    </select>
+</mapper>

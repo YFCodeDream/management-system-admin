@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.yfcod.management.controller.LoginController">
+   <children>
+      <Label layoutX="60.0" layoutY="52.0" text="欢迎登录厦门大学考试管理系统" textFill="#f8e5aa" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Label>
+      <VBox layoutX="105.0" layoutY="126.0" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="180.0">
+         <children>
+            <HBox layoutX="105.0" layoutY="126.0">
+               <children>
+                  <Label layoutX="105.0" layoutY="127.0" text="用户名" textFill="WHITE">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="30.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="adminIdField" layoutX="198.0" layoutY="126.0" prefHeight="30.0" prefWidth="427.0" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="40.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox layoutX="105.0" layoutY="193.0">
+               <children>
+                  <Label layoutX="105.0" layoutY="194.0" text="密码" textFill="WHITE">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="50.0" />
+                     </HBox.margin>
+                  </Label>
+                  <PasswordField fx:id="adminPwdField" prefHeight="30.0" prefWidth="428.0" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="40.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox fx:id="adminPhoneHBox">
+               <children>
+                  <Label layoutX="105.0" layoutY="194.0" text="电话" textFill="WHITE">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="50.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="adminPhoneField" prefHeight="30.0" prefWidth="428.0" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <Button fx:id="leftBtn" layoutX="226.0" layoutY="403.0" mnemonicParsing="false" onAction="#handleLeft" text="登录" AnchorPane.bottomAnchor="120.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="500.0">
+         <font>
+            <Font size="20.0" />
+         </font></Button>
+      <Button fx:id="rightBtn" layoutX="513.0" layoutY="403.0" mnemonicParsing="false" onAction="#handleRight" text="注册" AnchorPane.bottomAnchor="120.0" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="200.0">
+         <font>
+            <Font size="20.0" />
+         </font></Button>
+      <Label fx:id="registerInfoText" layoutX="211.0" layoutY="128.0" text="注册信息填写" textFill="#ee1414" AnchorPane.leftAnchor="210.0" AnchorPane.topAnchor="130.0" />
+      <ComboBox fx:id="identityBox" layoutX="486.0" layoutY="125.0" prefWidth="150.0" AnchorPane.rightAnchor="165.0" AnchorPane.topAnchor="125.0" />
+      <Label fx:id="registerInfoText1" layoutX="495.0" layoutY="495.0" text="该处为管理员注册" textFill="#ee1414" AnchorPane.bottomAnchor="85.0" AnchorPane.leftAnchor="500.0" />
+      <Label fx:id="registerInfoText11" layoutX="505.0" layoutY="505.0" text="须验证已知管理员身份" textFill="#ee1414" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="500.0" />
+      <Label fx:id="registerInfoText111" layoutX="515.0" layoutY="515.0" text="学生、教师不可注册" textFill="#ee1414" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="500.0" />
+   </children>
+</AnchorPane>

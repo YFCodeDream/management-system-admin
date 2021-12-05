@@ -1,0 +1,603 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="900.0" prefWidth="1350.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.yfcod.management.controller.TeacherController">
+   <children>
+      <VBox prefHeight="600.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <children>
+          <MenuBar VBox.vgrow="NEVER">
+               <menus>
+                  <Menu mnemonicParsing="false" text="管理员">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleLogout" text="修改密码" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleLogout" text="登出" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleQuit" text="退出" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="导出">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleExportCurrentData" text="导出当前数据" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleExportAllData" text="导出全部数据" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" onAction="#handleAbout" text="帮助">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="关于" />
+                     </items>
+                  </Menu>
+               </menus>
+          </MenuBar>
+          <SplitPane dividerPositions="0.15" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+            <items>
+              <AnchorPane>
+                <children>
+                        <Pane layoutX="14.0" layoutY="14.0" prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: #84bf96;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="考试管理" textAlignment="CENTER" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="15.0">
+                    <font>
+                      <Font size="20.0" fx:id="x1" />
+                    </font>
+                  </Label>
+                        <Pane fx:id="explorerPane" opacity="0.5" prefHeight="60.0" prefWidth="199.0" style="-fx-background-color: #cde6c7;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0" />
+                        <Label fx:id="statisticsExamLabel" onMouseClicked="#setStatisticsExamSelectedModel" text="考试统计" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="75.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Pane fx:id="explorerPane" layoutX="10.0" layoutY="10.0" opacity="0.5" prefHeight="60.0" prefWidth="199.0" style="-fx-background-color: #cde6c7;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="120.0" />
+                        <Label fx:id="manageExamLabel" layoutX="10.0" layoutY="10.0" onMouseClicked="#setManageExamSelectedModel" text="数据管理" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="135.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                </children>
+              </AnchorPane>
+                  <AnchorPane fx:id="teacherMainPane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <AnchorPane prefHeight="806.0" prefWidth="761.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <TabPane fx:id="manageExamTabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <tabs>
+                                  <Tab text="考试统计">
+                                    <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <Pane layoutX="77.0" layoutY="20.0" prefHeight="130.0" prefWidth="1143.0" style="-fx-background-color: #afb4db;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                      <Label text="您查询的考试科目是：" AnchorPane.rightAnchor="313.0" AnchorPane.topAnchor="80.0" />
+                                                      <Label fx:id="currentStatisticCourseName" layoutX="654.0" layoutY="142.0" text="Label" AnchorPane.leftAnchor="830.0" AnchorPane.topAnchor="80.0" />
+                                                      <HBox layoutX="688.0" layoutY="35.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="30.0">
+                                                         <children>
+                                                            <Label layoutX="689.0" layoutY="40.0" prefHeight="34.0" prefWidth="136.0" text="输入考试代号：" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="40.0">
+                                                               <font>
+                                                                  <Font size="18.0" />
+                                                               </font></Label>
+                                                            <TextField fx:id="statisticExamIdField" layoutX="799.0" layoutY="35.0" prefHeight="30.0" prefWidth="155.0" AnchorPane.rightAnchor="190.0" AnchorPane.topAnchor="35.0">
+                                                               <HBox.margin>
+                                                                  <Insets right="20.0" />
+                                                               </HBox.margin>
+                                                            </TextField>
+                                                            <Button layoutX="979.0" layoutY="35.0" mnemonicParsing="false" onAction="#handleStatisticExam" prefHeight="30.0" prefWidth="92.0" text="开始统计" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="35.0" />
+                                                         </children>
+                                                      </HBox>
+                                                      <PieChart fx:id="subsectionChart" layoutX="683.0" layoutY="300.0" prefHeight="450.0" prefWidth="500.0" title="分段人数统计" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="340.0" />
+                                                      <BarChart fx:id="allAverageChart" layoutX="41.0" layoutY="169.0" prefHeight="450.0" prefWidth="500.0" title="授课均分统计" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="340.0">
+                                                        <xAxis>
+                                                          <CategoryAxis fx:id="allAverageXAxis" side="BOTTOM" />
+                                                        </xAxis>
+                                                        <yAxis>
+                                                          <NumberAxis fx:id="allAverageYAxis" side="LEFT" />
+                                                        </yAxis>
+                                                      </BarChart>
+                                                      <Label layoutX="66.0" layoutY="65.0" text="您的考试数据统计" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0">
+                                                         <font>
+                                                            <Font size="20.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <HBox layoutX="24.0" layoutY="183.0" prefHeight="100.0" prefWidth="570.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="200.0">
+                                                         <children>
+                                                            <Pane fx:id="explorerPane" layoutX="61.0" layoutY="168.0" opacity="0.7" prefHeight="100.0" prefWidth="282.0" style="-fx-background-color: #7bbfea;" />
+                                                            <Pane fx:id="explorerPane" layoutX="365.0" layoutY="168.0" opacity="0.7" prefHeight="100.0" prefWidth="291.0" style="-fx-background-color: #faa755;" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox layoutX="570.0" layoutY="183.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0">
+                                                         <children>
+                                                            <Pane fx:id="explorerPane" layoutX="604.0" layoutY="168.0" opacity="0.7" prefHeight="100.0" prefWidth="289.0" style="-fx-background-color: #45b97c;" />
+                                                            <Pane fx:id="explorerPane" layoutX="908.0" layoutY="168.0" opacity="0.7" prefHeight="100.0" prefWidth="283.0" style="-fx-background-color: #d64f44;" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox prefHeight="44.0" prefWidth="278.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="225.0">
+                                                         <children>
+                                                            <VBox layoutX="70.0" layoutY="20.0">
+                                                               <children>
+                                                                  <Label layoutX="70.0" layoutY="20.0" text="最高均分：">
+                                                                     <font>
+                                                                        <Font size="16.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <Label layoutX="70.0" layoutY="58.0" text="课程名称：">
+                                                                     <font>
+                                                                        <Font size="16.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                               </children>
+                                                            </VBox>
+                                                            <VBox layoutX="161.0" layoutY="20.0">
+                                                               <children>
+                                                                  <Label fx:id="maxAverageScoreLabel" layoutX="161.0" layoutY="20.0" text="maxAverageScoreLabel">
+                                                                     <font>
+                                                                        <Font size="16.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <Label fx:id="maxScoreCourseIdLabel" layoutX="161.0" layoutY="58.0" text="maxScoreCourseIdLabel">
+                                                                     <font>
+                                                                        <Font size="16.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                               </children>
+                                                            </VBox>
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox prefHeight="44.0" prefWidth="278.0" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="225.0">
+                                                         <children>
+                                                            <VBox layoutX="70.0" layoutY="20.0">
+                                                               <children>
+                                                                  <Label layoutX="70.0" layoutY="20.0" text="最低均分：">
+                                                                     <font>
+                                                                        <Font size="16.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <Label layoutX="70.0" layoutY="58.0" text="课程名称：">
+                                                                     <font>
+                                                                        <Font size="16.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                               </children>
+                                                            </VBox>
+                                                            <VBox layoutX="161.0" layoutY="20.0">
+                                                               <children>
+                                                                  <Label fx:id="minAverageScoreLabel" layoutX="161.0" layoutY="20.0" text="minAverageScoreLabel">
+                                                                     <font>
+                                                                        <Font size="16.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <Label fx:id="minScoreCourseIdLabel" layoutX="161.0" layoutY="58.0" text="minScoreCourseIdLabel">
+                                                                     <font>
+                                                                        <Font size="16.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                               </children>
+                                                            </VBox>
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox prefHeight="44.0" prefWidth="278.0" AnchorPane.leftAnchor="580.0" AnchorPane.topAnchor="225.0">
+                                                         <children>
+                                                            <VBox layoutX="70.0" layoutY="20.0">
+                                                               <children>
+                                                                  <Label layoutX="70.0" layoutY="20.0" text="最高分：">
+                                                                     <font>
+                                                                        <Font size="16.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <Label layoutX="70.0" layoutY="58.0" text="学生学号：">
+                                                                     <font>
+                                                                        <Font size="16.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                               </children>
+                                                            </VBox>
+                                                            <VBox layoutX="161.0" layoutY="20.0">
+                                                               <children>
+                                                                  <Label fx:id="maxScoreLabel" layoutX="161.0" layoutY="20.0" text="maxScoreLabel">
+                                                                     <font>
+                                                                        <Font size="16.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <Label fx:id="maxScoreStudentIdLabel" layoutX="161.0" layoutY="58.0" text="maxScoreStudentIdLabel">
+                                                                     <font>
+                                                                        <Font size="16.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                               </children>
+                                                            </VBox>
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox prefHeight="44.0" prefWidth="278.0" AnchorPane.leftAnchor="870.0" AnchorPane.topAnchor="225.0">
+                                                         <children>
+                                                            <VBox layoutX="70.0" layoutY="20.0">
+                                                               <children>
+                                                                  <Label layoutX="70.0" layoutY="20.0" text="最低分：">
+                                                                     <font>
+                                                                        <Font size="16.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <Label layoutX="70.0" layoutY="58.0" text="学生学号：">
+                                                                     <font>
+                                                                        <Font size="16.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                               </children>
+                                                            </VBox>
+                                                            <VBox layoutX="161.0" layoutY="20.0">
+                                                               <children>
+                                                                  <Label fx:id="minScoreLabel" layoutX="161.0" layoutY="20.0" text="minScoreLabel">
+                                                                     <font>
+                                                                        <Font size="16.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <Label fx:id="minScoreStudentIdLabel" layoutX="161.0" layoutY="58.0" text="minScoreStudentIdLabel">
+                                                                     <font>
+                                                                        <Font size="16.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                               </children>
+                                                            </VBox>
+                                                         </children>
+                                                      </HBox>
+                                                      <Label layoutX="177.0" layoutY="152.0" text="您的授课已有考试数据统计">
+                                                         <font>
+                                                            <Font size="18.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label layoutX="785.0" layoutY="152.0" text="单次考试数据查询">
+                                                         <font>
+                                                            <Font size="18.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </AnchorPane>
+                                             </children>
+                                          </AnchorPane>
+                                    </content>
+                                  </Tab>
+                                  <Tab text="数据管理">
+                                    <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <TabPane fx:id="mainTablePane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <tabs>
+                                                      <Tab text="考试安排表">
+                                                         <content>
+                                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                               <children>
+                                                                  <SplitPane dividerPositions="0.65" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                     <items>
+                                                                        <TableView fx:id="arrangementTableView" prefHeight="200.0" prefWidth="200.0">
+                                                                           <columns>
+                                                                              <TableColumn fx:id="examIdArrangementColumn" prefWidth="91.0" text="考试编号" />
+                                                                              <TableColumn fx:id="courseIdArrangementColumn" prefWidth="122.0" text="课程编号" />
+                                                                              <TableColumn fx:id="examDateArrangementColumn" prefWidth="122.0" text="考试日期" />
+                                                                              <TableColumn fx:id="startTimeArrangementColumn" prefWidth="146.0" text="起始时间" />
+                                                                              <TableColumn fx:id="endTimeArrangementColumn" prefWidth="127.0" text="结束时间" />
+                                                                              <TableColumn fx:id="addressArrangementColumn" prefWidth="127.0" text="考试地点" />
+                                                                           </columns>
+                                                                        </TableView>
+                                                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                                                           <children>
+                                                                              <VBox layoutX="77.0" layoutY="50.0" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="50.0">
+                                                                                 <children>
+                                                                                    <Label layoutX="77.0" layoutY="50.0" text="考试编号">
+                                                                                       <VBox.margin>
+                                                                                          <Insets bottom="30.0" />
+                                                                                       </VBox.margin>
+                                                                                    </Label>
+                                                                                    <Label layoutX="77.0" layoutY="99.0" text="课程编号">
+                                                                                       <VBox.margin>
+                                                                                          <Insets bottom="30.0" />
+                                                                                       </VBox.margin>
+                                                                                    </Label>
+                                                                                    <Label layoutX="77.0" layoutY="145.0" text="考试日期" />
+                                                                                 </children>
+                                                                              </VBox>
+                                                                              <VBox layoutX="423.0" layoutY="50.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="50.0">
+                                                                                 <children>
+                                                                                    <Label layoutX="423.0" layoutY="50.0" text="起始时间">
+                                                                                       <VBox.margin>
+                                                                                          <Insets bottom="30.0" />
+                                                                                       </VBox.margin>
+                                                                                    </Label>
+                                                                                    <Label layoutX="423.0" layoutY="99.0" text="结束时间">
+                                                                                       <VBox.margin>
+                                                                                          <Insets bottom="30.0" />
+                                                                                       </VBox.margin>
+                                                                                    </Label>
+                                                                                    <Label layoutX="423.0" layoutY="145.0" text="考试地点" />
+                                                                                 </children>
+                                                                              </VBox>
+                                                                              <VBox layoutX="154.0" layoutY="45.0" AnchorPane.leftAnchor="155.0" AnchorPane.topAnchor="45.0">
+                                                                                 <children>
+                                                                                    <TextField fx:id="examIdArrangementField" layoutX="154.0" layoutY="45.0">
+                                                                                       <VBox.margin>
+                                                                                          <Insets bottom="20.0" />
+                                                                                       </VBox.margin>
+                                                                                    </TextField>
+                                                                                    <TextField fx:id="courseIdArrangementField" layoutX="154.0" layoutY="94.0">
+                                                                                       <VBox.margin>
+                                                                                          <Insets bottom="20.0" />
+                                                                                       </VBox.margin>
+                                                                                    </TextField>
+                                                                                    <TextField fx:id="examDateArrangementField" layoutX="154.0" layoutY="140.0" />
+                                                                                 </children>
+                                                                              </VBox>
+                                                                              <VBox layoutX="502.0" layoutY="45.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="45.0">
+                                                                                 <children>
+                                                                                    <TextField fx:id="startTimeArrangementField" layoutX="502.0" layoutY="45.0">
+                                                                                       <VBox.margin>
+                                                                                          <Insets bottom="20.0" />
+                                                                                       </VBox.margin>
+                                                                                    </TextField>
+                                                                                    <TextField fx:id="endTimeArrangementField" layoutX="502.0" layoutY="94.0">
+                                                                                       <VBox.margin>
+                                                                                          <Insets bottom="20.0" />
+                                                                                       </VBox.margin>
+                                                                                    </TextField>
+                                                                                    <HBox>
+                                                                                       <children>
+                                                                                          <ComboBox fx:id="addressArrangementBox" prefHeight="30.0" prefWidth="98.0" promptText="请选择">
+                                                                                             <HBox.margin>
+                                                                                                <Insets right="5.0" />
+                                                                                             </HBox.margin>
+                                                                                          </ComboBox>
+                                                                                          <Label text="号楼">
+                                                                                             <HBox.margin>
+                                                                                                <Insets right="5.0" />
+                                                                                             </HBox.margin>
+                                                                                          </Label>
+                                                                                          <TextField fx:id="addressArrangementField" prefHeight="30.0" prefWidth="64.0" />
+                                                                                       </children>
+                                                                                    </HBox>
+                                                                                 </children>
+                                                                              </VBox>
+                                                                              <HBox layoutX="523.0" layoutY="206.0" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="80.0">
+                                                                                 <children>
+                                                                                    <Button layoutX="523.0" layoutY="206.0" mnemonicParsing="false" onAction="#handleQueryArrangement" text="查询考试安排" AnchorPane.bottomAnchor="29.0" AnchorPane.rightAnchor="508.0">
+                                                                                       <HBox.margin>
+                                                                                          <Insets right="40.0" />
+                                                                                       </HBox.margin>
+                                                                                    </Button>
+                                                                                    <Button layoutX="665.0" layoutY="206.0" mnemonicParsing="false" onAction="#handleAddArrangement" text="添加考试安排">
+                                                                                       <HBox.margin>
+                                                                                          <Insets right="40.0" />
+                                                                                       </HBox.margin>
+                                                                                    </Button>
+                                                                                    <Button layoutX="811.0" layoutY="206.0" mnemonicParsing="false" onAction="#handleUpdateArrangement" text="修改考试安排">
+                                                                                       <HBox.margin>
+                                                                                          <Insets right="40.0" />
+                                                                                       </HBox.margin>
+                                                                                    </Button>
+                                                                                    <Button layoutX="951.0" layoutY="206.0" mnemonicParsing="false" onAction="#handleDeleteArrangement" text="删除考试安排" />
+                                                                                 </children>
+                                                                              </HBox>
+                                                                              <CheckBox fx:id="isOverdueBox" layoutX="80.0" layoutY="200.0" mnemonicParsing="false" text="已结束" AnchorPane.bottomAnchor="44.0" AnchorPane.rightAnchor="988.0" />
+                                                                              <Label layoutX="80.0" layoutY="14.0" text="考试编号为自动生成，添加考试安排时无需填写" textFill="RED" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="15.0" />
+                                                                           </children>
+                                                                        </AnchorPane>
+                                                                     </items>
+                                                                  </SplitPane>
+                                                               </children>
+                                                            </AnchorPane>
+                                                         </content>
+                                                      </Tab>
+                                                      <Tab text="成绩表">
+                                                         <content>
+                                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                               <children>
+                                                                  <SplitPane dividerPositions="0.7" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                     <items>
+                                                                        <TableView fx:id="scoreTableView" prefHeight="200.0" prefWidth="200.0">
+                                                                           <columns>
+                                                                              <TableColumn fx:id="examIdScoreColumn" prefWidth="75.0" text="考试编号" />
+                                                                              <TableColumn fx:id="studentIdScoreColumn" prefWidth="75.0" text="学生学号" />
+                                                                              <TableColumn fx:id="scoreScoreColumn" prefWidth="75.0" text="考试成绩" />
+                                                                           </columns>
+                                                                        </TableView>
+                                                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                                                           <children>
+                                                                              <VBox AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="50.0">
+                                                                                 <children>
+                                                                                    <Label layoutX="423.0" layoutY="50.0" text="考试编号">
+                                                                                       <VBox.margin>
+                                                                                          <Insets bottom="30.0" />
+                                                                                       </VBox.margin>
+                                                                                    </Label>
+                                                                                    <Label layoutX="423.0" layoutY="99.0" text="学生学号">
+                                                                                       <VBox.margin>
+                                                                                          <Insets bottom="30.0" />
+                                                                                       </VBox.margin>
+                                                                                    </Label>
+                                                                                    <Label layoutX="423.0" layoutY="145.0" text="考试成绩" />
+                                                                                 </children>
+                                                                              </VBox>
+                                                                              <VBox AnchorPane.leftAnchor="155.0" AnchorPane.topAnchor="45.0">
+                                                                                 <children>
+                                                                                    <TextField fx:id="examIdScoreField" layoutX="154.0" layoutY="45.0">
+                                                                                       <VBox.margin>
+                                                                                          <Insets bottom="20.0" />
+                                                                                       </VBox.margin>
+                                                                                    </TextField>
+                                                                                    <TextField fx:id="studentIdScoreField" layoutX="154.0" layoutY="94.0">
+                                                                                       <VBox.margin>
+                                                                                          <Insets bottom="20.0" />
+                                                                                       </VBox.margin>
+                                                                                    </TextField>
+                                                                                    <TextField fx:id="scoreScoreField" layoutX="154.0" layoutY="140.0" />
+                                                                                 </children>
+                                                                              </VBox>
+                                                                              <HBox layoutX="676.0" layoutY="160.0" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="50.0">
+                                                                                 <children>
+                                                                                    <Button layoutX="676.0" layoutY="160.0" mnemonicParsing="false" onAction="#handleQueryScore" text="查询成绩">
+                                                                                       <HBox.margin>
+                                                                                          <Insets right="40.0" />
+                                                                                       </HBox.margin>
+                                                                                    </Button>
+                                                                                    <Button layoutX="789.0" layoutY="160.0" mnemonicParsing="false" onAction="#handleAddScore" text="添加成绩" AnchorPane.bottomAnchor="36.0" AnchorPane.rightAnchor="272.0">
+                                                                                       <HBox.margin>
+                                                                                          <Insets right="40.0" />
+                                                                                       </HBox.margin>
+                                                                                    </Button>
+                                                                                    <Button layoutX="902.0" layoutY="160.0" mnemonicParsing="false" onAction="#handleUpdateScore" text="修改成绩">
+                                                                                       <HBox.margin>
+                                                                                          <Insets right="40.0" />
+                                                                                       </HBox.margin>
+                                                                                    </Button>
+                                                                                    <Button layoutX="1012.0" layoutY="160.0" mnemonicParsing="false" onAction="#handleDeleteScore" text="删除成绩" />
+                                                                                 </children>
+                                                                              </HBox>
+                                                                              <CheckBox fx:id="showAllDataBox" layoutX="651.0" layoutY="113.0" mnemonicParsing="false" text="显示全部数据" />
+                                                                           </children>
+                                                                        </AnchorPane>
+                                                                     </items>
+                                                                  </SplitPane>
+                                                               </children>
+                                                            </AnchorPane>
+                                                         </content>
+                                                      </Tab>
+                                                      <Tab text="课程表">
+                                                         <content>
+                                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                               <children>
+                                                                  <SplitPane dividerPositions="0.65" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                     <items>
+                                                                        <TableView fx:id="courseTableView" prefHeight="200.0" prefWidth="200.0">
+                                                                           <columns>
+                                                                              <TableColumn fx:id="courseIdCourseColumn" prefWidth="118.0" text="课程编号" />
+                                                                              <TableColumn fx:id="courseNameCourseColumn" prefWidth="104.0" text="课程名" />
+                                                                              <TableColumn fx:id="teacherIdCourseColumn" minWidth="3.0" prefWidth="103.0" text="教师编号" />
+                                                                              <TableColumn fx:id="addressCourseColumn" minWidth="0.0" prefWidth="96.0" text="授课地点" />
+                                                                              <TableColumn fx:id="courseDayCourseColumn" minWidth="0.0" prefWidth="134.0" text="授课日期" />
+                                                                              <TableColumn fx:id="courseTimePeriodCourseColumn" minWidth="1.0" prefWidth="117.0" text="授课时段" />
+                                                                           </columns>
+                                                                        </TableView>
+                                                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                                                           <children>
+                                                                              <VBox AnchorPane.leftAnchor="155.0" AnchorPane.topAnchor="45.0">
+                                                                                 <children>
+                                                                                    <TextField fx:id="courseIdCourseField" layoutX="502.0" layoutY="45.0">
+                                                                                       <VBox.margin>
+                                                                                          <Insets bottom="20.0" />
+                                                                                       </VBox.margin>
+                                                                                    </TextField>
+                                                                                    <TextField fx:id="courseNameCourseField" layoutX="502.0" layoutY="94.0">
+                                                                                       <VBox.margin>
+                                                                                          <Insets bottom="20.0" />
+                                                                                       </VBox.margin>
+                                                                                    </TextField>
+                                                                                    <TextField fx:id="teacherIdCourseField" layoutX="502.0" layoutY="140.0" />
+                                                                                 </children>
+                                                                              </VBox>
+                                                                              <VBox AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="45.0">
+                                                                                 <children>
+                                                                                    <HBox>
+                                                                                       <children>
+                                                                                          <ComboBox fx:id="addressCourseBox" prefHeight="30.0" prefWidth="98.0" promptText="请选择">
+                                                                                             <HBox.margin>
+                                                                                                <Insets right="5.0" />
+                                                                                             </HBox.margin>
+                                                                                          </ComboBox>
+                                                                                          <Label text="号楼">
+                                                                                             <HBox.margin>
+                                                                                                <Insets right="5.0" />
+                                                                                             </HBox.margin>
+                                                                                          </Label>
+                                                                                          <TextField fx:id="addressCourseField" prefHeight="30.0" prefWidth="64.0" />
+                                                                                       </children>
+                                                                                       <VBox.margin>
+                                                                                          <Insets bottom="20.0" />
+                                                                                       </VBox.margin>
+                                                                                    </HBox>
+                                                                                    <TextField fx:id="courseDayCourseField" layoutX="154.0" layoutY="94.0">
+                                                                                       <VBox.margin>
+                                                                                          <Insets bottom="20.0" />
+                                                                                       </VBox.margin>
+                                                                                    </TextField>
+                                                                                    <TextField fx:id="courseTimePeriodCourseField" layoutX="154.0" layoutY="140.0" />
+                                                                                 </children>
+                                                                              </VBox>
+                                                                              <VBox AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="50.0">
+                                                                                 <children>
+                                                                                    <Label layoutX="423.0" layoutY="50.0" text="课程编号">
+                                                                                       <VBox.margin>
+                                                                                          <Insets bottom="30.0" />
+                                                                                       </VBox.margin>
+                                                                                    </Label>
+                                                                                    <Label layoutX="423.0" layoutY="99.0" text="课程名">
+                                                                                       <VBox.margin>
+                                                                                          <Insets bottom="30.0" />
+                                                                                       </VBox.margin>
+                                                                                    </Label>
+                                                                                    <Label layoutX="423.0" layoutY="145.0" text="教师编号" />
+                                                                                 </children>
+                                                                              </VBox>
+                                                                              <VBox AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="50.0">
+                                                                                 <children>
+                                                                                    <Label layoutX="77.0" layoutY="50.0" text="授课地点">
+                                                                                       <VBox.margin>
+                                                                                          <Insets bottom="30.0" />
+                                                                                       </VBox.margin>
+                                                                                    </Label>
+                                                                                    <Label layoutX="77.0" layoutY="99.0" text="授课日期">
+                                                                                       <VBox.margin>
+                                                                                          <Insets bottom="30.0" />
+                                                                                       </VBox.margin>
+                                                                                    </Label>
+                                                                                    <Label layoutX="77.0" layoutY="145.0" text="授课时段" />
+                                                                                 </children>
+                                                                              </VBox>
+                                                                              <Button layoutX="651.0" layoutY="185.0" mnemonicParsing="false" onAction="#handleQueryCourse" text="查询课程" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="80.0" />
+                                                                              <CheckBox fx:id="showAllDataBox" layoutX="781.0" layoutY="200.0" mnemonicParsing="false" text="显示全部数据" />
+                                                                           </children>
+                                                                        </AnchorPane>
+                                                                     </items>
+                                                                  </SplitPane>
+                                                               </children>
+                                                            </AnchorPane>
+                                                         </content>
+                                                      </Tab>
+                                                   </tabs>
+                                                </TabPane>
+                                             </children>
+                                          </AnchorPane>
+                                    </content>
+                                  </Tab>
+                                </tabs>
+                              </TabPane>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+            </items>
+          </SplitPane>
+          <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
+            <children>
+              <Label maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="Left status" HBox.hgrow="ALWAYS">
+                <font>
+                  <Font size="11.0" fx:id="x3" />
+                </font>
+                <textFill>
+                  <Color blue="0.625" green="0.625" red="0.625" fx:id="x4" />
+                </textFill>
+              </Label>
+              <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
+              <Label font="$x3" maxWidth="-1.0" text="Right status" textFill="$x4" HBox.hgrow="NEVER" />
+            </children>
+            <padding>
+              <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+            </padding>
+          </HBox>
+        </children>
+        <stylesheets>
+          <URL value="@ComplexApplication.css" />
+        </stylesheets>
+      </VBox>
+   </children>
+</AnchorPane>

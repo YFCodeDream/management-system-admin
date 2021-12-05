@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yfcod.management.mapper.CourseMapper">
+    <resultMap id="courseMap" type="com.yfcod.management.model.Course">
+        <id column="CourseId" property="courseId"/>
+        <result column="CourseName" property="courseName"/>
+        <result column="TeacherId" property="teacherId"/>
+        <result column="Address" property="address"/>
+        <result column="CourseDay" property="courseDay"/>
+        <result column="CourseTimePeriod" property="courseTimePeriod"/>
+    </resultMap>
+
+    <select id="queryCourseAll" resultMap="courseMap">
+        SELECT * FROM course;
+    </select>
+
+    <select id="queryCourseById" resultMap="courseMap">
+        SELECT * FROM course WHERE CourseId = #{courseId};
+    </select>
+
+    <select id="queryCourseByConditions" resultMap="courseMap">
+        SELECT * FROM course
+        <where>
+            <if test="courseId != null">
+                CourseId = #{courseId}
+            </if>
+            <if test="courseName != null">
+                AND CourseName = #{courseName}
+            </if>
+            <if test="teacherId != null">
+                AND TeacherId = #{teacherId}
+            </if>
+            <if test="address != null">
+                AND Address = #{address}
+            </if>
+            <if test="courseDay != null">
+                AND CourseDay = #{courseDay}
+            </if>
+            <if test="courseTimePeriod != null">
+                AND CourseTimePeriod = #{courseTimePeriod}
+            </if>
+        </where>
+    </select>
+
+    <insert id="addCourse" parameterType="com.yfcod.management.model.Course">
+        INSERT INTO course (CourseName, TeacherId, Address, CourseDay, CourseTimePeriod)
+        VALUES (#{courseName}, #{teacherId}, #{address}, #{courseDay}, #{courseTimePeriod})
+    </insert>
+
+    <update id="updateCourse" parameterType="com.yfcod.management.model.Course">
+        UPDATE course
+        SET CourseName = #{courseName},
+            TeacherId = #{teacherId},
+            Address = #{address},
+            CourseDay = #{courseDay},
+            CourseTimePeriod = #{courseTimePeriod}
+        WHERE CourseId = #{courseId};
+    </update>
+
+    <delete id="deleteCourseById">
+        DELETE FROM course WHERE CourseId = #{courseId};
+    </delete>
+</mapper>

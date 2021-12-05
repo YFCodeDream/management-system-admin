@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yfcod.management.mapper.AdminMapper">
+    <resultMap id="adminMap" type="com.yfcod.management.model.Admin">
+        <id column="AdminId" property="adminId"/>
+        <result column="AdminPwd" property="adminPwd"/>
+        <result column="AdminPhone" property="adminPhone"/>
+    </resultMap>
+
+    <select id="queryAdminAll" resultMap="adminMap">
+        SELECT * FROM `admin`;
+    </select>
+
+    <select id="queryAdminById" resultMap="adminMap">
+        SELECT * FROM `admin` WHERE AdminId = #{adminId};
+    </select>
+
+    <update id="updateAdmin" parameterType="com.yfcod.management.model.Admin">
+        UPDATE `admin`
+        SET AdminPwd = #{adminPwd},
+            AdminPhone = #{adminPhone}
+        WHERE AdminId = #{adminId};
+    </update>
+
+    <insert id="addAdmin" parameterType="com.yfcod.management.model.Admin">
+        INSERT INTO `admin` VALUES (#{adminId}, #{adminPwd}, #{adminPhone});
+    </insert>
+
+    <delete id="deleteAdminById">
+        DELETE FROM `admin` WHERE AdminId = #{adminId};
+    </delete>
+</mapper>
