@@ -314,67 +314,18 @@ public class AdminController extends BaseController{
 
     @FXML
     private void handleQueryArrangement() {
-        try {
-            Integer examId = examIdArrangementField.getText().equals("") ?
-                    null : Integer.parseInt(examIdArrangementField.getText());
-            Integer courseId = courseIdArrangementField.getText().equals("") ?
-                    null: Integer.parseInt(courseIdArrangementField.getText());
-            Date examDate = examDateArrangementField.getText().equals("") ?
-                    null: Date.valueOf(examDateArrangementField.getText());
-            Time startTime = startTimeArrangementField.getText().equals("") ?
-                    null : Time.valueOf(startTimeArrangementField.getText());
-            Time endTime = endTimeArrangementField.getText().equals("") ?
-                    null: Time.valueOf(endTimeArrangementField.getText());
-            String addressClassNum = addressArrangementField.getText().equals("") ?
-                    null: addressArrangementField.getText();
-            String addressBuildingNum = addressArrangementBox.getValue();
-
-            String address = null;
-            if (addressClassNum != null && !addressBuildingNum.equals("请选择")) {
-                address = (addressBuildingNum + "号楼" + addressClassNum);
-            }
-
-            List<Arrangement> arrangements = ArrangementDao.queryArrangementByConditions(
-                    new Arrangement(
-                            examId,
-                            courseId,
-                            examDate,
-                            startTime,
-                            endTime,
-                            address
-                    )
-            );
-
-            this.arrangements.clear();
-
-            ArrayList<Arrangement> arrangementList = new ArrayList<>();
-            if (isOverdueBox.isSelected()) {
-                for (Arrangement arrangement : arrangements) {
-                    if (arrangement.getExamDate().before(
-                            Date.valueOf(String.valueOf(new Date(System.currentTimeMillis()))))
-                    ) {
-                        arrangementList.add(arrangement);
-                    }
-                    if (arrangement.getExamDate().equals(
-                            Date.valueOf(String.valueOf(new Date(System.currentTimeMillis()))))
-                    ) {
-                        if (arrangement.getEndTime().before(
-                                Time.valueOf(String.valueOf(new Time(System.currentTimeMillis())))
-                        ))
-                            arrangementList.add(arrangement);
-                    }
-                }
-                this.arrangements.addAll(arrangementList);
-            } else {
-                this.arrangements.addAll(arrangements);
-            }
-
-            arrangementTableView.setItems(this.arrangements);
-        } catch (IllegalArgumentException e) {
-            showAlert(primaryStage,
-                    "请输入正确的数值",
-                    "error");
-        }
+        queryArrangement(examIdArrangementField,
+                courseIdArrangementField,
+                examDateArrangementField,
+                startTimeArrangementField,
+                endTimeArrangementField,
+                addressArrangementField,
+                addressArrangementBox,
+                this.arrangements,
+                isOverdueBox,
+                arrangementTableView,
+                primaryStage,
+                null);
     }
 
     @FXML
@@ -747,14 +698,6 @@ public class AdminController extends BaseController{
         setColumnPrefWidth(timetableTableView);
     }
 
-    private <T> void setColumnPrefWidth(TableView<T> tableView) {
-        int columnSize = tableView.getColumns().size();
-        for (int i = 0; i < columnSize; i++) {
-            tableView.getColumns().get(i).prefWidthProperty()
-                    .bind(tableView.widthProperty().multiply(1.0 / columnSize));
-        }
-    }
-
     private void setCellValueFactory() {
         setArrangementCellValueFactory();
         setCourseCellValueFactory();
@@ -765,33 +708,11 @@ public class AdminController extends BaseController{
     }
 
     private void setArrangementCellValueFactory() {
-        examIdArrangementColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getExamId().toString()));
-        courseIdArrangementColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getCourseId().toString()));
-        examDateArrangementColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getExamDate().toString()));
-        startTimeArrangementColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getStartTime().toString()));
-        endTimeArrangementColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getEndTime().toString()));
-        addressArrangementColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getAddress()));
+        arrangementCellValueFactory(examIdArrangementColumn, courseIdArrangementColumn, examDateArrangementColumn, startTimeArrangementColumn, endTimeArrangementColumn, addressArrangementColumn);
     }
 
     private void setCourseCellValueFactory() {
-        courseIdCourseColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getCourseId().toString()));
-        courseNameCourseColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getCourseName()));
-        teacherIdCourseColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getTeacherId()));
-        addressCourseColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getAddress()));
-        courseDayCourseColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getCourseDay().toString()));
-        courseTimePeriodCourseColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getCourseTimePeriod().toString()));
+        courseCellValueFactory(courseIdCourseColumn, courseNameCourseColumn, teacherIdCourseColumn, addressCourseColumn, courseDayCourseColumn, courseTimePeriodCourseColumn);
     }
 
     private void setScoreCellValueFactory() {

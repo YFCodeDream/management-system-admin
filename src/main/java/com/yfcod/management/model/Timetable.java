@@ -7,6 +7,10 @@ public class Timetable {
     private String studentId;
     private Integer courseId;
 
+    public Timetable(String studentId) {
+        this.studentId = studentId;
+    }
+
     public Timetable(String studentId, Integer courseId) {
         this.studentId = studentId;
         this.courseId = courseId;

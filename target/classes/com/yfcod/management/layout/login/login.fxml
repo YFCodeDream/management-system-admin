@@ -13,7 +13,7 @@
    <children>
       <Label layoutX="60.0" layoutY="52.0" text="欢迎登录厦门大学考试管理系统" textFill="#f8e5aa" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0">
          <font>
-            <Font size="35.0" />
+            <Font name="Microsoft YaHei" size="32.0" />
          </font>
       </Label>
       <VBox layoutX="105.0" layoutY="126.0" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="180.0">

@@ -11,6 +11,10 @@ public class Course {
     private Integer courseDay;
     private Integer courseTimePeriod;
 
+    public Course(Integer courseId) {
+        this.courseId = courseId;
+    }
+
     public Course(String teacherId) {
         this.teacherId = teacherId;
     }

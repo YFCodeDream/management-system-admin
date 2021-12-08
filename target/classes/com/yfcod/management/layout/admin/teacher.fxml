@@ -44,21 +44,25 @@
                         <Pane layoutX="14.0" layoutY="14.0" prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: #84bf96;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                   <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="考试管理" textAlignment="CENTER" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="15.0">
                     <font>
-                      <Font size="20.0" fx:id="x1" />
+                      <Font name="System Bold" size="20.0" fx:id="x1" />
                     </font>
                   </Label>
-                        <Pane fx:id="explorerPane" opacity="0.5" prefHeight="60.0" prefWidth="199.0" style="-fx-background-color: #cde6c7;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0" />
-                        <Label fx:id="statisticsExamLabel" onMouseClicked="#setStatisticsExamSelectedModel" text="考试统计" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="75.0">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <Pane fx:id="explorerPane" layoutX="10.0" layoutY="10.0" opacity="0.5" prefHeight="60.0" prefWidth="199.0" style="-fx-background-color: #cde6c7;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="120.0" />
-                        <Label fx:id="manageExamLabel" layoutX="10.0" layoutY="10.0" onMouseClicked="#setManageExamSelectedModel" text="数据管理" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="135.0">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
+                        <Pane fx:id="statisticsExamPane" onMouseClicked="#setStatisticsExamSelectedModel" opacity="0.5" prefHeight="60.0" prefWidth="199.0" style="-fx-background-color: #cde6c7;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
+                           <children>
+                              <Label fx:id="statisticsExamLabel" layoutX="64.0" layoutY="18.0" text="考试统计">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children></Pane>
+                        <Pane fx:id="manageExamPane" layoutX="10.0" layoutY="10.0" onMouseClicked="#setManageExamSelectedModel" opacity="0.5" prefHeight="60.0" prefWidth="199.0" style="-fx-background-color: #cde6c7;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="120.0">
+                           <children>
+                              <Label fx:id="manageExamLabel" layoutX="64.0" layoutY="18.0" text="数据管理">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children></Pane>
                 </children>
               </AnchorPane>
                   <AnchorPane fx:id="teacherMainPane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -99,9 +103,9 @@
                                                           <NumberAxis fx:id="allAverageYAxis" side="LEFT" />
                                                         </yAxis>
                                                       </BarChart>
-                                                      <Label layoutX="66.0" layoutY="65.0" text="您的考试数据统计" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0">
+                                                      <Label layoutX="66.0" layoutY="65.0" text="您的考试数据统计" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="45.0">
                                                          <font>
-                                                            <Font size="20.0" />
+                                                            <Font name="System Bold" size="24.0" />
                                                          </font>
                                                       </Label>
                                                       <HBox layoutX="24.0" layoutY="183.0" prefHeight="100.0" prefWidth="570.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="200.0">

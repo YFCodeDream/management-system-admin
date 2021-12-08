@@ -42,6 +42,12 @@ public class StudentDao {
         return students.get();
     }
 
+    public static Student queryStudentById(String studentId) {
+        AtomicReference<Student> student = new AtomicReference<>();
+        studentMapperOperation(studentMapper -> student.set(studentMapper.queryStudentById(studentId)), false);
+        return student.get();
+    }
+
     public static List<Student> queryStudentByConditions(Student student) {
         AtomicReference<List<Student>> students = new AtomicReference<>();
         studentMapperOperation(studentMapper ->

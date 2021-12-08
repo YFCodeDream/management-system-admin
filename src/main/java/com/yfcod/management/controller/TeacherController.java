@@ -1,11 +1,16 @@
 package com.yfcod.management.controller;
 
 import com.yfcod.management.Main;
-import com.yfcod.management.dao.*;
-import com.yfcod.management.model.*;
+import com.yfcod.management.dao.ArrangementDao;
+import com.yfcod.management.dao.CourseDao;
+import com.yfcod.management.dao.ScoreDao;
+import com.yfcod.management.dao.TimetableDao;
+import com.yfcod.management.model.Arrangement;
+import com.yfcod.management.model.Course;
+import com.yfcod.management.model.Score;
+import com.yfcod.management.model.Timetable;
 import com.yfcod.management.util.GenerateBarChartUtil;
 import com.yfcod.management.util.GeneratePieChartUtil;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,6 +19,7 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -28,7 +34,6 @@ import java.util.Objects;
 import static com.yfcod.management.util.ExportExcelUtil.exportExcel;
 import static com.yfcod.management.util.GenerateAlertUtil.showAlert;
 
-@SuppressWarnings("DuplicatedCode")
 public class TeacherController extends BaseController{
     /**
      * 考试安排表
@@ -123,7 +128,7 @@ public class TeacherController extends BaseController{
     private ComboBox<String> addressCourseBox;
 
     /**
-     *
+     * 图表区
      */
     @FXML
     private BarChart<String, Number> allAverageChart;
@@ -156,11 +161,25 @@ public class TeacherController extends BaseController{
     @FXML
     private TextField statisticExamIdField;
 
+    /**
+     * TabPane管理
+     */
     @FXML
     private TabPane manageExamTabPane;
     @FXML
     private TabPane mainTablePane;
 
+    /**
+     * 左侧导航栏
+     */
+    @FXML
+    private Pane statisticsExamPane;
+    @FXML
+    private Pane manageExamPane;
+
+    /**
+     * 当前教师号
+     */
     private String currentTeacherId;
 
     /**
@@ -197,67 +216,18 @@ public class TeacherController extends BaseController{
 
     @FXML
     private void handleQueryArrangement() {
-        try {
-            Integer examId = examIdArrangementField.getText().equals("") ?
-                    null : Integer.parseInt(examIdArrangementField.getText());
-            Integer courseId = courseIdArrangementField.getText().equals("") ?
-                    null: Integer.parseInt(courseIdArrangementField.getText());
-            Date examDate = examDateArrangementField.getText().equals("") ?
-                    null: Date.valueOf(examDateArrangementField.getText());
-            Time startTime = startTimeArrangementField.getText().equals("") ?
-                    null : Time.valueOf(startTimeArrangementField.getText());
-            Time endTime = endTimeArrangementField.getText().equals("") ?
-                    null: Time.valueOf(endTimeArrangementField.getText());
-            String addressClassNum = addressArrangementField.getText().equals("") ?
-                    null: addressArrangementField.getText();
-            String addressBuildingNum = addressArrangementBox.getValue();
-
-            String address = null;
-            if (addressClassNum != null && !addressBuildingNum.equals("请选择")) {
-                address = (addressBuildingNum + "号楼" + addressClassNum);
-            }
-
-            List<Arrangement> arrangements = ArrangementDao.queryArrangementByConditions(
-                    new Arrangement(
-                            examId,
-                            courseId,
-                            examDate,
-                            startTime,
-                            endTime,
-                            address
-                    )
-            );
-
-            this.arrangements.clear();
-
-            ArrayList<Arrangement> arrangementList = new ArrayList<>();
-            if (isOverdueBox.isSelected()) {
-                for (Arrangement arrangement : arrangements) {
-                    if (arrangement.getExamDate().before(
-                            Date.valueOf(String.valueOf(new Date(System.currentTimeMillis()))))
-                    ) {
-                        arrangementList.add(arrangement);
-                    }
-                    if (arrangement.getExamDate().equals(
-                            Date.valueOf(String.valueOf(new Date(System.currentTimeMillis()))))
-                    ) {
-                        if (arrangement.getEndTime().before(
-                                Time.valueOf(String.valueOf(new Time(System.currentTimeMillis())))
-                        ))
-                            arrangementList.add(arrangement);
-                    }
-                }
-                this.arrangements.addAll(arrangementList);
-            } else {
-                this.arrangements.addAll(arrangements);
-            }
-
-            arrangementTableView.setItems(this.arrangements);
-        } catch (IllegalArgumentException e) {
-            showAlert(primaryStage,
-                    "请输入正确的数值",
-                    "error");
-        }
+        queryArrangement(examIdArrangementField,
+                courseIdArrangementField,
+                examDateArrangementField,
+                startTimeArrangementField,
+                endTimeArrangementField,
+                addressArrangementField,
+                addressArrangementBox,
+                this.arrangements,
+                isOverdueBox,
+                arrangementTableView,
+                primaryStage,
+                null);
     }
 
     @FXML
@@ -719,9 +689,7 @@ public class TeacherController extends BaseController{
 
     @FXML
     private void handleAbout() {
-        showAlert(this.primaryStage,
-                "关于\n厦门大学考试管理系统\nV1.0.0\n作者：YFCodeDream",
-                "information");
+        showAbout(this.primaryStage);
     }
 
     private void showExportDialogAndSave(boolean isCurrent) {
@@ -978,14 +946,6 @@ public class TeacherController extends BaseController{
         setColumnPrefWidth(scoreTableView);
     }
 
-    private <T> void setColumnPrefWidth(TableView<T> tableView) {
-        int columnSize = tableView.getColumns().size();
-        for (int i = 0; i < columnSize; i++) {
-            tableView.getColumns().get(i).prefWidthProperty()
-                    .bind(tableView.widthProperty().multiply(1.0 / columnSize));
-        }
-    }
-
     @FXML
     private void setStatisticsExamSelectedModel() {
         manageExamTabPane.getSelectionModel().select(0);
@@ -1003,6 +963,17 @@ public class TeacherController extends BaseController{
                 fillScoreSelectedData(newValue));
         courseTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
                 fillCourseSelectedData(newValue));
+
+        manageExamTabPane.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
+            int selectedIndex = manageExamTabPane.getSelectionModel().getSelectedIndex();
+            if (selectedIndex == 0) {
+                statisticsExamPane.setOpacity(1);
+                manageExamPane.setOpacity(0.5);
+            } else if (selectedIndex == 1) {
+                statisticsExamPane.setOpacity(0.5);
+                manageExamPane.setOpacity(1);
+            }
+        }));
     }
 
     private void fillArrangementSelectedData(Arrangement selectedArrangement) {
@@ -1058,42 +1029,27 @@ public class TeacherController extends BaseController{
     }
 
     private void setArrangementCellValueFactory() {
-        examIdArrangementColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getExamId().toString()));
-        courseIdArrangementColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getCourseId().toString()));
-        examDateArrangementColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getExamDate().toString()));
-        startTimeArrangementColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getStartTime().toString()));
-        endTimeArrangementColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getEndTime().toString()));
-        addressArrangementColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getAddress()));
+        arrangementCellValueFactory(examIdArrangementColumn,
+                courseIdArrangementColumn,
+                examDateArrangementColumn,
+                startTimeArrangementColumn,
+                endTimeArrangementColumn,
+                addressArrangementColumn);
     }
 
     private void setCourseCellValueFactory() {
-        courseIdCourseColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getCourseId().toString()));
-        courseNameCourseColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getCourseName()));
-        teacherIdCourseColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getTeacherId()));
-        addressCourseColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getAddress()));
-        courseDayCourseColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getCourseDay().toString()));
-        courseTimePeriodCourseColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getCourseTimePeriod().toString()));
+        courseCellValueFactory(courseIdCourseColumn,
+                courseNameCourseColumn,
+                teacherIdCourseColumn,
+                addressCourseColumn,
+                courseDayCourseColumn,
+                courseTimePeriodCourseColumn);
     }
 
     private void setScoreCellValueFactory() {
-        examIdScoreColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getExamId().toString()));
-        studentIdScoreColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getStudentId()));
-        scoreScoreColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getScore().toString()));
+        scoreCellValueFactory(examIdScoreColumn,
+                studentIdScoreColumn,
+                scoreScoreColumn);
     }
 
     public void setCurrentTeacherId(String currentTeacherId) {

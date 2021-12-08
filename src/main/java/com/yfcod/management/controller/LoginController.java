@@ -2,8 +2,10 @@ package com.yfcod.management.controller;
 
 import com.yfcod.management.Main;
 import com.yfcod.management.dao.AdminDao;
+import com.yfcod.management.dao.StudentDao;
 import com.yfcod.management.dao.TeacherDao;
 import com.yfcod.management.model.Admin;
+import com.yfcod.management.model.Student;
 import com.yfcod.management.model.Teacher;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -53,7 +55,6 @@ public class LoginController extends BaseController{
                 "系统管理员"
         );
         identityBox.getSelectionModel().select(0);
-        currentIdentity = "学生";
         rightBtn.setDisable(true);
 
         identityBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
@@ -64,30 +65,58 @@ public class LoginController extends BaseController{
     private void handleLeft() {
         if (leftBtn.getText().equals("登录")) {
             if (identityBox.getValue().equals("系统管理员")) {
-                if (checkAdminInvalid()) return;
-                showAlert("登录成功", "information");
-                currentIdentity = "系统管理员";
-                this.main.setCurrentIdentity(currentIdentity);
-
-                this.main.showAdminOverview();
-                this.dialogStage.setTitle("厦门大学考试管理系统 - 用户：" + adminId);
-                this.dialogStage.centerOnScreen();
+                if (loginToAdmin()) return;
             }
+
             if (identityBox.getValue().equals("教师")) {
-                if (checkTeacherInvalid()) return;
-                showAlert("登录成功", "information");
-                currentIdentity = "教师";
+                if (loginToTeacher()) return;
+            }
 
-                this.main.setCurrentUserId(adminId);
-                this.main.setCurrentIdentity(currentIdentity);
-
-                this.main.showTeacherOverview();
-                this.dialogStage.setTitle("厦门大学考试管理系统 - 用户：" + adminId);
-                this.dialogStage.centerOnScreen();
+            if (identityBox.getValue().equals("学生")) {
+                loginToStudent();
             }
         } else if (leftBtn.getText().equals("清空")) {
             clearTextField();
         }
+    }
+
+    private boolean loginToAdmin() {
+        if (checkAdminInvalid()) return true;
+        showAlert("登录成功", "information");
+        currentIdentity = "系统管理员";
+        this.main.setCurrentIdentity(currentIdentity);
+
+        this.main.showAdminOverview();
+        this.dialogStage.setTitle("厦门大学考试管理系统 - 管理员号：" + adminId);
+        this.dialogStage.centerOnScreen();
+        return false;
+    }
+
+    private boolean loginToTeacher() {
+        if (checkTeacherInvalid()) return true;
+        showAlert("登录成功", "information");
+        currentIdentity = "教师";
+
+        this.main.setCurrentUserId(adminId);
+        this.main.setCurrentIdentity(currentIdentity);
+
+        this.main.showTeacherOverview();
+        this.dialogStage.setTitle("厦门大学考试管理系统 - 教师号：" + adminId);
+        this.dialogStage.centerOnScreen();
+        return false;
+    }
+
+    private void loginToStudent() {
+        if (checkStudentInvalid()) return;
+        showAlert("登录成功", "information");
+        currentIdentity = "学生";
+
+        this.main.setCurrentUserId(adminId);
+        this.main.setCurrentIdentity(currentIdentity);
+
+        this.main.showStudentOverview();
+        this.dialogStage.setTitle("厦门大学考试管理系统 - 学号：" + adminId);
+        this.dialogStage.centerOnScreen();
     }
 
     @FXML
@@ -158,6 +187,21 @@ public class LoginController extends BaseController{
             return true;
         }
         if (!Objects.equals(teacher.getPassword(), this.adminPwd)) {
+            showAlert("密码错误，请重新输入", "warning");
+            return true;
+        }
+        return false;
+    }
+
+    private boolean checkStudentInvalid() {
+        this.adminId = adminIdField.getText();
+        this.adminPwd = adminPwdField.getText();
+        Student student = StudentDao.queryStudentById(adminId);
+        if (student == null) {
+            showAlert("未查找到该学生", "warning");
+            return true;
+        }
+        if (!Objects.equals(student.getPassword(), this.adminPwd)) {
             showAlert("密码错误，请重新输入", "warning");
             return true;
         }

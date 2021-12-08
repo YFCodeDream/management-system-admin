@@ -2,6 +2,7 @@ package com.yfcod.management;
 
 import com.yfcod.management.controller.BaseController;
 import com.yfcod.management.controller.LoginController;
+import com.yfcod.management.controller.StudentController;
 import com.yfcod.management.controller.TeacherController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -35,6 +36,11 @@ public class Main extends Application {
 
     public void showTeacherOverview() {
         loadOverview("layout/admin/teacher.fxml", false);
+        primaryStage.setResizable(false);
+    }
+
+    public void showStudentOverview() {
+        loadOverview("layout/admin/student.fxml", false);
         primaryStage.setResizable(false);
     }
 
@@ -73,10 +79,16 @@ public class Main extends Application {
                     LoginController loginController = loader.getController();
                     currentIdentity = loginController.getCurrentIdentity();
                 }
-                if (currentIdentity.equals("教师")) {
-                    ((TeacherController) controller).setCurrentTeacherId(currentUserId);
-                    ((TeacherController) controller).showAllAverageChart();
-                    ((TeacherController) controller).setAllTableData();
+                if (currentIdentity != null) {
+                    if (currentIdentity.equals("教师")) {
+                        ((TeacherController) controller).setCurrentTeacherId(currentUserId);
+                        ((TeacherController) controller).showAllAverageChart();
+                        ((TeacherController) controller).setAllTableData();
+                    }
+                    if (currentIdentity.equals("学生")) {
+                        ((StudentController) controller).setCurrentStudentId(currentUserId);
+                        ((StudentController) controller).setAllTableData();
+                    }
                 }
             }
 
