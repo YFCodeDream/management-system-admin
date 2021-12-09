@@ -19,6 +19,7 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.StackedBarChart;
 import javafx.scene.control.*;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -28,6 +29,7 @@ import java.util.*;
 import static com.yfcod.management.util.ExportExcelUtil.exportExcel;
 import static com.yfcod.management.util.GenerateAlertUtil.showAlert;
 
+@SuppressWarnings("DuplicatedCode")
 public class StudentController extends BaseController {
     /**
      * 考试安排表
@@ -146,6 +148,13 @@ public class StudentController extends BaseController {
     private Label minScoreCourseIdLabel;
 
     @FXML
+    private Pane navManageExamPane;
+    @FXML
+    private Pane navQueryScorePane;
+    @FXML
+    private Pane navQueryCoursesPane;
+
+    @FXML
     private TabPane mainTablePane;
 
     /**
@@ -165,6 +174,7 @@ public class StudentController extends BaseController {
         setCellValueFactory();
         setColumnsPrefWidth();
         setAllComboBox();
+        setTableViewSelectedModel();
     }
 
     @FXML
@@ -386,7 +396,8 @@ public class StudentController extends BaseController {
         minScoreLabel.setText(String.valueOf(minScore));
     }
 
-    private void showCurrentScoresChart(List<String> currentCourseNames, List<Number> currentStudentScores) {
+    private void showCurrentScoresChart(List<String> currentCourseNames,
+                                        List<Number> currentStudentScores) {
         GenerateBarChartUtil.setXYAxis(
                 scoreXAxis,
                 scoreYAxis,
@@ -402,7 +413,8 @@ public class StudentController extends BaseController {
         );
     }
 
-    private void showRankRateChart(List<String> currentCourseNames, List<Number> currentRankRate) {
+    private void showRankRateChart(List<String> currentCourseNames,
+                                   List<Number> currentRankRate) {
         List<GenerateStackedBarChartUtil.BinaryTuple<String, Number>> binaryTuples = new ArrayList<>();
         List<GenerateStackedBarChartUtil.BinaryTuple<String, Number>> totalBinaryTuples = new ArrayList<>();
         assert currentCourseNames.size() == currentRankRate.size();
@@ -549,6 +561,61 @@ public class StudentController extends BaseController {
         addressArrangementBox.getItems().addAll("一", "四");
         addressCourseBox.getItems().addAll("一", "四");
         showAllDataBox.setSelected(true);
+    }
+
+    private void setTableViewSelectedModel() {
+        arrangementTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
+                fillArrangementSelectedData(newValue));
+        scoreTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
+                fillScoreSelectedData(newValue));
+        courseTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
+                fillCourseSelectedData(newValue));
+
+        mainTablePane.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
+            int selectedIndex = mainTablePane.getSelectionModel().getSelectedIndex();
+            if (selectedIndex == 0) {
+                navManageExamPane.setOpacity(1);
+                navQueryScorePane.setOpacity(0.5);
+                navQueryCoursesPane.setOpacity(0.5);
+            } else if (selectedIndex == 1) {
+                navManageExamPane.setOpacity(0.5);
+                navQueryScorePane.setOpacity(1);
+                navQueryCoursesPane.setOpacity(0.5);
+            } else if (selectedIndex == 2) {
+                navManageExamPane.setOpacity(0.5);
+                navQueryScorePane.setOpacity(0.5);
+                navQueryCoursesPane.setOpacity(1);
+            }
+        }));
+    }
+
+    private void fillArrangementSelectedData(Arrangement selectedArrangement) {
+        baseArrangementSelectedData(selectedArrangement, examIdArrangementField, courseIdArrangementField, examDateArrangementField, startTimeArrangementField, endTimeArrangementField, addressArrangementField, addressArrangementBox);
+    }
+
+    private void fillScoreSelectedData(Score selectedScore) {
+        examIdScoreField.setText(selectedScore == null ? "" : String.valueOf(selectedScore.getExamId()));
+        studentIdScoreField.setText(selectedScore == null ? "" : selectedScore.getStudentId());
+        scoreScoreField.setText(selectedScore == null ? "" : String.valueOf(selectedScore.getScore()));
+    }
+
+    private void fillCourseSelectedData(Course selectedCourse) {
+        baseCourseSelectedData(selectedCourse, courseIdCourseField, courseNameCourseField, addressCourseField, addressCourseBox, courseDayCourseField, courseTimePeriodCourseField);
+    }
+
+    @FXML
+    private void setManageExamSelectedModel() {
+        mainTablePane.getSelectionModel().select(0);
+    }
+
+    @FXML
+    private void setQueryScoreSelectedModel() {
+        mainTablePane.getSelectionModel().select(1);
+    }
+
+    @FXML
+    private void setQueryCoursesSelectedModel() {
+        mainTablePane.getSelectionModel().select(2);
     }
 
     public void setCurrentStudentId(String currentStudentId) {

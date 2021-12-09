@@ -187,6 +187,46 @@ public abstract class BaseController {
         }
     }
 
+    protected void baseArrangementSelectedData(Arrangement selectedArrangement, TextField examIdArrangementField, TextField courseIdArrangementField, TextField examDateArrangementField, TextField startTimeArrangementField, TextField endTimeArrangementField, TextField addressArrangementField, ComboBox<String> addressArrangementBox) {
+        if (selectedArrangement == null) {
+            examIdArrangementField.setText("");
+            courseIdArrangementField.setText("");
+            examDateArrangementField.setText("");
+            startTimeArrangementField.setText("");
+            endTimeArrangementField.setText("");
+            addressArrangementField.setText("");
+            return;
+        }
+        examIdArrangementField.setText(String.valueOf(selectedArrangement.getExamId()));
+        courseIdArrangementField.setText(String.valueOf(selectedArrangement.getCourseId()));
+        examDateArrangementField.setText(selectedArrangement.getExamDate().toString());
+        startTimeArrangementField.setText(selectedArrangement.getStartTime().toString());
+        endTimeArrangementField.setText(selectedArrangement.getEndTime().toString());
+
+        String[] split = selectedArrangement.getAddress().split("号楼");
+
+        addressArrangementField.setText(split[1]);
+        addressArrangementBox.getSelectionModel().select(split[0]);
+    }
+
+    protected void baseCourseSelectedData(Course selectedCourse, TextField courseIdCourseField, TextField courseNameCourseField, TextField addressCourseField, ComboBox<String> addressCourseBox, TextField courseDayCourseField, TextField courseTimePeriodCourseField) {
+        courseIdCourseField.setText(selectedCourse == null ? "" : String.valueOf(selectedCourse.getCourseId()));
+        courseNameCourseField.setText(selectedCourse == null ? "" : selectedCourse.getCourseName());
+
+        if (selectedCourse == null) {
+            addressCourseField.setText("");
+        } else {
+            String[] split = selectedCourse.getAddress().split("号楼");
+            addressCourseField.setText(split[1]);
+            addressCourseBox.getSelectionModel().select(split[0]);
+        }
+
+        courseDayCourseField.setText(selectedCourse == null ? "" : String.valueOf(selectedCourse.getCourseDay()));
+        courseTimePeriodCourseField.setText(
+                selectedCourse == null ? "" : String.valueOf(selectedCourse.getCourseTimePeriod())
+        );
+    }
+
     protected void showAbout(Stage primaryStage) {
         showAlert(primaryStage,
                 "关于\n厦门大学考试管理系统\nV1.0.0\n作者：YFCodeDream",

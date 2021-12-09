@@ -21,6 +21,18 @@
     -fx-opacity: 1;
 }
 
+#navManageExamPane:hover {
+    -fx-opacity: 1;
+}
+
+#navQueryScorePane:hover {
+    -fx-opacity: 1;
+}
+
+#navQueryCoursesPane:hover {
+    -fx-opacity: 1;
+}
+
 /*#statisticsExamPane:hover {*/
 /*    -fx-opacity: 1;*/
 /*}*/

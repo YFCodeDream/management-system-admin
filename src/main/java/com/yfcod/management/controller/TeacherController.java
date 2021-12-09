@@ -34,6 +34,7 @@ import java.util.Objects;
 import static com.yfcod.management.util.ExportExcelUtil.exportExcel;
 import static com.yfcod.management.util.GenerateAlertUtil.showAlert;
 
+@SuppressWarnings("DuplicatedCode")
 public class TeacherController extends BaseController{
     /**
      * 考试安排表
@@ -976,25 +977,14 @@ public class TeacherController extends BaseController{
     }
 
     private void fillArrangementSelectedData(Arrangement selectedArrangement) {
-        if (selectedArrangement == null) {
-            examIdArrangementField.setText("");
-            courseIdArrangementField.setText("");
-            examDateArrangementField.setText("");
-            startTimeArrangementField.setText("");
-            endTimeArrangementField.setText("");
-            addressArrangementField.setText("");
-            return;
-        }
-        examIdArrangementField.setText(String.valueOf(selectedArrangement.getExamId()));
-        courseIdArrangementField.setText(String.valueOf(selectedArrangement.getCourseId()));
-        examDateArrangementField.setText(selectedArrangement.getExamDate().toString());
-        startTimeArrangementField.setText(selectedArrangement.getStartTime().toString());
-        endTimeArrangementField.setText(selectedArrangement.getEndTime().toString());
-
-        String[] split = selectedArrangement.getAddress().split("号楼");
-
-        addressArrangementField.setText(split[1]);
-        addressArrangementBox.getSelectionModel().select(split[0]);
+        baseArrangementSelectedData(selectedArrangement,
+                examIdArrangementField,
+                courseIdArrangementField,
+                examDateArrangementField,
+                startTimeArrangementField,
+                endTimeArrangementField,
+                addressArrangementField,
+                addressArrangementBox);
     }
 
     private void fillScoreSelectedData(Score selectedScore) {
@@ -1004,21 +994,13 @@ public class TeacherController extends BaseController{
     }
 
     private void fillCourseSelectedData(Course selectedCourse) {
-        courseIdCourseField.setText(selectedCourse == null ? "" : String.valueOf(selectedCourse.getCourseId()));
-        courseNameCourseField.setText(selectedCourse == null ? "" : selectedCourse.getCourseName());
-
-        if (selectedCourse == null) {
-            addressCourseField.setText("");
-        } else {
-            String[] split = selectedCourse.getAddress().split("号楼");
-            addressCourseField.setText(split[1]);
-            addressCourseBox.getSelectionModel().select(split[0]);
-        }
-
-        courseDayCourseField.setText(selectedCourse == null ? "" : String.valueOf(selectedCourse.getCourseDay()));
-        courseTimePeriodCourseField.setText(
-                selectedCourse == null ? "" : String.valueOf(selectedCourse.getCourseTimePeriod())
-        );
+        baseCourseSelectedData(selectedCourse,
+                courseIdCourseField,
+                courseNameCourseField,
+                addressCourseField,
+                addressCourseBox,
+                courseDayCourseField,
+                courseTimePeriodCourseField);
     }
 
     private void setCellValueFactory() {

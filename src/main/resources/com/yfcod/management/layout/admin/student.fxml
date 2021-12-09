@@ -47,7 +47,7 @@
                       <Font name="System Bold" size="20.0" fx:id="x1" />
                     </font>
                   </Label>
-                        <Pane fx:id="navManageExamPane" opacity="0.5" prefHeight="60.0" prefWidth="199.0" style="-fx-background-color: #cde6c7;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
+                        <Pane fx:id="navManageExamPane" onMouseClicked="#setManageExamSelectedModel" opacity="0.5" prefHeight="60.0" prefWidth="199.0" style="-fx-background-color: #cde6c7;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
                            <children>
                               <Label fx:id="statisticsExamLabel" layoutX="64.0" layoutY="18.0" text="考试安排">
                                  <font>
@@ -55,7 +55,7 @@
                                  </font>
                               </Label>
                            </children></Pane>
-                        <Pane fx:id="navQueryScorePane" layoutX="10.0" layoutY="10.0" opacity="0.5" prefHeight="60.0" prefWidth="199.0" style="-fx-background-color: #cde6c7;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="120.0">
+                        <Pane fx:id="navQueryScorePane" layoutX="10.0" layoutY="10.0" onMouseClicked="#setQueryScoreSelectedModel" opacity="0.5" prefHeight="60.0" prefWidth="199.0" style="-fx-background-color: #cde6c7;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="120.0">
                            <children>
                               <Label fx:id="manageExamLabel" layoutX="64.0" layoutY="18.0" text="成绩查询">
                                  <font>
@@ -63,7 +63,7 @@
                                  </font>
                               </Label>
                            </children></Pane>
-                        <Pane fx:id="navQueryCoursesPane" layoutX="10.0" layoutY="180.0" opacity="0.5" prefHeight="60.0" prefWidth="199.0" style="-fx-background-color: #cde6c7;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="180.0">
+                        <Pane fx:id="navQueryCoursesPane" layoutX="10.0" layoutY="180.0" onMouseClicked="#setQueryCoursesSelectedModel" opacity="0.5" prefHeight="60.0" prefWidth="199.0" style="-fx-background-color: #cde6c7;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="180.0">
                            <children>
                               <Label fx:id="manageExamLabel1" layoutX="64.0" layoutY="18.0" text="课表查询">
                                  <font>

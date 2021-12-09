@@ -29,9 +29,11 @@
                           <items>
                               <MenuItem mnemonicParsing="false" onAction="#handleExportCurrentData" text="导出当前数据" />
                             <MenuItem mnemonicParsing="false" onAction="#handleExportAllData" text="导出全部数据" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                              <MenuItem mnemonicParsing="false" text="导出日志" />
                           </items>
                         </Menu>
-                  <SeparatorMenuItem mnemonicParsing="false" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
                         <Menu fx:id="queryMenu" mnemonicParsing="false" text="查询">
                           <items>
                             <MenuItem mnemonicParsing="false" text="考试" />
