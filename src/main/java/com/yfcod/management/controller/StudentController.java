@@ -300,6 +300,11 @@ public class StudentController extends BaseController {
     }
 
     @FXML
+    private void handleUpdateInfo() {
+        updateInfo(primaryStage, "学生", currentStudentId);
+    }
+
+    @FXML
     private void handleLogout() {
         this.main.getPrimaryStage().centerOnScreen();
         this.main.getPrimaryStage().setMaximized(false);

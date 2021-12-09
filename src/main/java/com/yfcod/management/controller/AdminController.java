@@ -10,8 +10,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.io.*;
 import java.sql.Date;
@@ -21,8 +19,6 @@ import static com.yfcod.management.util.ExportExcelUtil.exportExcel;
 import static com.yfcod.management.util.GenerateAlertUtil.showAlert;
 
 @SuppressWarnings("DuplicatedCode")
-@EqualsAndHashCode(callSuper = true)
-@Data
 public class AdminController extends BaseController{
     /**
      * 左侧导航栏
@@ -221,26 +217,43 @@ public class AdminController extends BaseController{
     /**
      * 表中数据
      */
-    private ObservableList<Arrangement> arrangements = FXCollections.observableArrayList();
-    private ObservableList<Course> courses = FXCollections.observableArrayList();
-    private ObservableList<Score> scores = FXCollections.observableArrayList();
-    private ObservableList<Student> students = FXCollections.observableArrayList();
-    private ObservableList<Teacher> teachers = FXCollections.observableArrayList();
-    private ObservableList<Timetable> timetables = FXCollections.observableArrayList();
+    private final ObservableList<Arrangement> arrangements = FXCollections.observableArrayList();
+    private final ObservableList<Course> courses = FXCollections.observableArrayList();
+    private final ObservableList<Score> scores = FXCollections.observableArrayList();
+    private final ObservableList<Student> students = FXCollections.observableArrayList();
+    private final ObservableList<Teacher> teachers = FXCollections.observableArrayList();
+    private final ObservableList<Timetable> timetables = FXCollections.observableArrayList();
 
     /**
      * 导航栏数据
      */
-    private static ObservableList<String> tableNames = FXCollections.observableArrayList();
+    private static final ObservableList<String> tableNames = FXCollections.observableArrayList();
 
     /**
      * 日志路径
      */
-    private static String logPath = "log/debug.txt";
+    private static final String logPath = "log/debug.txt";
 
+    /**
+     * 当前管理员号
+     */
+    private String currentAdminId;
+
+    /**
+     * 与主场景的索引连接
+     */
     private Stage primaryStage;
     private Main main;
 
+    /**
+     * 初始化方法
+     * 1. 初始化导航栏
+     * 2. 设置表数据格式
+     * 3. 设置表列宽
+     * 4. 设置查询区复选框值
+     * 5. 初始化所有表数据
+     * 6. 初始化导航栏选择模板
+     */
     @FXML
     private void initialize() {
         tableNames.addAll(
@@ -272,16 +285,76 @@ public class AdminController extends BaseController{
 
     // 菜单栏操作
 
+    /**
+     * 导出当前表数据
+     */
     @FXML
     private void handleExportCurrentData() {
         showExportDialogAndSave(true);
     }
 
+    /**
+     * 导出当前表所有数据
+     */
     @FXML
     private void handleExportAllData() {
         showExportDialogAndSave(false);
     }
 
+    /**
+     * 导出日志
+     */
+    @FXML
+    private void handleExportLog() {
+        FileChooser fileChooser = new FileChooser();
+
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+                "txt files (*.txt)", "*.txt");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        File file = fileChooser.showSaveDialog(this.main.getPrimaryStage());
+
+        if (file != null) {
+            if (file.getPath().endsWith(".txt")) {
+                String logPath = (file.getPath()).replace("\\", "\\\\");
+                String log = readLog(isConcise);
+
+                File logFile = new File(logPath);
+                BufferedWriter writer = null;
+
+                try {
+                    writer = new BufferedWriter(new FileWriter(logFile));
+                    writer.write(log);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (writer != null) {
+                        try {
+                            writer.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                showAlert(primaryStage,
+                        "导出日志成功",
+                        "information");
+            }
+        }
+    }
+
+    /**
+     * 修改当前管理员密码
+     */
+    @FXML
+    private void handleUpdateInfo() {
+        updateInfo(primaryStage, "系统管理员", currentAdminId);
+    }
+
+    /**
+     * 登出操作
+     */
     @FXML
     private void handleLogout() {
         this.main.getPrimaryStage().centerOnScreen();
@@ -296,11 +369,17 @@ public class AdminController extends BaseController{
         primaryStage.centerOnScreen();
     }
 
+    /**
+     * 退出系统
+     */
     @FXML
     private void handleQuit() {
         System.exit(0);
     }
 
+    /**
+     * 显示关于
+     */
     @FXML
     private void handleAbout() {
         showAlert(this.primaryStage,
@@ -542,8 +621,10 @@ public class AdminController extends BaseController{
         }
     }
 
-    // 辅助方法
-
+    /**
+     * 显示导出Excel的对话框
+     * @param isCurrent 是否导出当前数据
+     */
     private void showExportDialogAndSave(boolean isCurrent) {
         FileChooser fileChooser = new FileChooser();
 
@@ -569,7 +650,6 @@ public class AdminController extends BaseController{
                         break;
                     case "课程表":
                         exportExcel(Course.class, courses, excelPath);
-                        System.out.println(1);
                         break;
                     case "成绩表":
                         exportExcel(Score.class, scores, excelPath);
@@ -585,12 +665,17 @@ public class AdminController extends BaseController{
                         break;
                 }
                 showAlert(primaryStage,
-                        "导出成功",
+                        "导出数据成功",
                         "information");
             }
         }
     }
 
+    /**
+     * 读取日志文件
+     * @param isConcise 简/繁模式
+     * @return 日志文件
+     */
     private String readLog(boolean isConcise) {
         File logFile = new File(logPath);
         BufferedReader reader = null;
@@ -757,6 +842,10 @@ public class AdminController extends BaseController{
                 new SimpleStringProperty(cellData.getValue().getStudentId()));
         courseIdTimetableColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getCourseId().toString()));
+    }
+
+    public void setCurrentAdminId(String currentAdminId) {
+        this.currentAdminId = currentAdminId;
     }
 
     @Override

@@ -670,6 +670,11 @@ public class TeacherController extends BaseController{
     }
 
     @FXML
+    private void handleUpdateInfo() {
+        updateInfo(primaryStage, "教师", currentTeacherId);
+    }
+
+    @FXML
     private void handleLogout() {
         this.main.getPrimaryStage().centerOnScreen();
         this.main.getPrimaryStage().setMaximized(false);

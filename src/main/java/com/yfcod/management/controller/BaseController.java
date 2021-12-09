@@ -1,21 +1,23 @@
 package com.yfcod.management.controller;
 
 import com.yfcod.management.Main;
-import com.yfcod.management.dao.ArrangementDao;
-import com.yfcod.management.dao.TimetableDao;
-import com.yfcod.management.model.Arrangement;
-import com.yfcod.management.model.Course;
-import com.yfcod.management.model.Score;
-import com.yfcod.management.model.Timetable;
+import com.yfcod.management.dao.*;
+import com.yfcod.management.model.*;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import static com.yfcod.management.util.GenerateAlertUtil.showAlert;
 
@@ -225,6 +227,111 @@ public abstract class BaseController {
         courseTimePeriodCourseField.setText(
                 selectedCourse == null ? "" : String.valueOf(selectedCourse.getCourseTimePeriod())
         );
+    }
+
+    protected void updateInfo(Stage primaryStage, String currentIdentity, String currentUserId) {
+        Dialog<HashMap<String, String>> dialog = new Dialog<>();
+        dialog.setTitle("修改个人信息");
+        dialog.setHeaderText("修改个人信息");
+
+        ButtonType submitButtonType = new ButtonType("提交", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(submitButtonType, ButtonType.CANCEL);
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 20, 20));
+
+        PasswordField firstPwd = new PasswordField();
+        firstPwd.setPromptText("密码");
+        PasswordField secondPwd = new PasswordField();
+        secondPwd.setPromptText("确认密码");
+
+        grid.add(new Label("密码："), 0, 0);
+        grid.add(firstPwd, 1, 0);
+        grid.add(new Label("确认密码："), 0, 1);
+        grid.add(secondPwd, 1, 1);
+
+        TextField adminPhoneField = null;
+        if (currentIdentity.equals("系统管理员")) {
+            adminPhoneField = new TextField();
+            adminPhoneField.setPromptText("电话号码");
+            grid.add(new Label("电话号码："), 0, 2);
+            grid.add(adminPhoneField, 1, 2);
+        }
+
+        Node submitButton = dialog.getDialogPane().lookupButton(submitButtonType);
+        submitButton.setDisable(true);
+
+        firstPwd.textProperty().addListener((observable, oldValue, newValue) ->
+                submitButton.setDisable(newValue.trim().isEmpty()));
+
+        dialog.getDialogPane().setContent(grid);
+
+        Platform.runLater(firstPwd::requestFocus);
+
+        TextField finalAdminPhoneField = adminPhoneField;
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == submitButtonType) {
+                HashMap<String, String> updateInfoMap = new HashMap<>();
+                updateInfoMap.put("firstPwd", firstPwd.getText());
+                updateInfoMap.put("secondPwd", secondPwd.getText());
+                if (finalAdminPhoneField != null) {
+                    updateInfoMap.put("adminPhone", finalAdminPhoneField.getText());
+                }
+                return updateInfoMap;
+            }
+            return null;
+        });
+
+        Optional<HashMap<String, String>> result = dialog.showAndWait();
+        result.ifPresent(updateInfoMap -> {
+            if (firstPwd.getText().isEmpty() || firstPwd.getText() == null) {
+                showAlert(primaryStage,
+                        "请输入新密码",
+                        "warning");
+                return;
+            }
+            if (!firstPwd.getText().equals(secondPwd.getText())) {
+                showAlert(primaryStage,
+                        "两次输入密码不一致",
+                        "warning");
+                return;
+            }
+            switch (currentIdentity) {
+                case "系统管理员":
+                    String adminPhone = updateInfoMap.get("adminPhone");
+                    if (adminPhone == null || adminPhone.isEmpty()) {
+                        AdminDao.updateAdmin(
+                                new Admin(currentUserId, updateInfoMap.get("firstPwd"), null)
+                        );
+                    } else {
+                        if (adminPhone.length() != 11) {
+                            showAlert(primaryStage,
+                                    "手机号不足11位",
+                                    "warning");
+                            return;
+                        }
+                        AdminDao.updateAdmin(
+                                new Admin(currentUserId, updateInfoMap.get("firstPwd"), adminPhone)
+                        );
+                    }
+                    break;
+                case "教师":
+                    TeacherDao.updateTeacherPwd(
+                            new Teacher(currentUserId, updateInfoMap.get("firstPwd"))
+                    );
+                    break;
+                case "学生":
+                    StudentDao.updateStudentPwd(
+                            new Student(currentUserId, updateInfoMap.get("firstPwd"))
+                    );
+                    break;
+            }
+            showAlert(primaryStage,
+                    "修改密码成功",
+                    "information");
+        });
     }
 
     protected void showAbout(Stage primaryStage) {

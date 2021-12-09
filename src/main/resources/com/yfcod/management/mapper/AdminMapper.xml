@@ -20,9 +20,15 @@
 
     <update id="updateAdmin" parameterType="com.yfcod.management.model.Admin">
         UPDATE `admin`
-        SET AdminPwd = #{adminPwd},
-            AdminPhone = #{adminPhone}
-        WHERE AdminId = #{adminId};
+        <set>
+            <if test="adminPwd != null">
+                AdminPwd = #{adminPwd},
+            </if>
+            <if test="adminPhone != null">
+                AdminPhone = #{adminPhone},
+            </if>
+        </set>
+        where AdminId = #{adminId};
     </update>
 
     <insert id="addAdmin" parameterType="com.yfcod.management.model.Admin">

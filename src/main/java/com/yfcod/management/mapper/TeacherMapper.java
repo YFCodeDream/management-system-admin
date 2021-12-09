@@ -15,5 +15,7 @@ public interface TeacherMapper {
 
     void updateTeacher(Teacher teacher);
 
+    void updateTeacherPwd(Teacher teacher);
+
     void deleteTeacherById(String teacherId);
 }

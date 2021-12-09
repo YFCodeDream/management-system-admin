@@ -18,6 +18,11 @@ public class Student {
     public Student() {
     }
 
+    public Student(String studentId, String password) {
+        this.studentId = studentId;
+        this.password = password;
+    }
+
     public Student(String studentId, String studentName, Boolean gender, Date birthday, String nation, String major, Integer grade) {
         this.studentId = studentId;
         this.studentName = studentName;

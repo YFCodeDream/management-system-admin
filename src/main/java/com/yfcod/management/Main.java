@@ -1,9 +1,6 @@
 package com.yfcod.management;
 
-import com.yfcod.management.controller.BaseController;
-import com.yfcod.management.controller.LoginController;
-import com.yfcod.management.controller.StudentController;
-import com.yfcod.management.controller.TeacherController;
+import com.yfcod.management.controller.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -44,14 +41,6 @@ public class Main extends Application {
         primaryStage.setResizable(false);
     }
 
-    public void showUpdateInfoOverview() {
-        if (currentIdentity.equals("系统管理员")) {
-            loadOverview("layout/update/update-admin.fxml", false);
-        } else {
-            loadOverview("layout/update/update-pwd.fxml", false);
-        }
-    }
-
     private void loadOverview(String fxmlPath, boolean hasNotLogin) {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -80,6 +69,9 @@ public class Main extends Application {
                     currentIdentity = loginController.getCurrentIdentity();
                 }
                 if (currentIdentity != null) {
+                    if (currentIdentity.equals("系统管理员")) {
+                        ((AdminController) controller).setCurrentAdminId(currentUserId);
+                    }
                     if (currentIdentity.equals("教师")) {
                         ((TeacherController) controller).setCurrentTeacherId(currentUserId);
                         ((TeacherController) controller).showAllAverageChart();

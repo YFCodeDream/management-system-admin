@@ -57,6 +57,11 @@ public class TeacherDao {
         return teachers.get();
     }
 
+    public static void updateTeacherPwd(Teacher teacher) {
+        teacherMapperOperation(teacherMapper ->
+                teacherMapper.updateTeacherPwd(teacher), true);
+    }
+
     private interface TeacherMapperAdapter {
         void operation(TeacherMapper teacherMapper);
     }

@@ -17,7 +17,7 @@
             <menus>
                   <Menu mnemonicParsing="false" text="管理员">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handleLogout" text="修改密码" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleUpdateInfo" text="修改信息" />
                         <MenuItem mnemonicParsing="false" onAction="#handleLogout" text="登出" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#handleQuit" text="退出" />
@@ -30,7 +30,7 @@
                               <MenuItem mnemonicParsing="false" onAction="#handleExportCurrentData" text="导出当前数据" />
                             <MenuItem mnemonicParsing="false" onAction="#handleExportAllData" text="导出全部数据" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                              <MenuItem mnemonicParsing="false" text="导出日志" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleExportLog" text="导出日志" />
                           </items>
                         </Menu>
                         <SeparatorMenuItem mnemonicParsing="false" />

@@ -65,6 +65,16 @@
         WHERE StudentId = #{studentId};
     </update>
 
+    <update id="updateStudentPwd" parameterType="com.yfcod.management.model.Student">
+        UPDATE student
+        <set>
+            <if test="password != null">
+                Password = #{password},
+            </if>
+        </set>
+        WHERE StudentId = #{studentId};
+    </update>
+
     <delete id="deleteStudentById">
         DELETE FROM student WHERE StudentId = #{studentId};
     </delete>

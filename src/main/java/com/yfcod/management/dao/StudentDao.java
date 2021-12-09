@@ -56,6 +56,11 @@ public class StudentDao {
         return students.get();
     }
 
+    public static void updateStudentPwd(Student student) {
+        studentMapperOperation(studentMapper ->
+                studentMapper.updateStudentPwd(student), true);
+    }
+
     private interface StudentMapperAdapter {
         void operation(StudentMapper studentMapper);
     }

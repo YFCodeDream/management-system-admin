@@ -16,9 +16,9 @@
         <children>
           <MenuBar VBox.vgrow="NEVER">
                <menus>
-                  <Menu mnemonicParsing="false" text="管理员">
+                  <Menu mnemonicParsing="false" text="用户">
                      <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handleLogout" text="修改密码" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleUpdateInfo" text="修改密码" />
                         <MenuItem mnemonicParsing="false" onAction="#handleLogout" text="登出" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#handleQuit" text="退出" />

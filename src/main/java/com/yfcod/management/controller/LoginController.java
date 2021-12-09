@@ -84,6 +84,8 @@ public class LoginController extends BaseController{
         if (checkAdminInvalid()) return true;
         showAlert("登录成功", "information");
         currentIdentity = "系统管理员";
+
+        this.main.setCurrentUserId(adminId);
         this.main.setCurrentIdentity(currentIdentity);
 
         this.main.showAdminOverview();

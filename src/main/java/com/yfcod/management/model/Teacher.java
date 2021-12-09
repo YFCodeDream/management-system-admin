@@ -16,6 +16,11 @@ public class Teacher {
     public Teacher() {
     }
 
+    public Teacher(String teacherId, String password) {
+        this.teacherId = teacherId;
+        this.password = password;
+    }
+
     public Teacher(String teacherId, String teacherName, Boolean gender, Date birthday, String nation) {
         this.teacherId = teacherId;
         this.teacherName = teacherName;
