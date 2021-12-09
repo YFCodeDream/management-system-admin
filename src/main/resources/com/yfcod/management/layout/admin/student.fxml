@@ -267,24 +267,92 @@
                                                                                           <Font name="System Bold" size="24.0" />
                                                                                        </font>
                                                                                     </Label>
-                                                                                    <StackedBarChart layoutX="38.0" layoutY="168.0" prefHeight="552.0" prefWidth="563.0" title="排名占比统计">
+                                                                                    <StackedBarChart fx:id="rankRateChart" layoutX="38.0" layoutY="168.0" prefHeight="552.0" prefWidth="563.0" title="排名占比统计">
                                                                                       <xAxis>
-                                                                                        <CategoryAxis side="BOTTOM" />
+                                                                                        <CategoryAxis fx:id="rankRateXAxis" side="BOTTOM" />
                                                                                       </xAxis>
                                                                                       <yAxis>
-                                                                                        <NumberAxis side="LEFT" />
+                                                                                        <NumberAxis fx:id="rankRateYAxis" side="LEFT" />
                                                                                       </yAxis>
                                                                                     </StackedBarChart>
-                                                                                    <BarChart layoutX="627.0" layoutY="168.0" prefHeight="335.0" prefWidth="488.0" title="已有成绩统计">
+                                                                                    <BarChart fx:id="scoreChart" layoutX="627.0" layoutY="168.0" prefHeight="335.0" prefWidth="488.0" title="已有成绩统计">
                                                                                       <xAxis>
-                                                                                        <CategoryAxis side="BOTTOM" />
+                                                                                        <CategoryAxis fx:id="scoreXAxis" side="BOTTOM" />
                                                                                       </xAxis>
                                                                                       <yAxis>
-                                                                                        <NumberAxis side="LEFT" />
+                                                                                        <NumberAxis fx:id="scoreYAxis" side="LEFT" />
                                                                                       </yAxis>
                                                                                     </BarChart>
-                                                                                    <Pane fx:id="explorerPane" layoutX="671.0" layoutY="619.0" opacity="0.7" prefHeight="100.0" prefWidth="400.0" style="-fx-background-color: #d64f44;" />
-                                                                                    <Pane fx:id="explorerPane" layoutX="671.0" layoutY="519.0" opacity="0.7" prefHeight="100.0" prefWidth="400.0" style="-fx-background-color: #45b97c;" />
+                                                                                    <Pane fx:id="explorerPane" layoutX="671.0" layoutY="619.0" opacity="0.7" prefHeight="100.0" prefWidth="400.0" style="-fx-background-color: #d64f44;">
+                                                                                       <children>
+                                                                                          <HBox layoutX="61.0" layoutY="28.0" prefHeight="44.0" prefWidth="278.0">
+                                                                                             <children>
+                                                                                                <VBox layoutX="70.0" layoutY="20.0">
+                                                                                                   <children>
+                                                                                                      <Label layoutX="70.0" layoutY="20.0" text="最低分：">
+                                                                                                         <font>
+                                                                                                            <Font size="16.0" />
+                                                                                                         </font>
+                                                                                                      </Label>
+                                                                                                      <Label layoutX="70.0" layoutY="58.0" text="课程名称：">
+                                                                                                         <font>
+                                                                                                            <Font size="16.0" />
+                                                                                                         </font>
+                                                                                                      </Label>
+                                                                                                   </children>
+                                                                                                </VBox>
+                                                                                                <VBox layoutX="161.0" layoutY="20.0">
+                                                                                                   <children>
+                                                                                                      <Label fx:id="minScoreLabel" layoutX="161.0" layoutY="20.0" text="minScoreLabel">
+                                                                                                         <font>
+                                                                                                            <Font size="16.0" />
+                                                                                                         </font>
+                                                                                                      </Label>
+                                                                                                      <Label fx:id="minScoreCourseIdLabel" layoutX="161.0" layoutY="58.0" text="minScoreCourseIdLabel">
+                                                                                                         <font>
+                                                                                                            <Font size="16.0" />
+                                                                                                         </font>
+                                                                                                      </Label>
+                                                                                                   </children>
+                                                                                                </VBox>
+                                                                                             </children>
+                                                                                          </HBox>
+                                                                                       </children></Pane>
+                                                                                    <Pane fx:id="explorerPane" layoutX="671.0" layoutY="519.0" opacity="0.7" prefHeight="100.0" prefWidth="400.0" style="-fx-background-color: #45b97c;">
+                                                                                       <children>
+                                                                                          <HBox layoutX="61.0" layoutY="28.0" prefHeight="44.0" prefWidth="278.0">
+                                                                                             <children>
+                                                                                                <VBox layoutX="70.0" layoutY="20.0">
+                                                                                                   <children>
+                                                                                                      <Label layoutX="70.0" layoutY="20.0" text="最高分：">
+                                                                                                         <font>
+                                                                                                            <Font size="16.0" />
+                                                                                                         </font>
+                                                                                                      </Label>
+                                                                                                      <Label layoutX="70.0" layoutY="58.0" text="课程名称：">
+                                                                                                         <font>
+                                                                                                            <Font size="16.0" />
+                                                                                                         </font>
+                                                                                                      </Label>
+                                                                                                   </children>
+                                                                                                </VBox>
+                                                                                                <VBox layoutX="161.0" layoutY="20.0">
+                                                                                                   <children>
+                                                                                                      <Label fx:id="maxScoreLabel" layoutX="161.0" layoutY="20.0" text="maxScoreLabel">
+                                                                                                         <font>
+                                                                                                            <Font size="16.0" />
+                                                                                                         </font>
+                                                                                                      </Label>
+                                                                                                      <Label fx:id="maxScoreCourseIdLabel" layoutX="161.0" layoutY="58.0" text="maxScoreCourseIdLabel">
+                                                                                                         <font>
+                                                                                                            <Font size="16.0" />
+                                                                                                         </font>
+                                                                                                      </Label>
+                                                                                                   </children>
+                                                                                                </VBox>
+                                                                                             </children>
+                                                                                          </HBox>
+                                                                                       </children></Pane>
                                                                                  </children>
                                                                               </AnchorPane>
                                                                            </children>

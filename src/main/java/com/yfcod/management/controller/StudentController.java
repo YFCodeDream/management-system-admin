@@ -9,16 +9,21 @@ import com.yfcod.management.model.Arrangement;
 import com.yfcod.management.model.Course;
 import com.yfcod.management.model.Score;
 import com.yfcod.management.model.Timetable;
+import com.yfcod.management.util.GenerateBarChartUtil;
+import com.yfcod.management.util.GenerateStackedBarChartUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.StackedBarChart;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static com.yfcod.management.util.ExportExcelUtil.exportExcel;
 import static com.yfcod.management.util.GenerateAlertUtil.showAlert;
@@ -115,6 +120,30 @@ public class StudentController extends BaseController {
 
     @FXML
     private ComboBox<String> addressCourseBox;
+
+    /**
+     * 图表区
+     */
+    @FXML
+    private StackedBarChart<String, Number> rankRateChart;
+    @FXML
+    private CategoryAxis rankRateXAxis;
+    @FXML
+    private NumberAxis rankRateYAxis;
+    @FXML
+    private BarChart<String, Number> scoreChart;
+    @FXML
+    private CategoryAxis scoreXAxis;
+    @FXML
+    private NumberAxis scoreYAxis;
+    @FXML
+    private Label maxScoreLabel;
+    @FXML
+    private Label maxScoreCourseIdLabel;
+    @FXML
+    private Label minScoreLabel;
+    @FXML
+    private Label minScoreCourseIdLabel;
 
     @FXML
     private TabPane mainTablePane;
@@ -284,42 +313,6 @@ public class StudentController extends BaseController {
         showAbout(this.primaryStage);
     }
 
-    private void showExportDialogAndSave(boolean isCurrent) {
-        FileChooser fileChooser = new FileChooser();
-
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
-                "xls files (*.xls)", "*.xls");
-        fileChooser.getExtensionFilters().add(extFilter);
-
-        File file = fileChooser.showSaveDialog(this.main.getPrimaryStage());
-
-        if (file != null) {
-            if (file.getPath().endsWith(".xls")) {
-                if (!isCurrent) {
-                    setAllTableData();
-                }
-
-                String excelPath = (file.getPath()).replace("\\", "\\\\");
-
-                switch (mainTablePane.getSelectionModel().getSelectedItem().getText()) {
-                    case "考试安排" :
-                        exportExcel(Arrangement.class, arrangements, excelPath);
-                        break;
-                    case "成绩查询":
-                        exportExcel(Course.class, courses, excelPath);
-                        System.out.println(1);
-                        break;
-                    case "课表查询":
-                        exportExcel(Score.class, scores, excelPath);
-                        break;
-                }
-                showAlert(primaryStage,
-                        "导出成功",
-                        "information");
-            }
-        }
-    }
-
     public void setAllTableData() {
         arrangements.clear();
         courses.clear();
@@ -356,6 +349,164 @@ public class StudentController extends BaseController {
 
         studentIdScoreField.setText(currentStudentId);
         studentIdScoreField.setEditable(false);
+    }
+
+    public void showStudentScoreChart() {
+        List<String> currentCourseNames = new ArrayList<>();
+        List<Number> currentRankRate = new ArrayList<>();
+        List<Number> currentStudentScores = new ArrayList<>();
+
+        setStudentScoreChartData(currentCourseNames, currentRankRate, currentStudentScores);
+
+        showRankRateChart(currentCourseNames, currentRankRate);
+        showCurrentScoresChart(currentCourseNames, currentStudentScores);
+        showCurrentScoresText(currentCourseNames, currentStudentScores);
+    }
+
+    private void showCurrentScoresText(List<String> currentCourseNames, List<Number> currentStudentScores) {
+        int maxScore = 0;
+        if (currentStudentScores.stream().mapToInt(Number::intValue).max().isPresent()) {
+            maxScore = currentStudentScores.stream().mapToInt(Number::intValue)
+                    .max().getAsInt();
+        }
+        int minScore = 0;
+        if (currentStudentScores.stream().mapToInt(Number::intValue).min().isPresent()) {
+            minScore = currentStudentScores.stream().mapToInt(Number::intValue)
+                    .min().getAsInt();
+        }
+        for (int i = 0; i < currentCourseNames.size(); i++) {
+            if (currentStudentScores.get(i).equals(maxScore)) {
+                maxScoreCourseIdLabel.setText(currentCourseNames.get(i));
+            }
+            if (currentStudentScores.get(i).equals(minScore)) {
+                minScoreCourseIdLabel.setText(currentCourseNames.get(i));
+            }
+        }
+        maxScoreLabel.setText(String.valueOf(maxScore));
+        minScoreLabel.setText(String.valueOf(minScore));
+    }
+
+    private void showCurrentScoresChart(List<String> currentCourseNames, List<Number> currentStudentScores) {
+        GenerateBarChartUtil.setXYAxis(
+                scoreXAxis,
+                scoreYAxis,
+                currentCourseNames,
+                "课程名称",
+                "已有成绩"
+        );
+        GenerateBarChartUtil.setBarChartData(
+                scoreChart,
+                currentCourseNames,
+                currentStudentScores,
+                currentStudentId
+        );
+    }
+
+    private void showRankRateChart(List<String> currentCourseNames, List<Number> currentRankRate) {
+        List<GenerateStackedBarChartUtil.BinaryTuple<String, Number>> binaryTuples = new ArrayList<>();
+        List<GenerateStackedBarChartUtil.BinaryTuple<String, Number>> totalBinaryTuples = new ArrayList<>();
+        assert currentCourseNames.size() == currentRankRate.size();
+        for (int i = 0; i < currentCourseNames.size(); i++) {
+            binaryTuples.add(new GenerateStackedBarChartUtil.BinaryTuple<>(
+                    currentCourseNames.get(i), currentRankRate.get(i)
+            ));
+            totalBinaryTuples.add(new GenerateStackedBarChartUtil.BinaryTuple<>(
+                    currentCourseNames.get(i), 1.0 - (double) currentRankRate.get(i)
+            ));
+        }
+        HashMap<String, List<GenerateStackedBarChartUtil.BinaryTuple<String, Number>>> currentStudentSeries =
+                new HashMap<>();
+        currentStudentSeries.put(currentStudentId, binaryTuples);
+        currentStudentSeries.put("总计", totalBinaryTuples);
+
+        GenerateStackedBarChartUtil.setXYAxis(
+                rankRateXAxis,
+                rankRateYAxis,
+                currentCourseNames,
+                "课程名称",
+                "排名占比"
+        );
+        GenerateStackedBarChartUtil.setStackedBarChartData(
+                rankRateChart,
+                Arrays.asList(currentStudentId, "总计"),
+                currentStudentSeries
+        );
+    }
+
+    private void setStudentScoreChartData(List<String> currentCourseNames,
+                                          List<Number> currentRankRate,
+                                          List<Number> currentStudentScores) {
+        List<Timetable> timetables = TimetableDao.queryTimetableByConditions(
+                new Timetable(currentStudentId)
+        );
+        for (Timetable timetable : timetables) {
+            Integer currentCourseId = timetable.getCourseId();
+            List<Course> currentCourses = CourseDao.queryCourseByConditions(
+                    new Course(currentCourseId)
+            );
+            for (Course course : currentCourses) {
+                currentCourseNames.add(course.getCourseName());
+            }
+
+            int rank = 0;
+            List<Arrangement> currentArrangements = ArrangementDao.queryArrangementByConditions(
+                    new Arrangement(currentCourseId)
+            );
+            for (Arrangement arrangement : currentArrangements) {
+                Integer currentExamId = arrangement.getExamId();
+                List<Score> currentScores = ScoreDao.queryScoreByConditions(
+                        new Score(currentExamId)
+                );
+                int currentStudentScore = 0;
+                for (Score score : currentScores) {
+                    if (score.getStudentId().equals(currentStudentId)) {
+                        currentStudentScore = score.getScore();
+                    }
+                }
+                currentStudentScores.add(currentStudentScore);
+                for (Score score : currentScores) {
+                    if (score.getScore() < currentStudentScore) {
+                        rank += 1;
+                    }
+                }
+                currentRankRate.add(rank / ((double) currentScores.size() - 1));
+            }
+        }
+    }
+
+    private void showExportDialogAndSave(boolean isCurrent) {
+        FileChooser fileChooser = new FileChooser();
+
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+                "xls files (*.xls)", "*.xls");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        File file = fileChooser.showSaveDialog(this.main.getPrimaryStage());
+
+        if (file != null) {
+            if (file.getPath().endsWith(".xls")) {
+                if (!isCurrent) {
+                    setAllTableData();
+                }
+
+                String excelPath = (file.getPath()).replace("\\", "\\\\");
+
+                switch (mainTablePane.getSelectionModel().getSelectedItem().getText()) {
+                    case "考试安排" :
+                        exportExcel(Arrangement.class, arrangements, excelPath);
+                        break;
+                    case "成绩查询":
+                        exportExcel(Course.class, courses, excelPath);
+                        break;
+                    case "课表查询":
+                        exportExcel(Score.class, scores, excelPath);
+                        break;
+                }
+                showAlert(primaryStage,
+                        "导出成功",
+                        "information");
+            }
+        }
     }
 
     private void setCellValueFactory() {

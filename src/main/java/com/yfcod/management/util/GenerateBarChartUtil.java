@@ -1,25 +1,12 @@
 package com.yfcod.management.util;
 
-import javafx.collections.FXCollections;
 import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 
 import java.util.List;
 
-public class GenerateBarChartUtil {
-    public static void setXYAxis(CategoryAxis xAxis,
-                                 NumberAxis yAxis,
-                                 List<String> xValues,
-                                 String xLabel,
-                                 String yLabel) {
-        xAxis.setCategories(FXCollections.observableArrayList(xValues));
-        xAxis.setLabel(xLabel);
-        yAxis.setLabel(yLabel);
-    }
-
+public class GenerateBarChartUtil extends BaseBarChartUtil{
     public static void setBarChartData(BarChart<String, Number> barChart,
                                        List<String> xData,
                                        List<Number> yData,

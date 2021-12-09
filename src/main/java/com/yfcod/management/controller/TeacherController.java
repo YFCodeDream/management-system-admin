@@ -715,7 +715,6 @@ public class TeacherController extends BaseController{
                         break;
                     case "课程表":
                         exportExcel(Course.class, courses, excelPath);
-                        System.out.println(1);
                         break;
                     case "成绩表":
                         exportExcel(Score.class, scores, excelPath);

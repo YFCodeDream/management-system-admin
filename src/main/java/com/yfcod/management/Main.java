@@ -88,6 +88,7 @@ public class Main extends Application {
                     if (currentIdentity.equals("学生")) {
                         ((StudentController) controller).setCurrentStudentId(currentUserId);
                         ((StudentController) controller).setAllTableData();
+                        ((StudentController) controller).showStudentScoreChart();
                     }
                 }
             }
