@@ -62,7 +62,7 @@ public class LoginController extends BaseController{
     }
 
     @FXML
-    private void handleLeft() {
+    public void handleLeft() {
         if (leftBtn.getText().equals("登录")) {
             if (identityBox.getValue().equals("系统管理员")) {
                 if (loginToAdmin()) return;
@@ -134,7 +134,9 @@ public class LoginController extends BaseController{
             leftBtn.setText("清空");
             rightBtn.setText("提交");
 
-            this.main.getPrimaryStage().setTitle("厦门大学考试管理系统-注册");
+            this.main.getPrimaryStage().setTitle("厦门大学考试管理系统 - 注册");
+
+            dialogStage.getScene().getAccelerators().remove(main.getLoginCombination());
         } else if (rightBtn.getText().equals("提交")) {
             this.adminId = adminIdField.getText();
             this.adminPwd = adminPwdField.getText();
@@ -220,6 +222,8 @@ public class LoginController extends BaseController{
         clearRegisterInfo();
         leftBtn.setText("登录");
         rightBtn.setText("注册");
+
+        dialogStage.getScene().getAccelerators().put(main.getLoginCombination(), this::handleLeft);
     }
 
     private boolean checkAdminInvalid(String adminPhone) {
@@ -271,6 +275,10 @@ public class LoginController extends BaseController{
 
     public String getCurrentIdentity() {
         return currentIdentity;
+    }
+
+    public Button getLeftBtn() {
+        return leftBtn;
     }
 
     @Override

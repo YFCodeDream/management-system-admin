@@ -17,31 +17,31 @@
             <menus>
                   <Menu mnemonicParsing="false" text="管理员">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handleUpdateInfo" text="修改信息" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleLogout" text="登出" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleUpdateInfo" text="修改信息    Ctrl+Shift+U" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleLogout" text="登出    Ctrl+Shift+L" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleQuit" text="退出" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleQuit" text="退出    Ctrl+Q" />
                     </items>
                   </Menu>
               <Menu mnemonicParsing="false" text="数据">
                 <items>
                         <Menu mnemonicParsing="false" text="导出">
                           <items>
-                              <MenuItem mnemonicParsing="false" onAction="#handleExportCurrentData" text="导出当前数据" />
-                            <MenuItem mnemonicParsing="false" onAction="#handleExportAllData" text="导出全部数据" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleExportCurrentData" text="导出当前数据    Ctrl+E" />
+                            <MenuItem mnemonicParsing="false" onAction="#handleExportAllData" text="导出全部数据    Ctrl+Alt+E" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                              <MenuItem mnemonicParsing="false" onAction="#handleExportLog" text="导出日志" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleExportLog" text="导出日志    Ctrl+Alt+L" />
                           </items>
                         </Menu>
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <Menu fx:id="queryMenu" mnemonicParsing="false" text="查询">
                           <items>
-                            <MenuItem mnemonicParsing="false" text="考试" />
-                              <MenuItem mnemonicParsing="false" text="课程" />
-                              <MenuItem mnemonicParsing="false" text="成绩" />
-                              <MenuItem mnemonicParsing="false" text="学生" />
-                              <MenuItem mnemonicParsing="false" text="教师" />
-                              <MenuItem mnemonicParsing="false" text="选课" />
+                            <MenuItem mnemonicParsing="false" text="考试    Ctrl+1" />
+                              <MenuItem mnemonicParsing="false" text="课程    Ctrl+2" />
+                              <MenuItem mnemonicParsing="false" text="成绩    Ctrl+3" />
+                              <MenuItem mnemonicParsing="false" text="学生    Ctrl+4" />
+                              <MenuItem mnemonicParsing="false" text="教师    Ctrl+5" />
+                              <MenuItem mnemonicParsing="false" text="选课    Ctrl+6" />
                           </items>
                         </Menu>
                 </items>

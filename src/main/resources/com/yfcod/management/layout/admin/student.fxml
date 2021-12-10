@@ -18,16 +18,16 @@
                <menus>
                   <Menu mnemonicParsing="false" text="用户">
                      <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handleUpdateInfo" text="修改密码" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleLogout" text="登出" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleUpdateInfo" text="修改密码    Ctrl+Shift+U" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleLogout" text="登出    Ctrl+Shift+L" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleQuit" text="退出" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleQuit" text="退出    Ctrl+Q" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="导出">
                      <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handleExportCurrentData" text="导出当前数据" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleExportAllData" text="导出全部数据" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleExportCurrentData" text="导出当前数据    Ctrl+E" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleExportAllData" text="导出全部数据    Ctrl+Alt+E" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" onAction="#handleAbout" text="帮助">

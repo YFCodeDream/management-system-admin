@@ -8,6 +8,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -19,7 +22,7 @@ import static com.yfcod.management.util.ExportExcelUtil.exportExcel;
 import static com.yfcod.management.util.GenerateAlertUtil.showAlert;
 
 @SuppressWarnings("DuplicatedCode")
-public class AdminController extends BaseController{
+public class AdminController extends BaseController implements MenuItemOperation {
     /**
      * 左侧导航栏
      */
@@ -289,7 +292,7 @@ public class AdminController extends BaseController{
      * 导出当前表数据
      */
     @FXML
-    private void handleExportCurrentData() {
+    public void handleExportCurrentData() {
         showExportDialogAndSave(true);
     }
 
@@ -297,7 +300,7 @@ public class AdminController extends BaseController{
      * 导出当前表所有数据
      */
     @FXML
-    private void handleExportAllData() {
+    public void handleExportAllData() {
         showExportDialogAndSave(false);
     }
 
@@ -348,7 +351,7 @@ public class AdminController extends BaseController{
      * 修改当前管理员密码
      */
     @FXML
-    private void handleUpdateInfo() {
+    public void handleUpdateInfo() {
         updateInfo(primaryStage, "系统管理员", currentAdminId);
     }
 
@@ -356,7 +359,7 @@ public class AdminController extends BaseController{
      * 登出操作
      */
     @FXML
-    private void handleLogout() {
+    public void handleLogout() {
         this.main.getPrimaryStage().centerOnScreen();
         this.main.getPrimaryStage().setMaximized(false);
         this.main.getPrimaryStage().setTitle("厦门大学考试管理系统 - 登录");
@@ -373,7 +376,7 @@ public class AdminController extends BaseController{
      * 退出系统
      */
     @FXML
-    private void handleQuit() {
+    public void handleQuit() {
         System.exit(0);
     }
 
@@ -851,6 +854,57 @@ public class AdminController extends BaseController{
     @Override
     public void setDialogStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
+
+        setAdminKeyCodeCombination(primaryStage);
+    }
+
+    private void setAdminKeyCodeCombination(Stage primaryStage) {
+        KeyCodeCombination exportLogCombination = new KeyCodeCombination(KeyCode.L,
+                KeyCombination.CONTROL_DOWN, KeyCombination.ALT_DOWN);
+        primaryStage.getScene().getAccelerators().put(exportLogCombination, this::handleExportLog);
+
+        primaryStage.getScene().getAccelerators().put(
+                new KeyCodeCombination(KeyCode.DIGIT1, KeyCombination.CONTROL_DOWN),
+                () -> {
+                    mainTablePane.getSelectionModel().select(0);
+                    currentTable = mainTablePane.getSelectionModel().getSelectedItem().getText();
+                }
+        );
+        primaryStage.getScene().getAccelerators().put(
+                new KeyCodeCombination(KeyCode.DIGIT2, KeyCombination.CONTROL_DOWN),
+                () -> {
+                    mainTablePane.getSelectionModel().select(1);
+                    currentTable = mainTablePane.getSelectionModel().getSelectedItem().getText();
+                }
+        );
+        primaryStage.getScene().getAccelerators().put(
+                new KeyCodeCombination(KeyCode.DIGIT3, KeyCombination.CONTROL_DOWN),
+                () -> {
+                    mainTablePane.getSelectionModel().select(2);
+                    currentTable = mainTablePane.getSelectionModel().getSelectedItem().getText();
+                }
+        );
+        primaryStage.getScene().getAccelerators().put(
+                new KeyCodeCombination(KeyCode.DIGIT4, KeyCombination.CONTROL_DOWN),
+                () -> {
+                    mainTablePane.getSelectionModel().select(3);
+                    currentTable = mainTablePane.getSelectionModel().getSelectedItem().getText();
+                }
+        );
+        primaryStage.getScene().getAccelerators().put(
+                new KeyCodeCombination(KeyCode.DIGIT5, KeyCombination.CONTROL_DOWN),
+                () -> {
+                    mainTablePane.getSelectionModel().select(4);
+                    currentTable = mainTablePane.getSelectionModel().getSelectedItem().getText();
+                }
+        );
+        primaryStage.getScene().getAccelerators().put(
+                new KeyCodeCombination(KeyCode.DIGIT6, KeyCombination.CONTROL_DOWN),
+                () -> {
+                    mainTablePane.getSelectionModel().select(5);
+                    currentTable = mainTablePane.getSelectionModel().getSelectedItem().getText();
+                }
+        );
     }
 
     @Override

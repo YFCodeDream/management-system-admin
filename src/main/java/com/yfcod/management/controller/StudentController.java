@@ -30,7 +30,7 @@ import static com.yfcod.management.util.ExportExcelUtil.exportExcel;
 import static com.yfcod.management.util.GenerateAlertUtil.showAlert;
 
 @SuppressWarnings("DuplicatedCode")
-public class StudentController extends BaseController {
+public class StudentController extends BaseController implements MenuItemOperation {
     /**
      * 考试安排表
      */
@@ -290,22 +290,22 @@ public class StudentController extends BaseController {
     }
 
     @FXML
-    private void handleExportCurrentData() {
+    public void handleExportCurrentData() {
         showExportDialogAndSave(true);
     }
 
     @FXML
-    private void handleExportAllData() {
+    public void handleExportAllData() {
         showExportDialogAndSave(false);
     }
 
     @FXML
-    private void handleUpdateInfo() {
+    public void handleUpdateInfo() {
         updateInfo(primaryStage, "学生", currentStudentId);
     }
 
     @FXML
-    private void handleLogout() {
+    public void handleLogout() {
         this.main.getPrimaryStage().centerOnScreen();
         this.main.getPrimaryStage().setMaximized(false);
         this.main.getPrimaryStage().setTitle("厦门大学考试管理系统 - 登录");
@@ -319,7 +319,7 @@ public class StudentController extends BaseController {
     }
 
     @FXML
-    private void handleQuit() {
+    public void handleQuit() {
         System.exit(0);
     }
 

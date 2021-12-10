@@ -5,6 +5,7 @@ import javafx.stage.Stage;
 
 import java.util.Objects;
 
+@SuppressWarnings("DuplicatedCode")
 public class GenerateAlertUtil {
     public static void showAlert(Stage primaryStage, String message, String alertType) {
         Alert alert;

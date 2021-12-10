@@ -5,6 +5,9 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
@@ -14,6 +17,24 @@ public class Main extends Application {
     private String currentIdentity;
     private String currentUserId;
     private Stage primaryStage;
+
+    private final KeyCodeCombination loginCombination =
+            new KeyCodeCombination(KeyCode.ENTER);
+    private final KeyCodeCombination updateInfoCombination =
+            new KeyCodeCombination(KeyCode.U,
+                    KeyCombination.CONTROL_DOWN, KeyCombination.SHIFT_DOWN);
+    private final KeyCodeCombination logOutCombination =
+            new KeyCodeCombination(KeyCode.L,
+                    KeyCombination.CONTROL_DOWN, KeyCombination.SHIFT_DOWN);
+    private final KeyCodeCombination quitCombination =
+            new KeyCodeCombination(KeyCode.Q,
+                    KeyCombination.CONTROL_DOWN);
+    private final KeyCodeCombination exportCurrentDataCombination =
+            new KeyCodeCombination(KeyCode.E,
+                    KeyCombination.CONTROL_DOWN);
+    private final KeyCodeCombination exportAllDataCombination =
+            new KeyCodeCombination(KeyCode.E,
+                    KeyCombination.CONTROL_DOWN, KeyCombination.ALT_DOWN);
 
     @Override
     public void start(Stage primaryStage) {
@@ -46,6 +67,8 @@ public class Main extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource(fxmlPath));
             AnchorPane rootPane = loader.load();
+            Scene rootScene = new Scene(rootPane);
+            primaryStage.setScene(rootScene);
 
             if (hasNotLogin) {
                 rootPane.setBackground(new Background(new BackgroundImage(
@@ -67,8 +90,24 @@ public class Main extends Application {
                 if (hasNotLogin) {
                     LoginController loginController = loader.getController();
                     currentIdentity = loginController.getCurrentIdentity();
+
+                    if (loginController.getLeftBtn().getText().equals("登录")) {
+                        rootScene.getAccelerators().put(loginCombination, loginController::handleLeft);
+                    } else {
+                        rootScene.getAccelerators().remove(loginCombination);
+                    }
                 }
                 if (currentIdentity != null) {
+                    rootScene.getAccelerators().put(exportCurrentDataCombination, () ->
+                            ((MenuItemOperation) controller).handleExportCurrentData());
+                    rootScene.getAccelerators().put(exportAllDataCombination, () ->
+                            ((MenuItemOperation) controller).handleExportAllData());
+                    rootScene.getAccelerators().put(updateInfoCombination, () ->
+                            ((MenuItemOperation) controller).handleUpdateInfo());
+                    rootScene.getAccelerators().put(logOutCombination, () ->
+                            ((MenuItemOperation) controller).handleLogout());
+                    rootScene.getAccelerators().put(quitCombination, () ->
+                            ((MenuItemOperation) controller).handleQuit());
                     if (currentIdentity.equals("系统管理员")) {
                         ((AdminController) controller).setCurrentAdminId(currentUserId);
                     }
@@ -85,7 +124,6 @@ public class Main extends Application {
                 }
             }
 
-            primaryStage.setScene(new Scene(rootPane));
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -102,6 +140,10 @@ public class Main extends Application {
 
     public Stage getPrimaryStage() {
         return primaryStage;
+    }
+
+    public KeyCodeCombination getLoginCombination() {
+        return loginCombination;
     }
 
     public static void main(String[] args) {
