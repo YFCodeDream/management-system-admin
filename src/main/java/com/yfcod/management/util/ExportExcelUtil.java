@@ -1,5 +1,6 @@
 package com.yfcod.management.util;
 
+import com.yfcod.management.constant.TableColumnName;
 import javafx.collections.ObservableList;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -12,6 +13,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class ExportExcelUtil {
     public static <T> void exportExcel(Class<T> tClass, ObservableList<T> ts, String excelPath) {
@@ -26,8 +28,16 @@ public class ExportExcelUtil {
         for (int i = 0; i < fields.length; i++) {
             String[] fieldStrArr = fields[i].toString().split("\\.");
             String fieldStr = fieldStrArr[fieldStrArr.length - 1];
+            String fieldStrCopy = fieldStr;
 
-            titleRow.createCell(i).setCellValue(fieldStr);
+            if (fieldStr.equals("password")) continue;
+
+            if (fieldStr.equals("address")) {
+                fieldStrCopy = (tClass.toString().split("\\.")[
+                        tClass.toString().split("\\.").length - 1]).toLowerCase(Locale.ROOT) + "Address";
+            }
+
+            titleRow.createCell(i).setCellValue(TableColumnName.tableColumnNames.get(fieldStrCopy));
 
             for (Method method : methods) {
                 if (method.toString().contains("get") &&

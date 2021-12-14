@@ -98,16 +98,11 @@ public class Main extends Application {
                     }
                 }
                 if (currentIdentity != null) {
-                    rootScene.getAccelerators().put(exportCurrentDataCombination, () ->
-                            ((MenuItemOperation) controller).handleExportCurrentData());
-                    rootScene.getAccelerators().put(exportAllDataCombination, () ->
-                            ((MenuItemOperation) controller).handleExportAllData());
-                    rootScene.getAccelerators().put(updateInfoCombination, () ->
-                            ((MenuItemOperation) controller).handleUpdateInfo());
-                    rootScene.getAccelerators().put(logOutCombination, () ->
-                            ((MenuItemOperation) controller).handleLogout());
-                    rootScene.getAccelerators().put(quitCombination, () ->
-                            ((MenuItemOperation) controller).handleQuit());
+                    rootScene.getAccelerators().put(exportCurrentDataCombination, ((MenuItemOperation) controller)::handleExportCurrentData);
+                    rootScene.getAccelerators().put(exportAllDataCombination, ((MenuItemOperation) controller)::handleExportAllData);
+                    rootScene.getAccelerators().put(updateInfoCombination, ((MenuItemOperation) controller)::handleUpdateInfo);
+                    rootScene.getAccelerators().put(logOutCombination, ((MenuItemOperation) controller)::handleLogout);
+                    rootScene.getAccelerators().put(quitCombination, ((MenuItemOperation) controller)::handleQuit);
                     if (currentIdentity.equals("系统管理员")) {
                         ((AdminController) controller).setCurrentAdminId(currentUserId);
                     }
