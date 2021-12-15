@@ -16,7 +16,9 @@ import java.util.List;
 import java.util.Locale;
 
 public class ExportExcelUtil {
-    public static <T> void exportExcel(Class<T> tClass, ObservableList<T> ts, String excelPath) {
+    public static <T> void exportExcel(Class<T> tClass,
+                                       ObservableList<T> ts,
+                                       String excelPath) {
         HSSFWorkbook hssfWorkbook = new HSSFWorkbook();
         HSSFSheet sheet = hssfWorkbook.createSheet();
         HSSFRow titleRow = sheet.createRow(0);

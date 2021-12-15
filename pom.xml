@@ -62,6 +62,14 @@
             <artifactId>poi</artifactId>
             <version>3.17</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/javax.mail/javax.mail-api -->
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>

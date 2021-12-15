@@ -5,6 +5,10 @@ public interface MenuItemOperation {
 
     void handleExportAllData();
 
+    void handleCurrentSendMail();
+
+    void handleAllSendMail();
+
     void handleUpdateInfo();
 
     void handleLogout();

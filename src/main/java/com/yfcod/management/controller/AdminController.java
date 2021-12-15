@@ -13,6 +13,7 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.apache.log4j.Logger;
 
 import java.io.*;
 import java.sql.Date;
@@ -248,6 +249,8 @@ public class AdminController extends BaseController implements MenuItemOperation
     private Stage primaryStage;
     private Main main;
 
+    private final Logger logger = Logger.getLogger(this.getClass());
+
     /**
      * 初始化方法
      * 1. 初始化导航栏
@@ -293,6 +296,7 @@ public class AdminController extends BaseController implements MenuItemOperation
      */
     @FXML
     public void handleExportCurrentData() {
+        logger.info("export current data -----");
         showExportDialogAndSave(true);
     }
 
@@ -301,6 +305,7 @@ public class AdminController extends BaseController implements MenuItemOperation
      */
     @FXML
     public void handleExportAllData() {
+        logger.info("export all data -----");
         showExportDialogAndSave(false);
     }
 
@@ -347,6 +352,16 @@ public class AdminController extends BaseController implements MenuItemOperation
         }
     }
 
+    @FXML
+    public void handleCurrentSendMail() {
+        showAndSendMail(false);
+    }
+
+    @FXML
+    public void handleAllSendMail() {
+        showAndSendMail(true);
+    }
+
     /**
      * 修改当前管理员密码
      */
@@ -377,6 +392,18 @@ public class AdminController extends BaseController implements MenuItemOperation
      */
     @FXML
     public void handleQuit() {
+        File tempDirectory = new File("temp");
+        if (tempDirectory.isDirectory()) {
+            File[] tempFiles = tempDirectory.listFiles();
+            if (tempFiles != null) {
+                for (File tempFile : tempFiles) {
+                    boolean isDeleted = tempFile.delete();
+                    if (isDeleted) {
+                        logger.info("temp file: " + tempFile + ", has been removed -----");
+                    }
+                }
+            }
+        }
         System.exit(0);
     }
 
@@ -624,6 +651,62 @@ public class AdminController extends BaseController implements MenuItemOperation
         }
     }
 
+    private void showAndSendMail(boolean isCurrent) {
+        if (!isCurrent) {
+            setAllTableData();
+        }
+        switch (currentTable) {
+            case "考试安排表" :
+                exportExcel(Arrangement.class, arrangements, "temp\\temp - arrangement.xls");
+                inputMailAddressAndSend(
+                        primaryStage,
+                        "考试安排表",
+                        "temp\\temp - arrangement.xls"
+                );
+                break;
+            case "课程表":
+                exportExcel(Course.class, courses, "temp\\temp - course.xls");
+                inputMailAddressAndSend(
+                        primaryStage,
+                        "课程表",
+                        "temp\\temp - course.xls"
+                );
+                break;
+            case "成绩表":
+                exportExcel(Score.class, scores, "temp\\temp - score.xls");
+                inputMailAddressAndSend(
+                        primaryStage,
+                        "成绩表",
+                        "temp\\temp - score.xls"
+                );
+                break;
+            case "学生表":
+                exportExcel(Student.class, students, "temp\\temp - student.xls");
+                inputMailAddressAndSend(
+                        primaryStage,
+                        "学生表",
+                        "temp\\temp - student.xls"
+                );
+                break;
+            case "教师表":
+                exportExcel(Teacher.class, teachers, "temp\\temp - teacher.xls");
+                inputMailAddressAndSend(
+                        primaryStage,
+                        "教师表",
+                        "temp\\temp - teacher.xls"
+                );
+                break;
+            case "选课表":
+                exportExcel(Timetable.class, timetables, "temp\\temp - timetable.xls");
+                inputMailAddressAndSend(
+                        primaryStage,
+                        "选课表",
+                        "temp\\temp - timetable.xls"
+                );
+                break;
+        }
+    }
+
     /**
      * 显示导出Excel的对话框
      * @param isCurrent 是否导出当前数据
@@ -670,6 +753,7 @@ public class AdminController extends BaseController implements MenuItemOperation
                 showAlert(primaryStage,
                         "导出数据成功",
                         "information");
+                logger.info("export excel completed -----");
             }
         }
     }

@@ -5,10 +5,7 @@ import com.yfcod.management.dao.ArrangementDao;
 import com.yfcod.management.dao.CourseDao;
 import com.yfcod.management.dao.ScoreDao;
 import com.yfcod.management.dao.TimetableDao;
-import com.yfcod.management.model.Arrangement;
-import com.yfcod.management.model.Course;
-import com.yfcod.management.model.Score;
-import com.yfcod.management.model.Timetable;
+import com.yfcod.management.model.*;
 import com.yfcod.management.util.GenerateBarChartUtil;
 import com.yfcod.management.util.GenerateStackedBarChartUtil;
 import javafx.collections.FXCollections;
@@ -300,6 +297,16 @@ public class StudentController extends BaseController implements MenuItemOperati
     }
 
     @FXML
+    public void handleCurrentSendMail() {
+        showAndSendMail(false);
+    }
+
+    @FXML
+    public void handleAllSendMail() {
+        showAndSendMail(true);
+    }
+
+    @FXML
     public void handleUpdateInfo() {
         updateInfo(primaryStage, "学生", currentStudentId);
     }
@@ -488,6 +495,38 @@ public class StudentController extends BaseController implements MenuItemOperati
                 }
                 currentRankRate.add(rank / ((double) currentScores.size() - 1));
             }
+        }
+    }
+
+    private void showAndSendMail(boolean isCurrent) {
+        if (!isCurrent) {
+            setAllTableData();
+        }
+        switch (mainTablePane.getSelectionModel().getSelectedItem().getText()) {
+            case "考试安排表" :
+                exportExcel(Arrangement.class, arrangements, "temp\\temp - arrangement.xls");
+                inputMailAddressAndSend(
+                        primaryStage,
+                        "考试安排表",
+                        "temp\\temp - arrangement.xls"
+                );
+                break;
+            case "课程表":
+                exportExcel(Course.class, courses, "temp\\temp - course.xls");
+                inputMailAddressAndSend(
+                        primaryStage,
+                        "课程表",
+                        "temp\\temp - course.xls"
+                );
+                break;
+            case "成绩表":
+                exportExcel(Score.class, scores, "temp\\temp - score.xls");
+                inputMailAddressAndSend(
+                        primaryStage,
+                        "成绩表",
+                        "temp\\temp - score.xls"
+                );
+                break;
         }
     }
 

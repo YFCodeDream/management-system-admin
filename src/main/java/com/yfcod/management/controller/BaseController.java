@@ -3,6 +3,7 @@ package com.yfcod.management.controller;
 import com.yfcod.management.Main;
 import com.yfcod.management.dao.*;
 import com.yfcod.management.model.*;
+import com.yfcod.management.util.SendMailUtil;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
@@ -332,6 +333,33 @@ public abstract class BaseController {
                     "修改密码成功",
                     "information");
         });
+    }
+
+    protected void inputMailAddressAndSend(Stage primaryStage,
+                                    String subTitle,
+                                    String excelTempFilePath) {
+        TextInputDialog mailAddressDialog = new TextInputDialog();
+        mailAddressDialog.setTitle("输入发送至邮箱地址");
+        mailAddressDialog.setHeaderText("输入发送至邮箱地址");
+        mailAddressDialog.setContentText("请输入邮箱");
+
+        Optional<String> result = mailAddressDialog.showAndWait();
+        if (result.isPresent()) {
+            try {
+                SendMailUtil.sendMail(
+                        result.get(),
+                        subTitle,
+                        excelTempFilePath
+                );
+                showAlert(primaryStage,
+                        "邮件发送成功，请查收",
+                        "information");
+            } catch (IllegalArgumentException e) {
+                showAlert(primaryStage,
+                        "邮箱输入格式不正确，请重新输入",
+                        "warning");
+            }
+        }
     }
 
     protected void showAbout(Stage primaryStage) {
