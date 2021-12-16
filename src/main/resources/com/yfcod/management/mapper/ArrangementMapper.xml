@@ -25,7 +25,7 @@
         SELECT * FROM arrangement
         <where>
             <if test="examId != null">
-                ExamId = #{examId}
+                AND ExamId = #{examId}
             </if>
             <if test="courseId != null">
                 AND CourseId = #{courseId}
@@ -34,10 +34,10 @@
                 AND NOT DATEDIFF(ExamDate, #{examDate})
             </if>
             <if test="startTime != null">
-                AND StartTime = #{startTime}
+                AND NOT TIMEDIFF(StartTime, TIME_FORMAT(#{startTime}, '%H:%i:%s'))
             </if>
             <if test="endTime != null">
-                AND EndTime = #{endTime}
+                AND NOT TIMEDIFF(EndTime, TIME_FORMAT(#{endTime}, '%H:%i:%s'))
             </if>
             <if test="address != null">
                 AND Address = #{address}

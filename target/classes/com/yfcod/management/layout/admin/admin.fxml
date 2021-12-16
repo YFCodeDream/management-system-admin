@@ -25,6 +25,8 @@
                   </Menu>
               <Menu mnemonicParsing="false" text="数据">
                 <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleShowAllTableData" text="显示所有数据    F5" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
                         <Menu mnemonicParsing="false" text="导出">
                           <items>
                               <MenuItem mnemonicParsing="false" onAction="#handleExportCurrentData" text="导出当前数据    Ctrl+E" />
@@ -46,6 +48,12 @@
                         </Menu>
                 </items>
               </Menu>
+                  <Menu mnemonicParsing="false" text="分享">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#handleCurrentSendMail" text="分享当前至邮箱    Ctrl+M" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleAllSendMail" text="分享全部至邮箱    Ctrl+Shift+M" />
+                    </items>
+                  </Menu>
               <Menu mnemonicParsing="false" onAction="#handleAbout" text="帮助">
                 <items>
                   <MenuItem mnemonicParsing="false" text="关于" />

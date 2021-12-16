@@ -25,6 +25,8 @@
                   </Menu>
               <Menu mnemonicParsing="false" text="数据">
                 <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleShowAllTableData" text="显示所有数据    F5" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
                         <Menu mnemonicParsing="false" text="导出">
                           <items>
                               <MenuItem mnemonicParsing="false" onAction="#handleExportCurrentData" text="导出当前数据    Ctrl+E" />

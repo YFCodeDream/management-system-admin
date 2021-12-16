@@ -24,6 +24,11 @@
                         <MenuItem mnemonicParsing="false" onAction="#handleQuit" text="退出    Ctrl+Q" />
                      </items>
                   </Menu>
+                  <Menu mnemonicParsing="false" text="数据">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleShowAllTableData" text="显示所有数据    F5" />
+                     </items>
+                  </Menu>
                   <Menu mnemonicParsing="false" text="导出">
                      <items>
                         <MenuItem mnemonicParsing="false" onAction="#handleExportCurrentData" text="导出当前数据    Ctrl+E" />
@@ -390,6 +395,7 @@
                                                                               </HBox>
                                                                               <CheckBox fx:id="isOverdueBox" layoutX="80.0" layoutY="200.0" mnemonicParsing="false" text="已结束" AnchorPane.bottomAnchor="44.0" AnchorPane.rightAnchor="988.0" />
                                                                               <Label layoutX="80.0" layoutY="14.0" text="考试编号为自动生成，添加考试安排时无需填写" textFill="RED" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="15.0" />
+                                                                              <CheckBox fx:id="showAllArrangementBox" layoutX="239.0" layoutY="200.0" mnemonicParsing="false" text="显示所有数据" />
                                                                            </children>
                                                                         </AnchorPane>
                                                                      </items>
@@ -463,7 +469,7 @@
                                                                                     <Button layoutX="1012.0" layoutY="160.0" mnemonicParsing="false" onAction="#handleDeleteScore" text="删除成绩" />
                                                                                  </children>
                                                                               </HBox>
-                                                                              <CheckBox fx:id="showAllDataBox" layoutX="651.0" layoutY="113.0" mnemonicParsing="false" text="显示全部数据" />
+                                                                              <CheckBox fx:id="showAllScoreBox" layoutX="651.0" layoutY="113.0" mnemonicParsing="false" text="显示全部数据" />
                                                                            </children>
                                                                         </AnchorPane>
                                                                      </items>
@@ -564,7 +570,7 @@
                                                                                  </children>
                                                                               </VBox>
                                                                               <Button layoutX="651.0" layoutY="185.0" mnemonicParsing="false" onAction="#handleQueryCourse" text="查询课程" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="80.0" />
-                                                                              <CheckBox fx:id="showAllDataBox" layoutX="781.0" layoutY="200.0" mnemonicParsing="false" text="显示全部数据" />
+                                                                              <CheckBox fx:id="showAllCourseBox" layoutX="781.0" layoutY="200.0" mnemonicParsing="false" text="显示全部数据" />
                                                                            </children>
                                                                         </AnchorPane>
                                                                      </items>

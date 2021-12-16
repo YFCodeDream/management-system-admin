@@ -92,7 +92,11 @@ public class TeacherController extends BaseController implements MenuItemOperati
     private TextField scoreScoreField;
 
     @FXML
-    private CheckBox showAllDataBox;
+    private CheckBox showAllScoreBox;
+    @FXML
+    private CheckBox showAllCourseBox;
+    @FXML
+    private CheckBox showAllArrangementBox;
 
     /**
      * 课程安排表
@@ -217,6 +221,10 @@ public class TeacherController extends BaseController implements MenuItemOperati
 
     @FXML
     private void handleQueryArrangement() {
+        if (showAllArrangementBox.isSelected()) {
+            setAllTableData();
+            return;
+        }
         queryArrangement(examIdArrangementField,
                 courseIdArrangementField,
                 examDateArrangementField,
@@ -434,7 +442,7 @@ public class TeacherController extends BaseController implements MenuItemOperati
                 address = (addressBuildingNum + "号楼" + addressClassNum);
             }
 
-            if (showAllDataBox.isSelected()) {
+            if (showAllCourseBox.isSelected()) {
                 setAllTableData();
                 return;
             }
@@ -470,7 +478,7 @@ public class TeacherController extends BaseController implements MenuItemOperati
             Integer score = scoreScoreField.getText().equals("") ?
                     null : Integer.parseInt(scoreScoreField.getText());
 
-            if (showAllDataBox.isSelected()) {
+            if (showAllScoreBox.isSelected()) {
                 setAllTableData();
                 return;
             }
@@ -657,6 +665,11 @@ public class TeacherController extends BaseController implements MenuItemOperati
                     "请输入正确的数值",
                     "error");
         }
+    }
+
+    @FXML
+    public void handleShowAllTableData() {
+        setAllTableData();
     }
 
     @FXML
@@ -949,7 +962,9 @@ public class TeacherController extends BaseController implements MenuItemOperati
     private void setAllComboBox() {
         addressArrangementBox.getItems().addAll("一", "四");
         addressCourseBox.getItems().addAll("一", "四");
-        showAllDataBox.setSelected(true);
+        showAllArrangementBox.setSelected(true);
+        showAllCourseBox.setSelected(true);
+        showAllScoreBox.setSelected(true);
     }
 
     public void setAllTableData() {
@@ -1044,10 +1059,12 @@ public class TeacherController extends BaseController implements MenuItemOperati
         baseCourseSelectedData(selectedCourse,
                 courseIdCourseField,
                 courseNameCourseField,
+                teacherIdCourseField,
                 addressCourseField,
                 addressCourseBox,
                 courseDayCourseField,
-                courseTimePeriodCourseField);
+                courseTimePeriodCourseField,
+                true);
     }
 
     private void setCellValueFactory() {

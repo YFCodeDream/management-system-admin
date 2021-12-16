@@ -291,6 +291,11 @@ public class AdminController extends BaseController implements MenuItemOperation
 
     // 菜单栏操作
 
+    @FXML
+    public void handleShowAllTableData() {
+        setAllTableData();
+    }
+
     /**
      * 导出当前表数据
      */
@@ -778,7 +783,9 @@ public class AdminController extends BaseController implements MenuItemOperation
             while ((temp = reader.readLine()) != null) {
                 if (isConcise) {
                     if (temp.startsWith("DEBUG [JavaFX Application Thread] - ==>") ||
-                            temp.startsWith("DEBUG [JavaFX Application Thread] - <==")) {
+                            temp.startsWith("DEBUG [JavaFX Application Thread] - <==") ||
+                            temp.contains("INFO") ||
+                            temp.contains("ERROR")) {
                         String replace = temp.replace(" [JavaFX Application Thread] -", "");
                         logStringBuilder.append(replace).append("\n");
                     }

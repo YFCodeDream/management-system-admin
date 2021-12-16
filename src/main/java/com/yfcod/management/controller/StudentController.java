@@ -19,6 +19,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.util.*;
@@ -84,7 +85,11 @@ public class StudentController extends BaseController implements MenuItemOperati
     private TextField scoreScoreField;
 
     @FXML
-    private CheckBox showAllDataBox;
+    private CheckBox showAllArrangementBox;
+    @FXML
+    private CheckBox showAllScoreBox;
+    @FXML
+    private CheckBox showAllCourseBox;
 
     /**
      * 课程安排表
@@ -166,6 +171,8 @@ public class StudentController extends BaseController implements MenuItemOperati
     private Stage primaryStage;
     private Main main;
 
+    private final Logger logger = Logger.getLogger(StudentController.class);
+
     @FXML
     private void initialize() {
         setCellValueFactory();
@@ -176,6 +183,10 @@ public class StudentController extends BaseController implements MenuItemOperati
 
     @FXML
     private void handleQueryArrangement() {
+        if (showAllArrangementBox.isSelected()) {
+            setAllTableData();
+            return;
+        }
         queryArrangement(examIdArrangementField,
                 courseIdArrangementField,
                 examDateArrangementField,
@@ -212,7 +223,7 @@ public class StudentController extends BaseController implements MenuItemOperati
                 address = (addressBuildingNum + "号楼" + addressClassNum);
             }
 
-            if (showAllDataBox.isSelected()) {
+            if (showAllCourseBox.isSelected()) {
                 setAllTableData();
                 return;
             }
@@ -263,7 +274,7 @@ public class StudentController extends BaseController implements MenuItemOperati
             Integer score = scoreScoreField.getText().equals("") ?
                     null : Integer.parseInt(scoreScoreField.getText());
 
-            if (showAllDataBox.isSelected()) {
+            if (showAllScoreBox.isSelected()) {
                 setAllTableData();
                 return;
             }
@@ -287,6 +298,11 @@ public class StudentController extends BaseController implements MenuItemOperati
     }
 
     @FXML
+    public void handleShowAllTableData() {
+        setAllTableData();
+    }
+
+    @FXML
     public void handleExportCurrentData() {
         showExportDialogAndSave(true);
     }
@@ -298,17 +314,20 @@ public class StudentController extends BaseController implements MenuItemOperati
 
     @FXML
     public void handleCurrentSendMail() {
-        showAndSendMail(false);
-    }
-
-    @FXML
-    public void handleAllSendMail() {
         showAndSendMail(true);
     }
 
     @FXML
+    public void handleAllSendMail() {
+        showAndSendMail(false);
+    }
+
+    @FXML
     public void handleUpdateInfo() {
+        logger.info("student side -----");
+        logger.info("updating personal information -----");
         updateInfo(primaryStage, "学生", currentStudentId);
+        logger.info("update completed -----");
     }
 
     @FXML
@@ -503,7 +522,7 @@ public class StudentController extends BaseController implements MenuItemOperati
             setAllTableData();
         }
         switch (mainTablePane.getSelectionModel().getSelectedItem().getText()) {
-            case "考试安排表" :
+            case "考试安排" :
                 exportExcel(Arrangement.class, arrangements, "temp\\temp - arrangement.xls");
                 inputMailAddressAndSend(
                         primaryStage,
@@ -511,7 +530,7 @@ public class StudentController extends BaseController implements MenuItemOperati
                         "temp\\temp - arrangement.xls"
                 );
                 break;
-            case "课程表":
+            case "成绩查询":
                 exportExcel(Course.class, courses, "temp\\temp - course.xls");
                 inputMailAddressAndSend(
                         primaryStage,
@@ -519,7 +538,7 @@ public class StudentController extends BaseController implements MenuItemOperati
                         "temp\\temp - course.xls"
                 );
                 break;
-            case "成绩表":
+            case "课表查询":
                 exportExcel(Score.class, scores, "temp\\temp - score.xls");
                 inputMailAddressAndSend(
                         primaryStage,
@@ -604,7 +623,9 @@ public class StudentController extends BaseController implements MenuItemOperati
     private void setAllComboBox() {
         addressArrangementBox.getItems().addAll("一", "四");
         addressCourseBox.getItems().addAll("一", "四");
-        showAllDataBox.setSelected(true);
+        showAllArrangementBox.setSelected(true);
+        showAllCourseBox.setSelected(true);
+        showAllScoreBox.setSelected(true);
     }
 
     private void setTableViewSelectedModel() {
@@ -634,7 +655,14 @@ public class StudentController extends BaseController implements MenuItemOperati
     }
 
     private void fillArrangementSelectedData(Arrangement selectedArrangement) {
-        baseArrangementSelectedData(selectedArrangement, examIdArrangementField, courseIdArrangementField, examDateArrangementField, startTimeArrangementField, endTimeArrangementField, addressArrangementField, addressArrangementBox);
+        baseArrangementSelectedData(selectedArrangement,
+                examIdArrangementField,
+                courseIdArrangementField,
+                examDateArrangementField,
+                startTimeArrangementField,
+                endTimeArrangementField,
+                addressArrangementField,
+                addressArrangementBox);
     }
 
     private void fillScoreSelectedData(Score selectedScore) {
@@ -644,7 +672,15 @@ public class StudentController extends BaseController implements MenuItemOperati
     }
 
     private void fillCourseSelectedData(Course selectedCourse) {
-        baseCourseSelectedData(selectedCourse, courseIdCourseField, courseNameCourseField, addressCourseField, addressCourseBox, courseDayCourseField, courseTimePeriodCourseField);
+        baseCourseSelectedData(selectedCourse,
+                courseIdCourseField,
+                courseNameCourseField,
+                teacherIdCourseField,
+                addressCourseField,
+                addressCourseBox,
+                courseDayCourseField,
+                courseTimePeriodCourseField,
+                false);
     }
 
     @FXML

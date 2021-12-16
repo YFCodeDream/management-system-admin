@@ -190,7 +190,14 @@ public abstract class BaseController {
         }
     }
 
-    protected void baseArrangementSelectedData(Arrangement selectedArrangement, TextField examIdArrangementField, TextField courseIdArrangementField, TextField examDateArrangementField, TextField startTimeArrangementField, TextField endTimeArrangementField, TextField addressArrangementField, ComboBox<String> addressArrangementBox) {
+    protected void baseArrangementSelectedData(Arrangement selectedArrangement,
+                                               TextField examIdArrangementField,
+                                               TextField courseIdArrangementField,
+                                               TextField examDateArrangementField,
+                                               TextField startTimeArrangementField,
+                                               TextField endTimeArrangementField,
+                                               TextField addressArrangementField,
+                                               ComboBox<String> addressArrangementBox) {
         if (selectedArrangement == null) {
             examIdArrangementField.setText("");
             courseIdArrangementField.setText("");
@@ -212,9 +219,21 @@ public abstract class BaseController {
         addressArrangementBox.getSelectionModel().select(split[0]);
     }
 
-    protected void baseCourseSelectedData(Course selectedCourse, TextField courseIdCourseField, TextField courseNameCourseField, TextField addressCourseField, ComboBox<String> addressCourseBox, TextField courseDayCourseField, TextField courseTimePeriodCourseField) {
+    protected void baseCourseSelectedData(Course selectedCourse,
+                                          TextField courseIdCourseField,
+                                          TextField courseNameCourseField,
+                                          TextField teacherIdCourseField,
+                                          TextField addressCourseField,
+                                          ComboBox<String> addressCourseBox,
+                                          TextField courseDayCourseField,
+                                          TextField courseTimePeriodCourseField,
+                                          boolean isTeacher) {
         courseIdCourseField.setText(selectedCourse == null ? "" : String.valueOf(selectedCourse.getCourseId()));
         courseNameCourseField.setText(selectedCourse == null ? "" : selectedCourse.getCourseName());
+
+        if (!isTeacher) {
+            teacherIdCourseField.setText(selectedCourse == null ? "" : selectedCourse.getTeacherId());
+        }
 
         if (selectedCourse == null) {
             addressCourseField.setText("");
