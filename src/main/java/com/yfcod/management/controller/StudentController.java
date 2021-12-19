@@ -363,7 +363,7 @@ public class StudentController extends BaseController implements MenuItemOperati
 
     @FXML
     public void handleQuit() {
-        System.exit(0);
+        baseQuit(logger);
     }
 
     @FXML

@@ -12,7 +12,9 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import org.apache.log4j.Logger;
 
+import java.io.File;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
@@ -397,5 +399,25 @@ public abstract class BaseController {
         showAlert(primaryStage,
                 "关于\n厦门大学考试管理系统\nV1.0.0\n作者：YFCodeDream",
                 "information");
+    }
+
+    protected void baseQuit(Logger logger) {
+        clearTempFile(logger);
+        System.exit(0);
+    }
+
+    public static void clearTempFile(Logger logger) {
+        File tempDirectory = new File("temp");
+        if (tempDirectory.isDirectory()) {
+            File[] tempFiles = tempDirectory.listFiles();
+            if (tempFiles != null) {
+                for (File tempFile : tempFiles) {
+                    boolean isDeleted = tempFile.delete();
+                    if (isDeleted) {
+                        logger.info("temp file: " + tempFile + ", has been removed -----");
+                    }
+                }
+            }
+        }
     }
 }

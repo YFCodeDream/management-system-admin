@@ -397,19 +397,7 @@ public class AdminController extends BaseController implements MenuItemOperation
      */
     @FXML
     public void handleQuit() {
-        File tempDirectory = new File("temp");
-        if (tempDirectory.isDirectory()) {
-            File[] tempFiles = tempDirectory.listFiles();
-            if (tempFiles != null) {
-                for (File tempFile : tempFiles) {
-                    boolean isDeleted = tempFile.delete();
-                    if (isDeleted) {
-                        logger.info("temp file: " + tempFile + ", has been removed -----");
-                    }
-                }
-            }
-        }
-        System.exit(0);
+        baseQuit(logger);
     }
 
     /**

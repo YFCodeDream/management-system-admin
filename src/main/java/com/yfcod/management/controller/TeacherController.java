@@ -22,6 +22,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.sql.Date;
@@ -196,6 +197,8 @@ public class TeacherController extends BaseController implements MenuItemOperati
 
     private Stage primaryStage;
     private Main main;
+
+    private final Logger logger = Logger.getLogger(TeacherController.class);
 
     @FXML
     private void initialize() {
@@ -713,7 +716,7 @@ public class TeacherController extends BaseController implements MenuItemOperati
 
     @FXML
     public void handleQuit() {
-        System.exit(0);
+        baseQuit(logger);
     }
 
     @FXML

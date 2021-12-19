@@ -40,7 +40,7 @@
                   <Menu mnemonicParsing="false" text="分享">
                      <items>
                         <MenuItem mnemonicParsing="false" onAction="#handleCurrentSendMail" text="分享当前至邮箱    Ctrl+M" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleAllSendMail" text="分享全部至邮箱    Ctrl+Shift+M" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleAllSendMail" text="分享全部至邮箱    Ctrl+Alt+M" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#handleSendMailPdf" text="分享成绩单至邮箱    Ctrl+Shift+P" />
                      </items>
