@@ -731,7 +731,8 @@ public class TeacherController extends BaseController implements MenuItemOperati
                 inputMailAddressAndSend(
                         primaryStage,
                         "考试安排表",
-                        "temp\\temp - arrangement.xls"
+                        "temp\\temp - arrangement.xls",
+                        ".xls"
                 );
                 break;
             case "课程表":
@@ -739,7 +740,8 @@ public class TeacherController extends BaseController implements MenuItemOperati
                 inputMailAddressAndSend(
                         primaryStage,
                         "课程表",
-                        "temp\\temp - course.xls"
+                        "temp\\temp - course.xls",
+                        ".xls"
                 );
                 break;
             case "成绩表":
@@ -747,7 +749,8 @@ public class TeacherController extends BaseController implements MenuItemOperati
                 inputMailAddressAndSend(
                         primaryStage,
                         "成绩表",
-                        "temp\\temp - score.xls"
+                        "temp\\temp - score.xls",
+                        ".xls"
                 );
                 break;
         }

@@ -58,6 +58,13 @@ public class CourseDao {
         return courses.get();
     }
 
+    public static Course queryCourseById(Integer courseId) {
+        AtomicReference<Course> course = new AtomicReference<>();
+        courseMapperOperation(courseMapper ->
+                course.set(courseMapper.queryCourseById(courseId)), false);
+        return course.get();
+    }
+
     private interface CourseMapperAdapter {
         void operation(CourseMapper courseMapper);
     }

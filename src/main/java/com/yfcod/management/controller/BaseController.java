@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 import static com.yfcod.management.util.GenerateAlertUtil.showAlert;
 
@@ -356,7 +357,8 @@ public abstract class BaseController {
 
     protected void inputMailAddressAndSend(Stage primaryStage,
                                     String subTitle,
-                                    String excelTempFilePath) {
+                                    String tempFilePath,
+                                    String fileSuffix) {
         TextInputDialog mailAddressDialog = new TextInputDialog();
         mailAddressDialog.setTitle("输入发送至邮箱地址");
         mailAddressDialog.setHeaderText("输入发送至邮箱地址");
@@ -364,21 +366,31 @@ public abstract class BaseController {
 
         Optional<String> result = mailAddressDialog.showAndWait();
         if (result.isPresent()) {
-            try {
+            if (isValidEmail(result.get())) {
                 SendMailUtil.sendMail(
                         result.get(),
                         subTitle,
-                        excelTempFilePath
+                        tempFilePath,
+                        fileSuffix
                 );
                 showAlert(primaryStage,
                         "邮件发送成功，请查收",
                         "information");
-            } catch (IllegalArgumentException e) {
+            } else {
                 showAlert(primaryStage,
-                        "邮箱输入格式不正确，请重新输入",
+                        "邮箱地址不正确，请重新输入",
                         "warning");
             }
         }
+    }
+
+    private static boolean isValidEmail(String email) {
+        if ((email != null) && (!email.isEmpty())) {
+            return Pattern.matches(
+                    "^(\\w+([-.][A-Za-z0-9]+)*){3,18}@\\w+([-.][A-Za-z0-9]+)*\\.\\w+([-.][A-Za-z0-9]+)*$",
+                    email);
+        }
+        return false;
     }
 
     protected void showAbout(Stage primaryStage) {

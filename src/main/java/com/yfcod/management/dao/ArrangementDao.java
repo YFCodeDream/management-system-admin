@@ -52,6 +52,13 @@ public class ArrangementDao {
         return arrangements.get();
     }
 
+    public static Arrangement queryArrangementById(Integer examId) {
+        AtomicReference<Arrangement> arrangement = new AtomicReference<>();
+        arrangementMapperOperation(arrangementMapper ->
+                arrangement.set(arrangementMapper.queryArrangementById(examId)), false);
+        return arrangement.get();
+    }
+
     public static void addArrangement(Arrangement arrangement) {
         arrangementMapperOperation(arrangementMapper ->
                 arrangementMapper.addArrangement(arrangement), true);

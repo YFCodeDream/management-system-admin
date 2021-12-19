@@ -1,13 +1,11 @@
 package com.yfcod.management.controller;
 
 import com.yfcod.management.Main;
-import com.yfcod.management.dao.ArrangementDao;
-import com.yfcod.management.dao.CourseDao;
-import com.yfcod.management.dao.ScoreDao;
-import com.yfcod.management.dao.TimetableDao;
+import com.yfcod.management.dao.*;
 import com.yfcod.management.model.*;
 import com.yfcod.management.util.GenerateBarChartUtil;
 import com.yfcod.management.util.GenerateStackedBarChartUtil;
+import com.yfcod.management.util.PrintPdfUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -16,6 +14,9 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.StackedBarChart;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -313,6 +314,11 @@ public class StudentController extends BaseController implements MenuItemOperati
     }
 
     @FXML
+    private void handlePrintPdf() {
+        showPrintPdfDialogAndSave();
+    }
+
+    @FXML
     public void handleCurrentSendMail() {
         showAndSendMail(true);
     }
@@ -320,6 +326,17 @@ public class StudentController extends BaseController implements MenuItemOperati
     @FXML
     public void handleAllSendMail() {
         showAndSendMail(false);
+    }
+
+    @FXML
+    private void handleSendMailPdf() {
+        exportReportPdf("temp\\temp - school report.pdf");
+        inputMailAddressAndSend(
+                primaryStage,
+                "学生成绩单",
+                "temp\\temp - school report.pdf",
+                ".pdf"
+        );
     }
 
     @FXML
@@ -527,7 +544,8 @@ public class StudentController extends BaseController implements MenuItemOperati
                 inputMailAddressAndSend(
                         primaryStage,
                         "考试安排表",
-                        "temp\\temp - arrangement.xls"
+                        "temp\\temp - arrangement.xls",
+                        ".xls"
                 );
                 break;
             case "成绩查询":
@@ -535,7 +553,8 @@ public class StudentController extends BaseController implements MenuItemOperati
                 inputMailAddressAndSend(
                         primaryStage,
                         "课程表",
-                        "temp\\temp - course.xls"
+                        "temp\\temp - course.xls",
+                        ".xls"
                 );
                 break;
             case "课表查询":
@@ -543,7 +562,8 @@ public class StudentController extends BaseController implements MenuItemOperati
                 inputMailAddressAndSend(
                         primaryStage,
                         "成绩表",
-                        "temp\\temp - score.xls"
+                        "temp\\temp - score.xls",
+                        ".xls"
                 );
                 break;
         }
@@ -582,6 +602,49 @@ public class StudentController extends BaseController implements MenuItemOperati
                         "information");
             }
         }
+    }
+
+    private void showPrintPdfDialogAndSave() {
+        FileChooser fileChooser = new FileChooser();
+
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+                "pdf files (*.pdf)", "*.pdf");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        File file = fileChooser.showSaveDialog(this.main.getPrimaryStage());
+
+        if (file != null) {
+            if (file.getPath().endsWith(".pdf")) {
+                String pdfPath = (file.getPath()).replace("\\", "\\\\");
+
+                exportReportPdf(pdfPath);
+
+                showAlert(primaryStage,
+                        "导出成功",
+                        "information");
+            }
+        }
+    }
+
+    private void exportReportPdf(String pdfPath) {
+        Student currentStudent = StudentDao.queryStudentById(currentStudentId);
+        HashMap<String, String> studentInfoMap = new HashMap<>();
+        studentInfoMap.put("studentId", currentStudentId);
+        studentInfoMap.put("studentName", currentStudent.getStudentName());
+        studentInfoMap.put("major", currentStudent.getMajor());
+
+        List<Score> currentScores = ScoreDao.queryScoreByConditions(new Score(currentStudentId));
+        List<String> examIds = new ArrayList<>();
+        List<String> courses = new ArrayList<>();
+        List<String> scores = new ArrayList<>();
+        for (Score score : currentScores) {
+            examIds.add(String.valueOf(score.getExamId()));
+            scores.add(String.valueOf(score.getScore()));
+            Arrangement arrangement = ArrangementDao.queryArrangementById(score.getExamId());
+            courses.add(CourseDao.queryCourseById(arrangement.getCourseId()).getCourseName());
+        }
+
+        PrintPdfUtil.printPdf(pdfPath, studentInfoMap, examIds, courses, scores);
     }
 
     private void setCellValueFactory() {
@@ -705,6 +768,13 @@ public class StudentController extends BaseController implements MenuItemOperati
     @Override
     public void setDialogStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
+
+        KeyCodeCombination printReportPdfCombination = new KeyCodeCombination(KeyCode.P,
+                KeyCombination.CONTROL_DOWN);
+        KeyCodeCombination sendMailPdfCombination = new KeyCodeCombination(KeyCode.P,
+                KeyCombination.CONTROL_DOWN, KeyCombination.SHIFT_DOWN);
+        primaryStage.getScene().getAccelerators().put(printReportPdfCombination, this::handlePrintPdf);
+        primaryStage.getScene().getAccelerators().put(sendMailPdfCombination, this::handleSendMailPdf);
     }
 
     @Override

@@ -666,7 +666,8 @@ public class AdminController extends BaseController implements MenuItemOperation
                 inputMailAddressAndSend(
                         primaryStage,
                         "考试安排表",
-                        "temp\\temp - arrangement.xls"
+                        "temp\\temp - arrangement.xls",
+                        ".xls"
                 );
                 break;
             case "课程表":
@@ -674,7 +675,8 @@ public class AdminController extends BaseController implements MenuItemOperation
                 inputMailAddressAndSend(
                         primaryStage,
                         "课程表",
-                        "temp\\temp - course.xls"
+                        "temp\\temp - course.xls",
+                        ".xls"
                 );
                 break;
             case "成绩表":
@@ -682,7 +684,8 @@ public class AdminController extends BaseController implements MenuItemOperation
                 inputMailAddressAndSend(
                         primaryStage,
                         "成绩表",
-                        "temp\\temp - score.xls"
+                        "temp\\temp - score.xls",
+                        ".xls"
                 );
                 break;
             case "学生表":
@@ -690,7 +693,8 @@ public class AdminController extends BaseController implements MenuItemOperation
                 inputMailAddressAndSend(
                         primaryStage,
                         "学生表",
-                        "temp\\temp - student.xls"
+                        "temp\\temp - student.xls",
+                        ".xls"
                 );
                 break;
             case "教师表":
@@ -698,7 +702,8 @@ public class AdminController extends BaseController implements MenuItemOperation
                 inputMailAddressAndSend(
                         primaryStage,
                         "教师表",
-                        "temp\\temp - teacher.xls"
+                        "temp\\temp - teacher.xls",
+                        ".xls"
                 );
                 break;
             case "选课表":
@@ -706,7 +711,8 @@ public class AdminController extends BaseController implements MenuItemOperation
                 inputMailAddressAndSend(
                         primaryStage,
                         "选课表",
-                        "temp\\temp - timetable.xls"
+                        "temp\\temp - timetable.xls",
+                        ".xls"
                 );
                 break;
         }
@@ -783,9 +789,7 @@ public class AdminController extends BaseController implements MenuItemOperation
             while ((temp = reader.readLine()) != null) {
                 if (isConcise) {
                     if (temp.startsWith("DEBUG [JavaFX Application Thread] - ==>") ||
-                            temp.startsWith("DEBUG [JavaFX Application Thread] - <==") ||
-                            temp.contains("INFO") ||
-                            temp.contains("ERROR")) {
+                            temp.startsWith("DEBUG [JavaFX Application Thread] - <==")) {
                         String replace = temp.replace(" [JavaFX Application Thread] -", "");
                         logStringBuilder.append(replace).append("\n");
                     }

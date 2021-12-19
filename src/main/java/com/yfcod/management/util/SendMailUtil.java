@@ -4,10 +4,7 @@ import org.apache.log4j.Logger;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
-import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.Session;
-import javax.mail.Transport;
+import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
@@ -28,7 +25,8 @@ public class SendMailUtil {
 
     public static void sendMail(String receiveMailAddress,
                                 String subTitle,
-                                String excelTempFilePath) {
+                                String tempFilePath,
+                                String fileSuffix) {
         logger.info("sending mail -----");
         Properties properties = new Properties();
         properties.put("mail.smtp.host", "smtp.163.com");
@@ -64,10 +62,10 @@ public class SendMailUtil {
 
             MimeBodyPart excelTempFilePart = new MimeBodyPart();
             DataHandler excelTempFileHandler = new DataHandler(
-                    new FileDataSource(excelTempFilePath)
+                    new FileDataSource(tempFilePath)
             );
             excelTempFilePart.setDataHandler(excelTempFileHandler);
-            excelTempFilePart.setFileName(subTitle + ".xls");
+            excelTempFilePart.setFileName(subTitle + fileSuffix);
 
             multipart.addBodyPart(textBodyPart);
             multipart.addBodyPart(excelTempFilePart);

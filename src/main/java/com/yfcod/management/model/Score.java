@@ -12,6 +12,10 @@ public class Score {
         this.examId = examId;
     }
 
+    public Score(String studentId) {
+        this.studentId = studentId;
+    }
+
     public Score(Integer examId, String studentId) {
         this.examId = examId;
         this.studentId = studentId;

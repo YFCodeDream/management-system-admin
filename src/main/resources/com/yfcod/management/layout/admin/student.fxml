@@ -33,12 +33,16 @@
                      <items>
                         <MenuItem mnemonicParsing="false" onAction="#handleExportCurrentData" text="导出当前数据    Ctrl+E" />
                         <MenuItem mnemonicParsing="false" onAction="#handleExportAllData" text="导出全部数据    Ctrl+Alt+E" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#handlePrintPdf" text="打印成绩单    Ctrl+P" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="分享">
                      <items>
                         <MenuItem mnemonicParsing="false" onAction="#handleCurrentSendMail" text="分享当前至邮箱    Ctrl+M" />
                         <MenuItem mnemonicParsing="false" onAction="#handleAllSendMail" text="分享全部至邮箱    Ctrl+Shift+M" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleSendMailPdf" text="分享成绩单至邮箱    Ctrl+Shift+P" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" onAction="#handleAbout" text="帮助">

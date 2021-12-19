@@ -10,7 +10,6 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
@@ -36,16 +35,6 @@ public class Main extends Application {
     private final KeyCodeCombination exportAllDataCombination =
             new KeyCodeCombination(KeyCode.E,
                     KeyCombination.CONTROL_DOWN, KeyCombination.ALT_DOWN);
-    private final KeyCodeCombination currentSendMailCombination =
-            new KeyCodeCombination(KeyCode.M,
-                    KeyCombination.CONTROL_DOWN);
-    private final KeyCodeCombination allSendMailCombination =
-            new KeyCodeCombination(KeyCode.M,
-                    KeyCombination.CONTROL_DOWN, KeyCombination.SHIFT_DOWN);
-    private final KeyCodeCombination showAllTableDataCombination =
-            new KeyCodeCombination(KeyCode.F5);
-
-    private final Logger logger = Logger.getLogger(Main.class);
 
     @Override
     public void start(Stage primaryStage) {
@@ -109,22 +98,20 @@ public class Main extends Application {
                     }
                 }
                 if (currentIdentity != null) {
-                    setKeyCodeCombination(rootScene, (MenuItemOperation) controller);
+                    rootScene.getAccelerators().put(exportCurrentDataCombination, ((MenuItemOperation) controller)::handleExportCurrentData);
+                    rootScene.getAccelerators().put(exportAllDataCombination, ((MenuItemOperation) controller)::handleExportAllData);
+                    rootScene.getAccelerators().put(updateInfoCombination, ((MenuItemOperation) controller)::handleUpdateInfo);
+                    rootScene.getAccelerators().put(logOutCombination, ((MenuItemOperation) controller)::handleLogout);
+                    rootScene.getAccelerators().put(quitCombination, ((MenuItemOperation) controller)::handleQuit);
                     if (currentIdentity.equals("系统管理员")) {
-                        logger.info("system admin logged in -----");
-                        logger.info("current admin id: " + currentUserId);
                         ((AdminController) controller).setCurrentAdminId(currentUserId);
                     }
                     if (currentIdentity.equals("教师")) {
-                        logger.info("teacher side user logged in -----");
-                        logger.info("current teacher id: " + currentUserId);
                         ((TeacherController) controller).setCurrentTeacherId(currentUserId);
                         ((TeacherController) controller).showAllAverageChart();
                         ((TeacherController) controller).setAllTableData();
                     }
                     if (currentIdentity.equals("学生")) {
-                        logger.info("student side user logged in -----");
-                        logger.info("current student id: " + currentUserId);
                         ((StudentController) controller).setCurrentStudentId(currentUserId);
                         ((StudentController) controller).setAllTableData();
                         ((StudentController) controller).showStudentScoreChart();
@@ -136,25 +123,6 @@ public class Main extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private void setKeyCodeCombination(Scene rootScene, MenuItemOperation controller) {
-        rootScene.getAccelerators().put(exportCurrentDataCombination,
-                controller::handleExportCurrentData);
-        rootScene.getAccelerators().put(exportAllDataCombination,
-                controller::handleExportAllData);
-        rootScene.getAccelerators().put(updateInfoCombination,
-                controller::handleUpdateInfo);
-        rootScene.getAccelerators().put(logOutCombination,
-                controller::handleLogout);
-        rootScene.getAccelerators().put(quitCombination,
-                controller::handleQuit);
-        rootScene.getAccelerators().put(currentSendMailCombination,
-                controller::handleCurrentSendMail);
-        rootScene.getAccelerators().put(allSendMailCombination,
-                controller::handleAllSendMail);
-        rootScene.getAccelerators().put(showAllTableDataCombination,
-                controller::handleShowAllTableData);
     }
 
     public void setCurrentUserId(String currentUserId) {

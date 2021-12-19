@@ -14,8 +14,6 @@ public class Arrangement {
     private Time endTime;
     private String address;
 
-
-
     public Arrangement(Integer courseId) {
         this.courseId = courseId;
     }
