@@ -212,6 +212,12 @@ public class TeacherController extends BaseController implements MenuItemOperati
     @FXML
     private void handleStatisticExam() {
         String examId = statisticExamIdField.getText();
+        if (!checkExamIdBelongToCurrentTeacher(Integer.parseInt(examId))) {
+            showAlert(primaryStage,
+                    "该考试代码不为您所有，请重新输入",
+                    "error");
+            return;
+        }
         try {
             subsectionChart.getData().clear();
             showSubsectionChart(Integer.parseInt(examId));
