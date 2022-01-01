@@ -75,8 +75,9 @@
          </font></Button>
       <Label fx:id="registerInfoText" layoutX="211.0" layoutY="128.0" text="注册信息填写" textFill="#ee1414" AnchorPane.leftAnchor="210.0" AnchorPane.topAnchor="130.0" />
       <ComboBox fx:id="identityBox" layoutX="486.0" layoutY="125.0" prefWidth="150.0" AnchorPane.rightAnchor="165.0" AnchorPane.topAnchor="125.0" />
-      <Label fx:id="registerInfoText1" layoutX="495.0" layoutY="495.0" text="该处为管理员注册" textFill="#ee1414" AnchorPane.bottomAnchor="85.0" AnchorPane.leftAnchor="500.0" />
-      <Label fx:id="registerInfoText11" layoutX="505.0" layoutY="505.0" text="须验证已知管理员身份" textFill="#ee1414" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="500.0" />
-      <Label fx:id="registerInfoText111" layoutX="515.0" layoutY="515.0" text="学生、教师不可注册" textFill="#ee1414" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="500.0" />
+      <Label layoutX="495.0" layoutY="495.0" text="该处为管理员注册" textFill="#ee1414" AnchorPane.bottomAnchor="85.0" AnchorPane.leftAnchor="500.0" />
+      <Label layoutX="505.0" layoutY="505.0" text="须验证已知管理员身份" textFill="#ee1414" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="500.0" />
+      <Label layoutX="515.0" layoutY="515.0" text="学生、教师不可注册" textFill="#ee1414" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="500.0" />
+      <Label fx:id="returnToLoginLabel" layoutX="635.0" layoutY="450.0" onMouseClicked="#returnToLogin" text="返回至登录页" textFill="#ee1414" underline="true" />
    </children>
 </AnchorPane>

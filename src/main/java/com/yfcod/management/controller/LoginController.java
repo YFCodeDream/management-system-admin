@@ -35,6 +35,8 @@ public class LoginController extends BaseController{
 
     @FXML
     private Label registerInfoText;
+    @FXML
+    private Label returnToLoginLabel;
 
     private Main main;
     private Stage dialogStage;
@@ -48,7 +50,9 @@ public class LoginController extends BaseController{
         leftBtn.setText("登录");
         rightBtn.setText("注册");
         registerInfoText.setVisible(false);
+        returnToLoginLabel.setVisible(false);
         adminPhoneHBox.setVisible(false);
+
         identityBox.getItems().addAll(
                 "学生",
                 "教师",
@@ -129,6 +133,7 @@ public class LoginController extends BaseController{
             if (checkAdminInvalid()) return;
 
             registerInfoText.setVisible(true);
+            returnToLoginLabel.setVisible(true);
             adminPhoneHBox.setVisible(true);
 
             leftBtn.setText("清空");
@@ -218,6 +223,7 @@ public class LoginController extends BaseController{
         adminPhoneField.setText("");
     }
 
+    @FXML
     private void returnToLogin() {
         clearRegisterInfo();
         leftBtn.setText("登录");
@@ -247,6 +253,7 @@ public class LoginController extends BaseController{
 
     private void clearRegisterInfo() {
         registerInfoText.setVisible(false);
+        returnToLoginLabel.setVisible(false);
         adminPhoneHBox.setVisible(false);
     }
 
