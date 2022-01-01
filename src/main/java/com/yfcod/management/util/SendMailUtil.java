@@ -1,5 +1,6 @@
 package com.yfcod.management.util;
 
+import com.yfcod.management.Main;
 import org.apache.log4j.Logger;
 
 import javax.activation.DataHandler;
@@ -9,15 +10,34 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
 
 public class SendMailUtil {
-    private static final String sendMailAddress = "yfcodedream@163.com";
-    private static final String sendMailNickName = "YFCodeDream";
-    private static final String sendMailNickNameEncoding = "UTF-8";
+    private static final String sendMailAddress;
+    private static final String sendMailNickName;
+    private static final String sendMailNickNameEncoding;
+    private static final String sendMailHost;
+    private static final String sendMailAuthPwd;
+
+    static {
+        Properties properties = new Properties();
+        InputStream inputStream = Main.class.getResourceAsStream("smtp.properties");
+        try {
+            properties.load(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        sendMailAddress = properties.getProperty("sendMailAddress");
+        sendMailNickName = properties.getProperty("sendMailNickName");
+        sendMailNickNameEncoding = properties.getProperty("sendMailNickNameEncoding");
+        sendMailHost = properties.getProperty("sendMailHost");
+        sendMailAuthPwd = properties.getProperty("sendMailAuthPwd");
+    }
 
     private static final String sendMailTitleHeader = "厦门大学考试管理信息系统 - ";
 
@@ -76,13 +96,15 @@ public class SendMailUtil {
             mimeMessage.saveChanges();
             Transport transport = session.getTransport("smtp");
             transport.connect(
-                    "smtp.163.com",
+                    sendMailHost,
                     sendMailAddress,
-                    "CLVLHXNUIMQJSWNB");
+                    sendMailAuthPwd);
             transport.sendMessage(mimeMessage, mimeMessage.getAllRecipients());
             transport.close();
 
-            logger.info(Calendar.getInstance().getTime() + " : # Send mail to " + " success -----");
+            logger.info(Calendar.getInstance().getTime() +
+                    " : # Send mail to " + receiveMailAddress +
+                    " success -----");
         } catch (MessagingException | UnsupportedEncodingException e) {
             logger.error(e.getMessage());
             e.printStackTrace();

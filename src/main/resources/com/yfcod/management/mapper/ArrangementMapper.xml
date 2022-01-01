@@ -60,13 +60,13 @@
                 ExamDate = #{examDate},
             </if>
             <if test="startTime != null">
-                StartTime = #{startTime}
+                StartTime = #{startTime},
             </if>
             <if test="endTime != null">
-                EndTime = #{endTime}
+                EndTime = #{endTime},
             </if>
             <if test="address != null">
-                Address = #{address}
+                Address = #{address},
             </if>
         </set>
         where ExamId = #{examId}

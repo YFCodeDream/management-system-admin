@@ -300,7 +300,7 @@ public class TeacherController extends BaseController implements MenuItemOperati
             return true;
         }
 
-        if (checkCourseIdBelongToCurrentTeacher(courseId)) {
+        if (!checkCourseIdBelongToCurrentTeacher(courseId)) {
             showAlert(primaryStage,
                     "您只能预约您的授课，请重新输入授课代码",
                     "error");
@@ -333,16 +333,8 @@ public class TeacherController extends BaseController implements MenuItemOperati
     }
 
     private boolean checkCourseIdBelongToCurrentTeacher(Integer courseId) {
-        List<Course> courses = CourseDao.queryCourseAll();
-        boolean isFound = false;
-        for (Course course : courses) {
-            if (course.getCourseId().equals(courseId)) {
-                if (course.getTeacherId().equals(currentTeacherId)) {
-                    isFound = true;
-                }
-            }
-        }
-        return isFound;
+        return Objects.equals(CourseDao.queryCourseById(courseId).getTeacherId(),
+                currentTeacherId);
     }
 
     @FXML
@@ -410,6 +402,18 @@ public class TeacherController extends BaseController implements MenuItemOperati
         if (selectedArrangement == null) {
             showAlert(primaryStage,
                     "请选择您要删除的考试安排",
+                    "warning");
+            return;
+        }
+        if (!checkCourseIdBelongToCurrentTeacher(selectedArrangement.getCourseId())) {
+            showAlert(primaryStage,
+                    "您只能删除您的授课的考试安排",
+                    "error");
+            return;
+        }
+        if (!ScoreDao.queryScoreByConditions(new Score(selectedArrangement.getExamId())).isEmpty()) {
+            showAlert(primaryStage,
+                    "该考试代码关联有学生成绩，不允许删除",
                     "warning");
             return;
         }
@@ -513,16 +517,8 @@ public class TeacherController extends BaseController implements MenuItemOperati
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private boolean checkExamIdBelongToCurrentTeacher(Integer examId) {
-        List<Arrangement> arrangements = ArrangementDao.queryArrangementAll();
-        boolean isFound = false;
-        for (Arrangement arrangement : arrangements) {
-            if (arrangement.getExamId().equals(examId)) {
-                if (checkCourseIdBelongToCurrentTeacher(arrangement.getCourseId())) {
-                    isFound = true;
-                }
-            }
-        }
-        return isFound;
+        return checkCourseIdBelongToCurrentTeacher(
+                ArrangementDao.queryArrangementById(examId).getCourseId());
     }
 
     @FXML
