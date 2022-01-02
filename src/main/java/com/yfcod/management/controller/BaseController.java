@@ -352,7 +352,7 @@ public abstract class BaseController {
                     break;
             }
             showAlert(primaryStage,
-                    "修改密码成功",
+                    "修改信息成功",
                     "information");
         });
     }

@@ -777,7 +777,10 @@ public class AdminController extends BaseController implements MenuItemOperation
             while ((temp = reader.readLine()) != null) {
                 if (isConcise) {
                     if (temp.startsWith("DEBUG [JavaFX Application Thread] - ==>") ||
-                            temp.startsWith("DEBUG [JavaFX Application Thread] - <==")) {
+                            temp.startsWith("DEBUG [JavaFX Application Thread] - <==") ||
+                            temp.contains("INFO") ||
+                            temp.contains("WARN") ||
+                            temp.contains("ERROR")) {
                         String replace = temp.replace(" [JavaFX Application Thread] -", "");
                         logStringBuilder.append(replace).append("\n");
                     }

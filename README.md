@@ -1,3 +1,5 @@
+# management-system-admin项目报告
+
 [TOC]
 
 <div STYLE="page-break-after: always;"></div>
@@ -105,7 +107,7 @@
 
 ## 1.3 功能结构图
 
-![](C:\self-documents\studying-resource\senior\management-system\experience\report\课设\考试管理系统.png)
+![](img\考试管理系统.png)
 
 ## 1.4 ER图
 
@@ -113,19 +115,19 @@ ER图也称实体-联系图(Entity Relationship Diagram)，提供了表示实体
 
 它是描述现实世界关系概念模型的有效方法。是表示概念关系模型的一种方式。用“矩形框”表示实体型，矩形框内写明实体名称;用“椭圆图框”或圆角矩形表示实体的属性，并用“实心线段”将其与相应关系的“实体型”连接起来；用”菱形框“表示实体型之间的联系成因，在菱形框内写明联系名，并用”实心线段“分别与有关实体型连接起来，同时在”实心线段“旁标上联系的类型（1:1,1:n或m:n）。
 
-![](C:\self-documents\studying-resource\senior\management-system\experience\report\课设\ER.bmp)
+![](img\ER.bmp)
 
 ## 1.5 实体属性表
 
-|    表名     | 对应实体意义 |                           属性名                           |
-| :---------: | :----------: | :--------------------------------------------------------: |
-|    admin    |    教师表    |                  管理员号，密码，手机号码                  |
-| arrangement |  考试安排表  | 考试代码，课程代码，考试日期，起始时间，结束时间，考试地点 |
-|   course    |    课程表    |  课程代码，课程名称，教师号，授课地点，授课日期，授课时段  |
-|    score    |    成绩表    |                  考试代码，学生学号，分数                  |
-|   student   |    学生表    |   学生学号，学生姓名，性别，生日，民族，专业，年级，密码   |
-|   teacher   |    教师表    |          教师号，教师姓名，性别，生日，民族，密码          |
-|  timetable  |    选课表    |                     学生学号，课程代码                     |
+|     表名      | 对应实体意义 |              属性名              |
+| :---------: | :----: | :---------------------------: |
+|    admin    |  教师表   |         管理员号，密码，手机号码          |
+| arrangement | 考试安排表  | 考试代码，课程代码，考试日期，起始时间，结束时间，考试地点 |
+|   course    |  课程表   | 课程代码，课程名称，教师号，授课地点，授课日期，授课时段  |
+|    score    |  成绩表   |         考试代码，学生学号，分数          |
+|   student   |  学生表   |  学生学号，学生姓名，性别，生日，民族，专业，年级，密码  |
+|   teacher   |  教师表   |     教师号，教师姓名，性别，生日，民族，密码      |
+|  timetable  |  选课表   |           学生学号，课程代码           |
 
 # 二、数据库选择
 
@@ -173,31 +175,31 @@ MySQL Server 具有一组与我们的用户密切合作开发的实用功能。�
 
 ### 管理员表
 
-<img src="C:\self-documents\studying-resource\senior\management-system\experience\report\课设\admin.png" style="zoom:50%;" />
+<img src="img\admin.png" style="zoom:50%;" />
 
 ### 考试安排表
 
-<img src="C:\self-documents\studying-resource\senior\management-system\experience\report\课设\arrangement.png" style="zoom:50%;" />
+<img src="img\arrangement.png" style="zoom:50%;" />
 
 ### 课程表
 
-<img src="C:\self-documents\studying-resource\senior\management-system\experience\report\课设\course.png" style="zoom:50%;" />
+<img src="img\course.png" style="zoom:50%;" />
 
 ### 成绩表
 
-<img src="C:\self-documents\studying-resource\senior\management-system\experience\report\课设\score.png" style="zoom:50%;" />
+<img src="img\score.png" style="zoom:50%;" />
 
 ### 学生表
 
-<img src="C:\self-documents\studying-resource\senior\management-system\experience\report\课设\student.png" style="zoom:50%;" />
+<img src="img\student.png" style="zoom:50%;" />
 
 ### 教师表
 
-<img src="C:\self-documents\studying-resource\senior\management-system\experience\report\课设\teacher.png" style="zoom:50%;" />
+<img src="img\teacher.png" style="zoom:50%;" />
 
 ### 选课表
 
-<img src="C:\self-documents\studying-resource\senior\management-system\experience\report\课设\timetable.png" style="zoom:50%;" />
+<img src="img\timetable.png" style="zoom:50%;" />
 
 # 三、开发方案选择
 
@@ -281,48 +283,41 @@ maven工程的pom.xml文件如下：
             <artifactId>mybatis</artifactId>
             <version>3.4.5</version>
         </dependency>
-
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.11</version>
         </dependency>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.22</version>
             <scope>provided</scope>
         </dependency>
-
         <!-- https://mvnrepository.com/artifact/log4j/log4j -->
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
         </dependency>
-
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
             <version>RELEASE</version>
             <scope>compile</scope>
         </dependency>
-
         <!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
             <version>3.17</version>
         </dependency>
-
         <!-- https://mvnrepository.com/artifact/javax.mail/javax.mail-api -->
         <dependency>
             <groupId>com.sun.mail</groupId>
             <artifactId>javax.mail</artifactId>
             <version>1.6.0</version>
         </dependency>
-
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>itextpdf</artifactId>
@@ -374,5 +369,716 @@ maven工程的pom.xml文件如下：
 
 # 四、系统功能介绍
 
+## 4.1 登录页
 
+登录页实现对应身份登录功能、系统管理员注册功能。
 
+### 对应身份登录
+
+<img src="img\login.png" style="zoom:60%;" />
+
+登录时默认身份为学生。身份选项包括：学生，教师，系统管理员。
+
+登录时，有以下情况：
+
+1. 若用户名输入不正确，则弹出提示框提示用户“未查找到该+<当前身份>”
+2. 若用户名输入正确，密码错误，则弹出提示框提示用户“密码错误，请重新输入”
+
+以学生省份为例，演示上述情况：
+
+<img src="img\login-1.png" style="zoom:60%;" />
+
+<img src="img\login-2.png" style="zoom:60%;" />
+
+登录成功，则弹出提示框“登录成功”，随即进入对应身份的系统。
+
+<img src="img\login-14.png" style="zoom:60%;" />
+
+### 系统管理员注册
+
+在系统管理员进行注册时，选择系统管理员身份，此时注册按钮可以点击，否则注册按钮不允许操作。同时，必须要先输入一位管理员的管理员号与密码，以便验证管理员身份。
+
+<img src="img\login-3.png" style="zoom:60%;" />
+
+验证时，有以下情况：
+
+1. 若管理员号不存在，则弹出提示框提示用户“未查找到该管理员”
+
+<img src="img\login-4.png" style="zoom:60%;" />
+
+2. 若管理员号输入正确，密码输入错误，则会提示用户“密码错误，请重新输入”
+
+<img src="img\login-5.png" style="zoom:60%;" />
+
+3. 当管理员号与密码均正确，进入注册界面
+
+<img src="img\login-6.png" style="zoom:60%;" />
+
+在对应的输入框中输入新用户名，新密码以及电话号码，点击提交即可完成注册。
+
+若要放弃注册，点击提交右侧的“返回至登录页”即可返回。
+
+在注册时，管理员号必须为11位，电话号码必须满足11位，密码不能为空，否则提示用户。
+
+1. 若管理员号不为11位，则提示“管理员号为11位”
+
+<img src="img\login-11.png" style="zoom:60%;" />
+
+2. 若电话号码不为11位，则提示“电话号码的长度必须为11位”
+
+<img src="img\login-12.png" style="zoom:60%;" />
+
+3. 若密码为空，则提示“请输入密码”
+
+<img src="img\login-13.png" style="zoom:60%;" />
+
+4. 若注册的管理员号已存在，则提示“该管理员号已经存在”
+
+<img src="img\login-10.png" style="zoom:60%;" />
+
+下图演示注册功能：
+
+<img src="img\login-7.png" style="zoom:60%;" />
+
+<img src="img\login-8.png" style="zoom:60%;" />
+
+随即自动返回登录页，且自动填充了注册时的管理员号和密码。
+
+<img src="img\login-9.png" style="zoom:60%;" />
+
+## 4.2 学生端
+
+下图演示了学生端首页：
+
+<img src="img\student-1.png" style="zoom:60%;" />
+
+左侧为导航栏，选择对应的查询项即跳转到对应的数据表，默认初始为考试安排表。
+
+### 考试安排查询
+
+学生只能查询自己选的课程对应的考试安排。考试安排查询的结果如首页图。
+
+在查询栏可以输入任何组合信息，系统根据输入的信息进行筛选，方便学生对于考试安排进行查询。
+
+请注意：显示所有数据的选框默认勾选，若要使用查询栏输入筛选信息，请取消勾选此选框。若勾选此选框，点击查询考试安排会显示学生所有考试安排，查询栏信息不生效。
+
+<img src="img\student-3.png" style="zoom:60%;" />
+
+### 成绩查询
+
+选择成绩查询，即可查询目前选课中已有所有成绩。
+
+<img src="img\student-2.png" style="zoom:60%;" />
+
+在查询栏可以输入任何组合信息，系统根据输入的信息进行筛选，方便学生对于考试成绩进行查询。
+
+请注意：显示所有数据的选框默认勾选，若要使用查询栏输入筛选信息，请取消勾选此选框。若勾选此选框，点击查询成绩会显示学生所有考试成绩，查询栏信息不生效。
+
+<img src="img\student-4.png" style="zoom:60%;" />
+
+### 成绩可视化统计
+
+在成绩查询项，有数据查询和可视化统计两个分项，选择可视化统计，即可显示当前学生已有考试成绩的图表统计dashboard，方便学生直观了解成绩信息。
+
+具体可视化统计的信息参见1.2中学生端功能说明。
+
+<img src="img\student-5.png" style="zoom:60%;" />
+
+排名占比表示当前成绩超过了本次参与该考试的学生百分比。如上图，学号为34520182200001的学生在数据结构与算法课程考试中击败了百分之二十五的学生，在数据结构实验中击败了百分之五十的学生。
+
+已有成绩统计表示当前学生已有成绩的统计。如上图，学号为34520182200001的学生数据结构与算法考试成绩为77分，数据结构实验为86分。
+
+最高最低分及其课程名称显示在右下角，最高分以绿色显示，最低分以红色显示。
+
+### 课表查询
+
+选择课表查询，即可查询当前学生所有选课信息。
+
+<img src="img\student-6.png" style="zoom:60%;" />
+
+在查询栏可以输入任何组合信息，系统根据输入的信息进行筛选，方便学生对于选课进行查询。
+
+请注意：显示所有数据的选框默认勾选，若要使用查询栏输入筛选信息，请取消勾选此选框。若勾选此选框，点击查询课程会显示学生所有选课记录，查询栏信息不生效。
+
+<img src="img\student-7.png" style="zoom:60%;" />
+
+### 打印成绩单
+
+在菜单栏选择：导出→打印成绩单，或者键入快捷键“Ctrl+P”，弹出文件保存的对话框，选择文件路径，点击保存即可打印学生成绩单。
+
+<img src="img\student-8.png" style="zoom:60%;" />
+
+<img src="img\student-9.png" style="zoom:60%;" />
+
+点击保存，显示导出成功，表面成绩单已打印。
+
+<img src="img\student-10.png" style="zoom:60%;" />
+
+下图为打印的PDF成绩单：
+
+<img src="img\student-11.png" style="zoom:60%;" />
+
+页眉左端显示“厦门大学考试管理系统印制 日期：+<打印日期>”，页眉右端显示页码。成绩单内容包含学生学号，学生姓名，专业，以及已有成绩的考试代码，课程名称，考试成绩。同时添加水印“XMU-MIS”进行防伪。
+
+### 分享成绩单至邮箱
+
+在菜单栏选择：分享→分享成绩单至邮箱，或者键入快捷键“Ctrl+Shift+P”，弹出输入邮箱对话框。
+
+<img src="img\student-12.png" style="zoom:60%;" />
+
+<img src="img\student-14.png" style="zoom:60%;" />
+
+若输入邮箱格式不正确，系统弹出提示框“邮箱格式不正确，请重新输入”。
+
+<img src="img\student-13.png" style="zoom:60%;" />
+
+点击确定，即可将成绩单发送至指定邮箱。
+
+<img src="img\student-15.png" style="zoom:60%;" />
+
+在指定邮箱查看邮件。
+
+<img src="img\student-16.png" style="zoom:60%;" />
+
+邮件发件人昵称，发件人邮箱地址等信息在相关配置文件里，邮件正文为：厦门大学考试管理信息系统导出：学生成绩单，已发送，请查收。PDF成绩单在附件。
+
+下图为附件预览：
+
+<img src="img\student-17.png" style="zoom:60%;" />
+
+## 4.3 教师端
+
+下图演示了教师端首页。
+
+<img src="img\teacher-1.png" style="zoom:60%;" />
+
+教师端有两项功能区：考试统计，数据管理。
+
+### 考试统计
+
+考试统计dashboard提供两个分区：授课均分统计，单次考试数据统计。
+
+授课均分统计如首页图。
+
+单次考试数据统计分区提供对单次考试进行可视化统计的功能。在右上角输入考试代码，进行可视化统计。
+
+在进行单次考试的可视化统计时，只能可视化当前教师发布的考试代码对应的考试信息，否则系统弹出提示框“该考试代码不为您所有，请重新输入”。
+
+<img src="img\teacher-2.png" style="zoom:60%;" />
+
+查询考试信息成功后，显示对应的考试科目，并给出各分段人数统计的扇形图，并给出最高最低分及对应的学生学号。
+
+<img src="img\teacher-3.png" style="zoom:60%;" />
+
+### 数据管理
+
+#### 考试安排查询
+
+教师能查询所有考试安排，方便进行预约管理。
+
+在查询栏可以输入任何组合信息，系统根据输入的信息进行筛选，方便教师对于考试安排进行查询。
+
+请注意：显示所有数据的选框默认勾选，若要使用查询栏输入筛选信息，请取消勾选此选框。若勾选此选框，点击查询考试安排会显示所有考试安排，查询栏信息不生效。
+
+<img src="img\teacher-4.png" style="zoom:60%;" />
+
+<img src="img\teacher-5.png" style="zoom:60%;" />
+
+#### 考试安排添加
+
+添加考试安排时，有以下情况：
+
+1. 若输入信息不完整，则弹出提示框“请输入完整信息”
+2. 若输入的课程代码不属于当前教师，则弹出提示框“您只能预约您的授课，请重新输入授课代码”
+3. 若当前预约的考试地点和考试时间已有预约，则弹出提示框“您预约的考试与其余考试冲突，请重新选择”
+
+篇幅原因，以上情况不一一给出图片演示。
+
+下图演示成功预约考试：
+
+先将此考试信息删除，以便演示添加操作。
+
+<img src="img\teacher-6.png" style="zoom:60%;" />
+
+为和之前的信息区分，将考试日期设置为2021-11-29，将起始时间和结束时间延后两小时。
+
+<img src="img\teacher-7.png" style="zoom:60%;" />
+
+点击添加考试安排，显示“预约成功，考试安排已添加”，说明预约成功。
+
+<img src="img\teacher-8.png" style="zoom:60%;" />
+
+系统立即更新信息，显示新预约的考试信息，可观察到系统自动分配了新考试代码。
+
+<img src="img\teacher-9.png" style="zoom:60%;" />
+
+#### 考试安排修改
+
+以上述添加的考试安排为例，修改其考试日期为2021-11-30。
+
+点击对应的考试安排项，进行考试安排修改。
+
+同理，有以下情况：
+
+1. 若输入信息不完整，则弹出提示框“请输入完整信息”
+2. 若输入的课程代码不属于当前教师，则弹出提示框“您只能预约您的授课，请重新输入授课代码”
+3. 若当前预约的考试地点和考试时间已有预约，则弹出提示框“您预约的考试与其余考试冲突，请重新选择”
+
+篇幅原因，以上情况不一一给出图片演示。
+
+下图演示成功修改考试：
+
+<img src="img\teacher-10.png" style="zoom:60%;" />
+
+点击修改考试安排，显示“考试安排已修改”，说明修改成功。
+
+<img src="img\teacher-11.png" style="zoom:60%;" />
+
+系统立即更新信息，可观察到考试日期已经修改。
+
+<img src="img\teacher-12.png" style="zoom:60%;" />
+
+#### 考试安排删除
+
+删除考试安排时，有以下情况：
+
+1. 未选择任何考试信息项，则系统显示“请选择您要删除的考试安排”
+2. 若输入的课程代码不属于当前教师，则弹出提示框“您只能删除您的授课的考试安排”
+3. 若该考试代码关联有学生成绩，则弹出提示框“该考试代码关联有学生成绩，不允许删除”
+
+篇幅原因，以上情况不一一给出图片演示。
+
+以上述添加的考试安排为例，下图演示成功删除考试：
+
+选择之前添加的考试安排，点击删除考试安排，显示“考试安排已删除”，说明删除成功。
+
+<img src="img\teacher-13.png" style="zoom:60%;" />
+
+系统立即刷新信息，之前添加的考试安排已删除。
+
+<img src="img\teacher-14.png" style="zoom:60%;" />
+
+#### 成绩管理
+
+成绩数据的增删改查与考试安排相似，此处不作过多详细描述，仅列出相关结果。
+
+查询成绩时，有以下情况：
+
+1. 若该考试代码不属于当前教师，则弹出提示框“该考试代码不为您所有，请重新输入”
+
+添加成绩时，有以下情况：
+
+1. 若输入信息不完整，则提示“请输入完整信息”
+2. 若该考试代码不属于当前教师，则弹出提示框“该考试代码不为您所有，请重新输入”
+3. 若该学生并未选择此课程，则提示“此学生未选择您的授课”
+4. 若学生成绩已存在，则提示“此学生成绩信息已存在”
+
+修改成绩时，有以下情况：
+
+1. 若输入信息不完整，则提示“请输入完整信息”
+2. 若该考试代码不属于当前教师，则弹出提示框“该考试代码不为您所有，请重新输入”
+3. 若该学生并未选择此课程，则提示“此学生未选择您的授课”
+
+删除成绩时，有以下情况：
+
+1. 未选择任何考试信息项，则系统显示“请选择您要删除的考试安排”
+
+#### 课表查询
+
+选择课表查询，即可查询当前教师所有授课信息。
+
+<img src="img\teacher-15.png" style="zoom:60%;" />
+
+在查询栏可以输入任何组合信息，系统根据输入的信息进行筛选，方便教师对于选课进行查询。
+
+请注意：显示所有数据的选框默认勾选，若要使用查询栏输入筛选信息，请取消勾选此选框。若勾选此选框，点击查询课程会显示所有授课，查询栏信息不生效。
+
+<img src="img\teacher-16.png" style="zoom:60%;" />
+
+## 4.4 系统管理员端
+
+下图演示了系统管理员端首页。
+
+<img src="img\admin-1.png" style="zoom:60%;" />
+
+左侧为导航栏，选择对应的查询项即跳转到对应的数据表，默认初始为考试安排表。
+
+中间的工作区是此系统数据库的所有数据，方便管理员进行监测。
+
+右侧是系统日志，提供该系统的后端日志查看窗口。
+
+#### 数据查询
+
+数据查询与学生端和教师端相似，不同的是系统管理员可以查询所有数据。
+
+#### 日志查看
+
+右侧日志窗口默认选择简洁模式，仅显示数据操作与功能调用的日志信息。
+
+点击显示完整日志，即可查看系统记录的完整日志，同时按钮文字变成显示简洁日志。
+
+<img src="img\admin-2.png" style="zoom:60%;" />
+
+#### 日志导出
+
+在菜单栏选择：数据→导出日志，或者键入快捷键“Ctrl+Alt+L”，弹出文件保存的对话框，选择文件路径，点击保存即可导出日志。
+
+<img src="img\admin-3.png" style="zoom:60%;" />
+
+下图演示简洁日志的导出：
+
+<img src="img\admin-4.png" style="zoom:60%;" />
+
+点击保存，显示“导出日志成功”，说明成功导出日志。
+
+<img src="img\admin-5.png" style="zoom:60%;" />
+
+查看导出的日志。
+
+<img src="img\admin-6.png" style="zoom:60%;" />
+
+可观察到记录的日志里包含数据库SQL操作，发送邮件，学生端教师端登入信息等，方便系统管理员对该系统进行运维。
+
+## 4.5 辅助功能
+
+辅助功能在学生端，教师端，系统管理员端均有实现，这一部分功能的演示以系统管理员端为例。
+
+### 显示所有数据
+
+在菜单栏选择：数据→显示所有数据，或者键入快捷键“F5”，则刷新并重新显示所有数据。
+
+<img src="img\extra-1.png" style="zoom:60%;" />
+
+### 导出数据至xls
+
+#### 当前数据
+
+在菜单栏选择：数据→导出→导出当前数据，或者键入快捷键“Ctrl+E”，弹出文件保存的对话框，选择文件路径，点击保存即可。
+
+<img src="img\extra-2.png" style="zoom:60%;" />
+
+<img src="img\extra-3.png" style="zoom:60%;" />
+
+点击保存，显示“导出数据成功”，说明已导出数据至xls。
+
+<img src="img\extra-4.png" style="zoom:60%;" />
+
+查看已导出的xls文件。
+
+<img src="img\extra-5.png" style="zoom:60%;" />
+
+可观察到已经将数据导出至xls文件，excel作为普及度更广的操作数据的方式，可以极大方便系统用户对于数据的处理。
+
+#### 所有数据
+
+在菜单栏选择：数据→导出→导出所有数据，或者键入快捷键“Ctrl+Alt+E”，弹出文件保存的对话框，选择文件路径，点击保存即可。
+
+<img src="img\extra-6.png" style="zoom:60%;" />
+
+<img src="img\extra-7.png" style="zoom:60%;" />
+
+### 分享数据至邮箱
+
+同理，分享数据至邮箱也分为当前数据和所有数据，对应的快捷键分别为“Ctrl+M”和“Ctrl+Alt+M”。
+
+<img src="img\extra-8.png" style="zoom:60%;" />
+
+下图演示分享全部至邮箱。
+
+与学生端分享成绩单至邮箱的功能类似，系统先弹出对话框要求输入指定邮箱地址并进行校验。
+
+在指定邮箱查看邮件。
+
+<img src="img\extra-9.png" style="zoom:60%;" />
+
+邮件发件人昵称，发件人邮箱地址等信息在相关配置文件里，邮件正文为：厦门大学考试管理信息系统导出：<导出的数据表名称>，已发送，请查收。xls数据表在附件。
+
+下图为附件预览：
+
+<img src="img\extra-10.png" style="zoom:60%;" />
+
+### 修改个人信息
+
+系统管理员修改的个人信息还包括手机号码，学生端和教师端仅能修改密码。
+
+在菜单栏选择：用户/管理员→修改信息，或者键入快捷键“Ctrl+Shift+U”，则弹出修改个人信息对话框。
+
+<img src="img\extra-11.png" style="zoom:60%;" />
+
+修改个人信息时，有以下情况：
+
+1. 若输入密码为空，则提示“请输入新密码”
+2. 若两次输入密码不一致，则提示“两次输入密码不一致”
+3. 若手机号不为空且不足11位，则提示“手机号不足11位”
+
+若修改成功，则提示“修改信息成功”。
+
+<img src="img\extra-12.png" style="zoom:60%;" />
+
+### 用户登出
+
+在菜单栏选择：用户/管理员→登出，或者键入快捷键“Ctrl+Shift+L”，则登出当前用户。
+
+<img src="img\extra-13.png" style="zoom:60%;" />
+
+<img src="img\extra-14.png" style="zoom:60%;" />
+
+### 退出系统
+
+在菜单栏选择：用户/管理员→退出，或者键入快捷键“Ctrl+Shift+L”，则登出当前用户。
+
+<img src="img\extra-15.png" style="zoom:60%;" />
+
+# 五、项目总结
+
+本次课程设计，从技术选型与项目架构，到完整项目开发流程，由我自己独立完成。整个项目体量较大（约有几千行代码），我花费了较多时间才可完成，这个过程极大锻炼了我的技术水平，让我体验到了工程化项目的开发过程。
+
+# 六、附录
+
+## 6.1 项目目录结构
+
+项目目录树如下：
+
+management-system-admin
+
+│  pom.xml maven依赖pom坐标文件
+
+│  README.md 项目报告文件  
+
+├─log
+
+│      debug.txt log4j日志文件
+
+├─src 源代码
+
+│  └─main
+
+│      ├─java
+
+│      │  └─com
+
+│      │      └─yfcod
+
+│      │          └─management
+
+│      │              │  Main.java 主入口文件
+
+│      │              ├─constant 常量包
+
+│      │              │      TableColumnName.java 表头常量
+
+│      │              ├─controller 控制器包
+
+│      │              │      AdminController.java 管理员端应用控制器
+
+│      │              │      BaseController.java 所有应用控制器的抽象基类，实现某些基本功能
+
+│      │              │      LoginController.java 登录页应用控制器
+
+│      │              │      MenuItemOperation.java 定义菜单栏公共操作的接口，所有应用控制器必须实现
+
+│      │              │      StudentController.java 学生端应用控制器
+
+│      │              │      TeacherController.java 教师端应用控制器
+
+│      │              ├─dao 数据库访问实现类包
+
+│      │              │      AdminDao.java 管理员数据库访问实现类
+
+│      │              │      ArrangementDao.java 考试安排数据库访问实现类
+
+│      │              │      CourseDao.java 课程数据库访问实现类
+
+│      │              │      ScoreDao.java 成绩数据库访问实现类
+
+│      │              │      StudentDao.java 学生数据库访问实现类
+
+│      │              │      TeacherDao.java 教师数据库访问实现类
+
+│      │              │      TimetableDao.java 选课记录数据库访问实现类
+
+│      │              ├─mapper 数据库映射接口包
+
+│      │              │      AdminMapper.java 管理员数据库访问接口
+
+│      │              │      ArrangementMapper.java 考试安排数据库访问接口
+
+│      │              │      CourseMapper.java 课程数据库访问接口
+
+│      │              │      ScoreMapper.java 成绩数据库访问接口
+
+│      │              │      StudentMapper.java 学生数据库访问接口
+
+│      │              │      TeacherMapper.java 教师数据库访问接口
+
+│      │              │      TimetableMapper.java 选课记录数据库访问接口
+
+│      │              ├─model Java bean对象包
+
+│      │              │      Admin.java 管理员模型
+
+│      │              │      Arrangement.java 考试安排模型
+
+│      │              │      Course.java 课程模型
+
+│      │              │      Score.java 成绩模型
+
+│      │              │      Student.java 学生模型
+
+│      │              │      Teacher.java 教师模型
+
+│      │              │      Timetable.java 选课记录模型
+
+│      │              ├─util 工具包
+
+│      │              │      BaseBarChartUtil.java 所有条形图绘制工具类的抽象基类，完成某些基本方法
+
+│      │              │      ExportExcelUtil.java xls导出工具类
+
+│      │              │      GenerateAlertUtil.java 弹窗生成工具类
+
+│      │              │      GenerateBarChartUtil.java 基本条形图绘制工具类
+
+│      │              │      GeneratePieChartUtil.java 基本饼图绘制工具类
+
+│      │              │      GenerateStackedBarChartUtil.java 堆叠条形图绘制工具类
+
+│      │              │      PrintPdfUtil.java PDF导出工具类
+
+│      │              │      SelfHeaderFooter.java 自定义页眉工具类
+
+│      │              │      SendMailUtil.java 邮件发送工具类
+
+│      │              │      Watermark.java 水印工具类
+
+│      │              └─wrapper 包装类包，负责与fxml页面交互（unused）
+
+│      │                      AdminWrapper.java
+
+│      │                      ArrangementWrapper.java
+
+│      │                      CourseWrapper.java
+
+│      │                      ScoreWrapper.java
+
+│      │                      StudentWrapper.java
+
+│      │                      TeacherWrapper.java
+
+│      │                      TimetableWrapper.java
+
+│      └─resources
+
+│          │  log4j.properties log4j配置文件
+
+│          ├─com
+
+│          │  └─yfcod
+
+│          │      └─management
+
+│          │          │  db.properties 数据库配置文件
+
+│          │          │  mybatis-config.xml mybatis配置文件
+
+│          │          │  smtp.properties smtp邮件服务协议配置文件
+
+│          │          ├─img 图片资源
+
+│          │          │      login-bg-autumn-cp.jpg
+
+│          │          │      login-bg-autumn.jpg
+
+│          │          │      xmu-logo.png
+
+│          │          ├─layout 布局文件
+
+│          │          │  ├─admin
+
+│          │          │  │      admin.fxml 管理员页面
+
+│          │          │  │      ComplexApplication.css 页面基本css文件
+
+│          │          │  │      student.fxml 学生端页面
+
+│          │          │  │      teacher.fxml 教师端页面
+
+│          │          │  └─login
+
+│          │          │          BasicApplication.css 页面基本css文件
+
+│          │          │          login.fxml 登录页
+
+│          │          └─mapper ORM层SQL映射文件
+
+│          │                  AdminMapper.xml 
+
+│          │                  ArrangementMapper.xml
+
+│          │                  CourseMapper.xml
+
+│          │                  ScoreMapper.xml
+
+│          │                  StudentMapper.xml
+
+│          │                  TeacherMapper.xml
+
+│          │                  TimetableMapper.xml
+
+│          └─sql 创建数据库SQL文件
+
+│                  create-admin.sql
+
+│                  create-arrangement.sql
+
+│                  create-course.sql
+
+│                  create-db.sql
+
+│                  create-score.sql
+
+│                  create-student.sql
+
+│                  create-teacher.sql
+
+│                  create-timetable.sql
+
+├─target 编译后的字节码文件夹
+
+└─temp 临时文件夹，临时文件自动删除
+
+## 6.2 项目开发IDE选择及配置方法
+
+### 开发IDE
+
+该项目是Jetbrains IDEA开发的maven工程。IDEA为最新版2021.3.1。
+
+### maven版本
+
+maven版本为3.6.3，请确保配置好MAVEN_HOME环境变量，以及在IDEA中配置好安装的maven。
+
+运行此工程前，建议对pom.xml进行reload project操作。
+
+<img src="img\maven-1.png" style="zoom:60%;" />
+
+### 样例数据库
+
+请先配置好MySQL数据库服务，关于MySQL的配置，请参阅官方文档。本报告不予赘述。
+
+请按照运行此项目MySQL服务属性，更改db.properties配置文件。
+
+配置完毕，请先执行create-db.sql文件，该SQL代码执行建立数据库操作。
+
+再执行余下的SQL文件，建立数据表并添加数据。
+
+## 6.3 项目地址及版本管理
+
+该项目存储库由我托管在本人的GitHub下，项目地址：https://github.com/YFCodeDream/management-system-admin
+
+关于此存储库的master branch的所有commit记录，可在：https://github.com/YFCodeDream/management-system-admin/commits/master处查看。
+
+由于此项目包含敏感信息，不日会将个人邮箱的smtp服务关闭，请更改smtp.properties配置文件以确保邮件服务可正常运行。
+
+目前最新版本为1.0.6。
+
+欢迎在issue区，pull request区留言。如果认可我的项目，请给此存储库star。

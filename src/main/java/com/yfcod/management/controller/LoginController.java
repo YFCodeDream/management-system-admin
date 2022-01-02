@@ -248,6 +248,11 @@ public class LoginController extends BaseController{
             clearRegisterInfo();
             return true;
         }
+        if (adminPhone.length() != 11) {
+            showAlert("电话号码的长度必须为11位", "warning");
+            clearRegisterInfo();
+            return true;
+        }
         return false;
     }
 
