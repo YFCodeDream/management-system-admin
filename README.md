@@ -107,7 +107,7 @@
 
 ## 1.3 功能结构图
 
-![](img\考试管理系统.png)
+<img src="img\考试管理系统.png" style="zoom:50%;" />
 
 ## 1.4 ER图
 
@@ -115,7 +115,7 @@ ER图也称实体-联系图(Entity Relationship Diagram)，提供了表示实体
 
 它是描述现实世界关系概念模型的有效方法。是表示概念关系模型的一种方式。用“矩形框”表示实体型，矩形框内写明实体名称;用“椭圆图框”或圆角矩形表示实体的属性，并用“实心线段”将其与相应关系的“实体型”连接起来；用”菱形框“表示实体型之间的联系成因，在菱形框内写明联系名，并用”实心线段“分别与有关实体型连接起来，同时在”实心线段“旁标上联系的类型（1:1,1:n或m:n）。
 
-![](img\ER.bmp)
+<img src="img\ER.bmp" style="zoom:50%;" />
 
 ## 1.5 实体属性表
 
@@ -153,7 +153,7 @@ SQL 由 ANSI/ISO SQL 标准定义。SQL 标准自 1986 年以来一直在发展�
 
 3. MySQL 软件是开源的。
 
-开源意味着任何人都可以使用和修改软件。任何人都可以从 Internet 下载 MySQL 软件并使用它，而无需支付任何费用。如果您愿意，您可以研究源代码并对其进行更改以满足您的需要。MySQL 软件使用 GPL（GNU 通用公共许可证）http://www.fsf.org/licenses/来定义在不同情况下您可以和不可以使用该软件做什么。如果您对 GPL 感到不舒服或需要将 MySQL 代码嵌入到商业应用程序中，您可以从我们这里购买商业许可版本。有关更多信息，请参阅 MySQL 许可概述(http://www.mysql.com/company/legal/licensing/）。
+开源意味着任何人都可以使用和修改软件。任何人都可以从 Internet 下载 MySQL 软件并使用它，而无需支付任何费用。如果您愿意，您可以研究源代码并对其进行更改以满足您的需要。MySQL 软件使用 GPL（GNU 通用公共许可证）http://www.fsf.org/licenses/ 来定义在不同情况下您可以和不可以使用该软件做什么。如果您对 GPL 感到不舒服或需要将 MySQL 代码嵌入到商业应用程序中，您可以从我们这里购买商业许可版本。有关更多信息，请参阅 MySQL 许可概述(http://www.mysql.com/company/legal/licensing/）。
 
 4. MySQL 数据库服务器非常快速、可靠、可扩展且易于使用。
 
@@ -1075,7 +1075,7 @@ maven版本为3.6.3，请确保配置好MAVEN_HOME环境变量，以及在IDEA�
 
 该项目存储库由我托管在本人的GitHub下，项目地址：https://github.com/YFCodeDream/management-system-admin
 
-关于此存储库的master branch的所有commit记录，可在：https://github.com/YFCodeDream/management-system-admin/commits/master处查看。
+关于此存储库的master branch的所有commit记录，可在：https://github.com/YFCodeDream/management-system-admin/commits/master 处查看。
 
 由于此项目包含敏感信息，不日会将个人邮箱的smtp服务关闭，请更改smtp.properties配置文件以确保邮件服务可正常运行。
 
