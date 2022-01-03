@@ -839,213 +839,112 @@ maven工程的pom.xml文件如下：
 
 项目目录树如下：
 
+```json
 management-system-admin
-
 │  pom.xml maven依赖pom坐标文件
-
 │  README.md 项目报告文件  
-
 ├─log
-
 │      debug.txt log4j日志文件
-
 ├─src 源代码
-
 │  └─main
-
 │      ├─java
-
 │      │  └─com
-
 │      │      └─yfcod
-
 │      │          └─management
-
 │      │              │  Main.java 主入口文件
-
 │      │              ├─constant 常量包
-
 │      │              │      TableColumnName.java 表头常量
-
 │      │              ├─controller 控制器包
-
 │      │              │      AdminController.java 管理员端应用控制器
-
 │      │              │      BaseController.java 所有应用控制器的抽象基类，实现某些基本功能
-
 │      │              │      LoginController.java 登录页应用控制器
-
-│      │              │      MenuItemOperation.java 定义菜单栏公共操作的接口，所有应用控制器必须实现
-
+│      │              │      MenuItemOperation.java 菜单栏公共操作的接口，所有应用控制器须实现
 │      │              │      StudentController.java 学生端应用控制器
-
 │      │              │      TeacherController.java 教师端应用控制器
-
 │      │              ├─dao 数据库访问实现类包
-
 │      │              │      AdminDao.java 管理员数据库访问实现类
-
 │      │              │      ArrangementDao.java 考试安排数据库访问实现类
-
 │      │              │      CourseDao.java 课程数据库访问实现类
-
 │      │              │      ScoreDao.java 成绩数据库访问实现类
-
 │      │              │      StudentDao.java 学生数据库访问实现类
-
 │      │              │      TeacherDao.java 教师数据库访问实现类
-
 │      │              │      TimetableDao.java 选课记录数据库访问实现类
-
 │      │              ├─mapper 数据库映射接口包
-
 │      │              │      AdminMapper.java 管理员数据库访问接口
-
 │      │              │      ArrangementMapper.java 考试安排数据库访问接口
-
 │      │              │      CourseMapper.java 课程数据库访问接口
-
 │      │              │      ScoreMapper.java 成绩数据库访问接口
-
 │      │              │      StudentMapper.java 学生数据库访问接口
-
 │      │              │      TeacherMapper.java 教师数据库访问接口
-
 │      │              │      TimetableMapper.java 选课记录数据库访问接口
-
 │      │              ├─model Java bean对象包
-
 │      │              │      Admin.java 管理员模型
-
 │      │              │      Arrangement.java 考试安排模型
-
 │      │              │      Course.java 课程模型
-
 │      │              │      Score.java 成绩模型
-
 │      │              │      Student.java 学生模型
-
 │      │              │      Teacher.java 教师模型
-
 │      │              │      Timetable.java 选课记录模型
-
-│      │              ├─util 工具包
-
-│      │              │      BaseBarChartUtil.java 所有条形图绘制工具类的抽象基类，完成某些基本方法
-
+│      │              ├─util 工具类包
+│      │              │      BaseBarChartUtil.java 所有条形图绘制工具类抽象基类，完成某些基本方法
 │      │              │      ExportExcelUtil.java xls导出工具类
-
 │      │              │      GenerateAlertUtil.java 弹窗生成工具类
-
 │      │              │      GenerateBarChartUtil.java 基本条形图绘制工具类
-
 │      │              │      GeneratePieChartUtil.java 基本饼图绘制工具类
-
 │      │              │      GenerateStackedBarChartUtil.java 堆叠条形图绘制工具类
-
 │      │              │      PrintPdfUtil.java PDF导出工具类
-
 │      │              │      SelfHeaderFooter.java 自定义页眉工具类
-
 │      │              │      SendMailUtil.java 邮件发送工具类
-
 │      │              │      Watermark.java 水印工具类
-
 │      │              └─wrapper 包装类包，负责与fxml页面交互（unused）
-
 │      │                      AdminWrapper.java
-
 │      │                      ArrangementWrapper.java
-
 │      │                      CourseWrapper.java
-
 │      │                      ScoreWrapper.java
-
 │      │                      StudentWrapper.java
-
 │      │                      TeacherWrapper.java
-
 │      │                      TimetableWrapper.java
-
 │      └─resources
-
 │          │  log4j.properties log4j配置文件
-
 │          ├─com
-
 │          │  └─yfcod
-
 │          │      └─management
-
 │          │          │  db.properties 数据库配置文件
-
 │          │          │  mybatis-config.xml mybatis配置文件
-
 │          │          │  smtp.properties smtp邮件服务协议配置文件
-
 │          │          ├─img 图片资源
-
 │          │          │      login-bg-autumn-cp.jpg
-
 │          │          │      login-bg-autumn.jpg
-
 │          │          │      xmu-logo.png
-
 │          │          ├─layout 布局文件
-
 │          │          │  ├─admin
-
 │          │          │  │      admin.fxml 管理员页面
-
-│          │          │  │      ComplexApplication.css 页面基本css文件
-
+│          │          │  │      ComplexApplication.css 主应用页基本css文件
 │          │          │  │      student.fxml 学生端页面
-
 │          │          │  │      teacher.fxml 教师端页面
-
 │          │          │  └─login
-
-│          │          │          BasicApplication.css 页面基本css文件
-
+│          │          │          BasicApplication.css 登录页基本css文件
 │          │          │          login.fxml 登录页
-
 │          │          └─mapper ORM层SQL映射文件
-
 │          │                  AdminMapper.xml 
-
 │          │                  ArrangementMapper.xml
-
 │          │                  CourseMapper.xml
-
 │          │                  ScoreMapper.xml
-
 │          │                  StudentMapper.xml
-
 │          │                  TeacherMapper.xml
-
 │          │                  TimetableMapper.xml
-
-│          └─sql 创建数据库SQL文件
-
+│          └─sql 创建数据库及数据表SQL文件
 │                  create-admin.sql
-
 │                  create-arrangement.sql
-
 │                  create-course.sql
-
-│                  create-db.sql
-
+│                  create-db.sql 创建数据库SQL文件
 │                  create-score.sql
-
 │                  create-student.sql
-
 │                  create-teacher.sql
-
 │                  create-timetable.sql
-
 ├─target 编译后的字节码文件夹
-
-└─temp 临时文件夹，临时文件自动删除
+└─temp 临时文件夹，临时文件会在退出系统后自动删除
+```
 
 ## 6.2 项目开发IDE选择及配置方法
 
