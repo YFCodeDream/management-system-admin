@@ -839,7 +839,7 @@ maven工程的pom.xml文件如下：
 
 项目目录树如下：
 
-```json
+```
 management-system-admin
 │  pom.xml maven依赖pom坐标文件
 │  README.md 项目报告文件  
